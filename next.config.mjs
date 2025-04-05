@@ -23,9 +23,13 @@ const nextConfig = {
   },
   // Configuration for GitHub Pages
   output: 'export',  // Generates static HTML files
+  // Use your GitHub username and repository name
   basePath: process.env.NODE_ENV === 'production' ? '/enhanced-interactive-portfolio' : '',
   assetPrefix: process.env.NODE_ENV === 'production' ? '/enhanced-interactive-portfolio/' : '',
   trailingSlash: true, // Adds trailing slashes to URLs
+  images: {
+    unoptimized: true,
+  }
 }
 
 mergeConfig(nextConfig, userConfig)

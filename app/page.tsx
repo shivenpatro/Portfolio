@@ -210,39 +210,37 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <HydrationBoundary>
-        <ClientOnly>
-          <div className="fixed inset-0 flex items-center justify-center bg-gray-900">
-            <div className="relative">
-              <motion.div
-                className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 blur-xl opacity-50"
-                animate={{
-                  scale: [1, 1.2, 1],
-                  rotate: [0, 180, 360],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Number.POSITIVE_INFINITY,
-                  repeatType: "loop",
-                }}
-              />
-              <motion.div
-                className="relative z-10 text-4xl sm:text-5xl font-bold"
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: [0, 1, 0], scale: [0.5, 1, 0.5] }}
-                transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-                style={{
-                  background: "linear-gradient(45deg, #6366f1, #8b5cf6, #d946ef)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
-                Loading...
-              </motion.div>
-            </div>
+      <ClientOnly>
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900">
+          <div className="relative">
+            <motion.div
+              className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 blur-xl opacity-50"
+              animate={{
+                scale: [1, 1.2, 1],
+                rotate: [0, 180, 360],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Number.POSITIVE_INFINITY,
+                repeatType: "loop",
+              }}
+            />
+            <motion.div
+              className="relative z-10 text-4xl sm:text-5xl font-bold"
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: [0, 1, 0], scale: [0.5, 1, 0.5] }}
+              transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+              style={{
+                background: "linear-gradient(45deg, #6366f1, #8b5cf6, #d946ef)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              Loading...
+            </motion.div>
           </div>
-        </ClientOnly>
-      </HydrationBoundary>
+        </div>
+      </ClientOnly>
     )
   }
 

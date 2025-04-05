@@ -64,6 +64,21 @@ pnpm build
 
 The static site will be generated in the `out` directory.
 
+### Deployment
+
+This project is set up to deploy automatically to GitHub Pages using GitHub Actions.
+
+1. Push your changes to the `main` branch
+2. GitHub Actions will automatically build and deploy your site
+3. Your site will be available at `https://yourusername.github.io/enhanced-interactive-portfolio/`
+
+Alternatively, you can use the included deployment script:
+
+```bash
+# On Windows
+./deploy.ps1
+```
+
 ## 📝 Project Structure
 
 - `app/`: Next.js app directory with pages and layouts
