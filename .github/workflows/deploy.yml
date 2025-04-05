@@ -42,3 +42,6 @@ jobs:
           folder: out
           branch: gh-pages
           clean: true
+          clean-exclude: |
+            .nojekyll
+            CNAME
