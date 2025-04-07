@@ -152,13 +152,13 @@ export default function Home() {
 
   const projects = [
     {
-      title: "Higgs Boson Rediscovery",
+      title: "HashChat",
       description:
-        "Conducted independent analysis to rediscover the Higgs Boson using particle physics data, employing Python and ROOT framework for data analysis and modeling.",
-      image: "https://placehold.co/500x300/3730a3/ffffff?text=Higgs+Boson",
-      url: "https://github.com/shivenpatro/HiggsBoson-Rediscovery",
-      tags: ["Python", "Data Analysis", "Physics", "ROOT"],
-      category: "data-science",
+        "A secure real-time chat application with end-to-end encryption using the SHA-256 algorithm. Features include user authentication, message persistence, typing indicators, read receipts, and a responsive UI built with React and Firebase.",
+      image: "/hashchat-preview.svg",
+      url: "https://github.com/shivenpatro/HashChat",
+      tags: ["JavaScript", "React", "Firebase", "Encryption", "WebSockets"],
+      category: "web-dev",
     },
     {
       title: "Personal Budget Tracker",
