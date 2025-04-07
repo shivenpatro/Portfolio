@@ -6,7 +6,7 @@ A modern, interactive personal portfolio website showcasing my skills, projects,
 
 ## 🌟 Live Demo
 
-Visit the live portfolio: [https://shivenpatro.github.io/enhanced-interactive-portfolio/](https://shivenpatro.github.io/enhanced-interactive-portfolio/)
+Visit the live portfolio: [https://shivenpatro.github.io/Portfolio/]((https://shivenpatro.github.io/Portfolio/))
 
 ## ✨ Features
 
