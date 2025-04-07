@@ -6,7 +6,7 @@ A modern, interactive personal portfolio website showcasing my skills, projects,
 
 ## 🌟 Live Demo
 
-Visit the live portfolio: [https://shivenpatro.github.io/Portfolio/]((https://shivenpatro.github.io/Portfolio/))
+Visit the live portfolio: [https://shivenpatro.github.io/Portfolio/](https://shivenpatro.github.io/Portfolio/)
 
 ## ✨ Features
 
@@ -70,7 +70,7 @@ This project is set up to deploy automatically to GitHub Pages using GitHub Acti
 
 1. Push your changes to the `main` branch
 2. GitHub Actions will automatically build and deploy your site
-3. Your site will be available at `https://yourusername.github.io/enhanced-interactive-portfolio/`
+3. Your site will be available at `https://yourusername.github.io/Portfolio/`
 
 Alternatively, you can use the included deployment script:
 
