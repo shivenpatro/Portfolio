@@ -156,7 +156,7 @@ export default function Home() {
       description:
         "A secure real-time chat application with end-to-end encryption using the SHA-256 algorithm. Features include user authentication, message persistence, typing indicators, read receipts, and a responsive UI built with React and Firebase.",
       image: "/hashchat-preview.svg",
-      url: "https://github.com/shivenpatro/HashChat",
+      url: "https://github.com/shivenpatro/Hash-Chat",
       tags: ["JavaScript", "React", "Firebase", "Encryption", "WebSockets"],
       category: "web-dev",
     },
@@ -421,9 +421,9 @@ export default function Home() {
                 <ClientOnly>
                   <ThreeDCard className="w-48 h-48 sm:w-64 sm:h-64 overflow-hidden">
                     <img
-                      src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202024-10-06%20174845-niZuwek8A8ugtOlijz5XV7LeVs6C4t.png"
+                      src="/images/profile-photo.jpg"
                       alt="Shiven Patro"
-                      className="rounded-full w-full h-full object-cover object-center"
+                      className="rounded-full w-full h-full object-cover object-top"
                     />
                   </ThreeDCard>
                 </ClientOnly>
