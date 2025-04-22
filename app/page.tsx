@@ -424,6 +424,11 @@ export default function Home() {
                       src="https://raw.githubusercontent.com/shivenpatro/Portfolio/main/public/images/profile-photo.jpg"
                       alt="Shiven Patro"
                       className="rounded-full w-full h-full object-cover object-top"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.onerror = null;
+                        target.src = "https://ui-avatars.com/api/?name=Shiven+Patro&background=3730a3&color=fff&size=200";
+                      }}
                     />
                   </ThreeDCard>
                 </ClientOnly>
