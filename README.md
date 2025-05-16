@@ -104,6 +104,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📞 Contact
 
-Shiven Patro - [contact@shivenpatro.com](mailto:contact@shivenpatro.com)
+Shiven Patro - [shivenpatro2018@gmail.com](mailto:shivenpatro2018@gmail.com)
 
 Project Link: [https://github.com/shivenpatro/enhanced-interactive-portfolio](https://github.com/shivenpatro/enhanced-interactive-portfolio)
