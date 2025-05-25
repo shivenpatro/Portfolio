@@ -17,6 +17,9 @@ interface ThreeDCardProps {
   scale?: number
 }
 
+// Helper to detect mobile size at runtime (client-only component).
+const isMobileDevice = () => typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches
+
 export const ThreeDCard = ({
   children,
   className = "",
@@ -29,6 +32,17 @@ export const ThreeDCard = ({
   borderRadius = "1rem",
   scale = 1.02,
 }: ThreeDCardProps) => {
+  // On mobile we skip all the motion logic and just render a normal div to improve performance.
+  if (isMobileDevice()) {
+    return (
+      <div
+        className={`relative overflow-hidden ${className}`}
+        style={{ borderRadius }}
+      >
+        {children}
+      </div>
+    )
+  }
   const [isHovered, setIsHovered] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
 

@@ -124,7 +124,9 @@ export const AnimatedTabs = ({
       {tabs.map((tab) => (
         <button
           key={tab.id}
-          ref={(el) => (tabRefs.current[tab.id] = el)}
+          ref={(el) => {
+            tabRefs.current[tab.id] = el;
+          }}
           className={`relative flex items-center transition-colors duration-200 ${variantStyles.tab} ${
             activeTab === tab.id ? variantStyles.activeTab : ""
           } ${tabClassName} ${activeTab === tab.id ? activeTabClassName : ""}`}
@@ -140,8 +142,8 @@ export const AnimatedTabs = ({
         animate={{
           width: indicatorStyle.width,
           height: variant === "underline" ? 2 : indicatorStyle.height,
-          x: indicatorStyle.left,
-          y: variant === "underline" ? indicatorStyle.height - 2 : indicatorStyle.top,
+          left: indicatorStyle.left,
+          top: variant === "underline" ? undefined : indicatorStyle.top,
         }}
         transition={{ type: "spring", stiffness: 500, damping: 30 }}
       />

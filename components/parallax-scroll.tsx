@@ -9,6 +9,11 @@ interface ParallaxScrollProps {
   speed?: number
   direction?: "up" | "down" | "left" | "right"
   offset?: [number, number]
+  /**
+   * Disable the parallax effect altogether. This is automatically enabled on mobile devices (<768px) to avoid
+   * unnecessary scroll calculations that can cause jank on low-powered GPUs.
+   */
+  disabled?: boolean
 }
 
 export const ParallaxScroll = ({
@@ -17,7 +22,19 @@ export const ParallaxScroll = ({
   speed = 0.5,
   direction = "up",
   offset = [0, 1],
+  disabled,
 }: ParallaxScrollProps) => {
+  // Short-circuit the motion logic on mobile or when explicitly disabled.
+  const isMobile = typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches
+
+  if (disabled || isMobile) {
+    return (
+      <div ref={undefined} className={className}>
+        {children}
+      </div>
+    )
+  }
+
   const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -27,20 +44,20 @@ export const ParallaxScroll = ({
   const getTransformValue = () => {
     switch (direction) {
       case "up":
-        return [0, `-${100 * speed}px`]
+        return [0, -100 * speed]
       case "down":
-        return [0, `${100 * speed}px`]
+        return [0, 100 * speed]
       case "left":
-        return [`-${100 * speed}px`, 0]
+        return [-100 * speed, 0]
       case "right":
-        return [`${100 * speed}px`, 0]
+        return [100 * speed, 0]
       default:
-        return [0, `-${100 * speed}px`]
+        return [0, -100 * speed]
     }
   }
 
-  const y = useTransform(scrollYProgress, [0, 1], getTransformValue())
-  const springY = useSpring(y, { stiffness: 100, damping: 30 })
+  const y = useTransform(scrollYProgress, [0, 1], getTransformValue() as any)
+  const springY = useSpring(y as any, { stiffness: 100, damping: 30 })
 
   return (
     <motion.div

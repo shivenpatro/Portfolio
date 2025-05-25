@@ -21,6 +21,7 @@ import {
   Layers,
   Download,
   ArrowRight,
+  Phone,
 } from "lucide-react"
 
 // Import static components
@@ -33,6 +34,7 @@ import { AnimatedCounter } from "@/components/animated-counter"
 import { TextCarousel } from "@/components/text-carousel"
 import { ClientOnly } from "@/components/client-only"
 import { HydrationBoundary } from "@/components/hydration-boundary"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 // Dynamic imports for components that might cause hydration issues
 const ResumeModal = dynamic(() => import("@/components/resume-modal").then(mod => mod.ResumeModal), { ssr: false })
@@ -46,7 +48,6 @@ const ScrollToTop = dynamic(() => import("@/components/scroll-to-top").then(mod 
 const AnimatedName = dynamic(() => import("@/components/animated-name").then(mod => mod.AnimatedName), { ssr: false })
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true)
   const [activeSection, setActiveSection] = useState("home")
   const [isTouchDevice, setIsTouchDevice] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
@@ -56,6 +57,7 @@ export default function Home() {
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(scrollYProgress, [0, 0.05], [1, 0])
   const scrollingRef = useRef(false)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     // Check for saved theme preference or use system preference
@@ -72,18 +74,15 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2000)
     setIsTouchDevice("ontouchstart" in window || navigator.maxTouchPoints > 0)
 
     // Preload resume files
     const preloadResumes = async () => {
       // Don't try to preload resumes, just log a message
-      console.log('Resume files will be checked when needed');
-    };
+      console.log("Resume files will be checked when needed")
+    }
 
     preloadResumes()
-
-    return () => clearTimeout(timer)
   }, [])
 
   const handleScroll = useCallback(
@@ -110,6 +109,20 @@ export default function Home() {
   }, [handleScroll])
 
   const scrollToSection = useCallback((sectionId: string) => {
+    // Use native smooth scrolling on mobile for better performance
+    if (isMobile) {
+      const el = document.getElementById(sectionId)
+      if (el) {
+        scrollingRef.current = true
+        el.scrollIntoView({ behavior: "smooth" })
+        setTimeout(() => {
+          scrollingRef.current = false
+          setActiveSection(sectionId)
+        }, 600)
+      }
+      return
+    }
+
     const element = document.getElementById(sectionId)
     if (element && !scrollingRef.current) {
       // Prevent multiple scroll events
@@ -148,7 +161,7 @@ export default function Home() {
 
       requestAnimationFrame(animateScroll);
     }
-  }, [])
+  }, [isMobile])
 
   const projects = [
     {
@@ -178,21 +191,21 @@ export default function Home() {
       category: "web-dev",
     },
     {
-      title: "Breakout Game",
+      title: "IntelliApply",
       description:
-        "A Python-based breakout game implementation featuring 6 powerups and basic gameplay features using pygame.",
-      image: "https://placehold.co/500x300/3730a3/ffffff?text=Breakout+Game",
-      url: "https://github.com/shivenpatro/breakout",
-      tags: ["Python", "Pygame", "Game Development"],
-      category: "software",
+        "AI-powered full-stack platform that parses your resume, scrapes multiple job boards and ranks the most relevant openings in a personalised dashboard.",
+      image: "/images/intelliapply.png", // TODO: replace with real screenshot
+      url: "https://github.com/shivenpatro/IntelliApply",
+      tags: ["React", "FastAPI", "Tailwind", "Supabase", "AI", "Web Scraping"],
+      category: "web-dev",
     },
     {
-      title: "Text to Handwriting",
+      title: "School Management API",
       description:
-        "Transforms digital text into realistic handwritten documents with custom fonts and natural text variations.",
-      image: "https://placehold.co/500x300/3730a3/ffffff?text=Text+to+Handwriting",
-      url: "https://github.com/shivenpatro/Text-to-handwritten",
-      tags: ["Python", "Image Processing", "Automation"],
+        "RESTful Node.js + Express API backed by MySQL that lets you add schools and list them sorted by distance using Haversine formula.",
+      image: "/images/school-api.png", // TODO: replace with real screenshot
+      url: "https://github.com/shivenpatro/school-management-api",
+      tags: ["Node.js", "Express", "MySQL", "REST"],
       category: "software",
     },
     {
@@ -208,42 +221,6 @@ export default function Home() {
 
   const filteredProjects = activeTab === "all" ? projects : projects.filter((project) => project.category === activeTab)
 
-  if (isLoading) {
-    return (
-      <ClientOnly>
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900">
-          <div className="relative">
-            <motion.div
-              className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 blur-xl opacity-50"
-              animate={{
-                scale: [1, 1.2, 1],
-                rotate: [0, 180, 360],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Number.POSITIVE_INFINITY,
-                repeatType: "loop",
-              }}
-            />
-            <motion.div
-              className="relative z-10 text-4xl sm:text-5xl font-bold"
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: [0, 1, 0], scale: [0.5, 1, 0.5] }}
-              transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-              style={{
-                background: "linear-gradient(45deg, #6366f1, #8b5cf6, #d946ef)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              Loading...
-            </motion.div>
-          </div>
-        </div>
-      </ClientOnly>
-    )
-  }
-
   return (
     <HydrationBoundary>
       <div
@@ -253,7 +230,7 @@ export default function Home() {
         {!isTouchDevice && <AnimatedCursor />}
       </ClientOnly>
       <ClientOnly>
-        <AnimatedBackground variant="particles" intensity={1.2} />
+        <AnimatedBackground variant="particles" intensity={isMobile ? 0.6 : 1.2} />
       </ClientOnly>
       <ClientOnly>
         <ResumeModal isOpen={isResumeModalOpen} onClose={() => setIsResumeModalOpen(false)} />
@@ -302,9 +279,9 @@ export default function Home() {
                   ? "flex flex-col fixed top-[72px] left-0 right-0 bg-gray-900/95 backdrop-blur-md p-6 shadow-lg border-b border-indigo-500/20 z-50"
                   : "hidden"
               } sm:flex sm:flex-row sm:static sm:shadow-none sm:p-0 sm:bg-transparent sm:space-x-8 sm:border-none sm:z-auto`}
-              initial={isMenuOpen ? { height: 0, opacity: 0 } : false}
-              animate={isMenuOpen ? { height: "auto", opacity: 1 } : false}
-              exit={isMenuOpen ? { height: 0, opacity: 0 } : false}
+              initial={isMenuOpen ? { height: 0, opacity: 0 } : undefined}
+              animate={isMenuOpen ? { height: "auto", opacity: 1 } : undefined}
+              exit={isMenuOpen ? { height: 0, opacity: 0 } : undefined}
               transition={{ duration: 0.3 }}
             >
               {["Home", "About", "Skills", "Projects", "Contact"].map((item) => (
@@ -780,6 +757,17 @@ export default function Home() {
                           className="text-gray-300 group-hover:text-indigo-400 transition-colors"
                         >
                           linkedin.com/in/shiven-patro
+                        </a>
+                      </motion.div>
+                      <motion.div className="flex items-center group" whileHover={{ x: 5 }}>
+                        <div className="p-2 bg-indigo-500/20 rounded-full mr-3">
+                          <Phone className="text-indigo-400 w-5 h-5" />
+                        </div>
+                        <a
+                          href="tel:+919861564032"
+                          className="text-gray-300 group-hover:text-indigo-400 transition-colors"
+                        >
+                          +91 9861564032
                         </a>
                       </motion.div>
                     </div>
