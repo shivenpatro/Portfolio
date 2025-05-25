@@ -224,13 +224,13 @@ export default function Home() {
   return (
     <HydrationBoundary>
       <div
-        className={`${isDarkMode ? "dark" : ""} bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen font-sans ${isTouchDevice ? "" : "cursor-none"}`}
+        className={`${isDarkMode ? "dark" : ""} bg-white dark:bg-gray-950 text-gray-900 dark:text-white min-h-screen font-sans ${isTouchDevice ? "" : "cursor-none"}`}
       >
       <ClientOnly>
         {!isTouchDevice && <AnimatedCursor />}
       </ClientOnly>
       <ClientOnly>
-        <AnimatedBackground variant="particles" intensity={isMobile ? 0.6 : 1.2} />
+        <AnimatedBackground variant="particles" intensity={isMobile ? 0.3 : 0.5} />
       </ClientOnly>
       <ClientOnly>
         <ResumeModal isOpen={isResumeModalOpen} onClose={() => setIsResumeModalOpen(false)} />
@@ -242,11 +242,11 @@ export default function Home() {
         <ScrollToTop backgroundColor="rgba(139, 92, 246, 0.8)" />
       </ClientOnly>
 
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/5 dark:bg-gray-900/5 backdrop-blur-md border-b border-white/10">
-        <nav className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 flex justify-between items-center">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-800/50">
+        <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center">
             <motion.button
-              className="sm:hidden mr-4 text-muted-foreground hover:text-indigo-400"
+              className="sm:hidden mr-4 text-muted-foreground hover:text-gray-900 dark:hover:text-white"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
               whileHover={{ scale: 1.1 }}
@@ -276,7 +276,7 @@ export default function Home() {
             <motion.ul
               className={`${
                 isMenuOpen
-                  ? "flex flex-col fixed top-[72px] left-0 right-0 bg-gray-900/95 backdrop-blur-md p-6 shadow-lg border-b border-indigo-500/20 z-50"
+                  ? "flex flex-col fixed top-[72px] left-0 right-0 bg-white/95 dark:bg-gray-950/95 backdrop-blur-md p-6 shadow-lg border-b border-gray-200 dark:border-gray-800 z-50"
                   : "hidden"
               } sm:flex sm:flex-row sm:static sm:shadow-none sm:p-0 sm:bg-transparent sm:space-x-8 sm:border-none sm:z-auto`}
               initial={isMenuOpen ? { height: 0, opacity: 0 } : undefined}
@@ -289,7 +289,7 @@ export default function Home() {
                   <motion.button
                     onClick={() => scrollToSection(item.toLowerCase())}
                     className={`relative text-base sm:text-lg font-medium ${
-                      activeSection === item.toLowerCase() ? "text-indigo-400" : "text-muted-foreground hover:text-indigo-400"
+                      activeSection === item.toLowerCase() ? "text-gray-900 dark:text-white" : "text-muted-foreground hover:text-gray-900 dark:hover:text-white"
                     }`}
                     whileHover={{ x: 5 }}
                     whileTap={{ scale: 0.95 }}
@@ -297,7 +297,7 @@ export default function Home() {
                     {item}
                     {activeSection === item.toLowerCase() && (
                       <motion.span
-                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-indigo-400"
+                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gray-900 dark:bg-white"
                         layoutId="activeSection"
                         transition={{ type: "spring", stiffness: 500, damping: 30 }}
                       />
@@ -319,8 +319,8 @@ export default function Home() {
                 localStorage.setItem("theme", "light")
               }
             }}
-            className="p-2 rounded-full bg-gray-800/50 dark:bg-gray-700/50 backdrop-blur-sm border border-gray-700/50"
-            whileHover={{ scale: 1.1, boxShadow: "0 0 15px rgba(139, 92, 246, 0.5)" }}
+            className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.9 }}
             aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
           >
@@ -345,20 +345,20 @@ export default function Home() {
             <RevealElement>
               <div className="h-12 overflow-hidden text-center">
                 <TextCarousel
-                  phrases={["Data Science Engineer", "Web Developer", "AI Enthusiast", "ML Engineer", "Software Developer", "Python Developer"]}
-                  className="text-xl sm:text-2xl md:text-3xl font-light text-indigo-300"
+                  phrases={["Data Science Engineer", "Web Developer", "AI Enthusiast"]}
+                  className="text-xl sm:text-2xl md:text-3xl font-light text-gray-600 dark:text-gray-400"
                 />
               </div>
             </RevealElement>
             <RevealElement delay={0.4} direction="up">
               <div className="mt-12 flex flex-wrap justify-center gap-4">
                 <AnimatedButton
-                  onClick={() => scrollToSection("projects")}
-                  variant="gradient"
+                  onClick={() => scrollToSection("about")}
+                  variant="primary"
                   icon={<ArrowRight className="w-5 h-5" />}
                   iconPosition="right"
                 >
-                  Explore My Work
+                  Learn More
                 </AnimatedButton>
                 <AnimatedButton
                   onClick={() => setIsResumeModalOpen(true)}
@@ -385,12 +385,12 @@ export default function Home() {
         </section>
 
         <section id="about" className="py-20 sm:py-32 px-4 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-indigo-900/5 to-purple-900/5 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-white dark:from-gray-900/50 dark:to-gray-950 pointer-events-none"></div>
           <div className="max-w-5xl mx-auto">
             <RevealText
               text="About Me"
               as="h2"
-              className="text-3xl sm:text-4xl font-bold mb-16 text-center text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400"
+              className="text-3xl sm:text-4xl font-bold mb-16 text-center text-gray-900 dark:text-white"
             />
 
             <div className="flex flex-col md:flex-row items-center">
@@ -421,71 +421,63 @@ export default function Home() {
                   preserveWhitespace={true}
                 />
 
-                <RevealElement delay={0.6} className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8">
-                  <AnimatedGradientBorder borderRadius="0.75rem" glowAmount={5}>
-                    <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 text-center">
-                      <div className="flex flex-col items-center">
-                        <div className="p-3 bg-indigo-500/20 rounded-full mb-4">
-                          <Code className="w-6 h-6 text-indigo-300" />
-                        </div>
-                        <AnimatedCounter
-                          end={10}
-                          className="text-3xl sm:text-4xl font-bold text-foreground mb-2"
-                          easing={(t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))}
-                        />
-                        <p className="text-muted-foreground">Projects</p>
+                <RevealElement delay={0.6} className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-12">
+                  <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-800">
+                    <div className="flex flex-col items-center">
+                      <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full mb-4">
+                        <Code className="w-6 h-6 text-gray-700 dark:text-gray-300" />
                       </div>
+                      <AnimatedCounter
+                        end={10}
+                        className="text-3xl sm:text-4xl font-bold text-foreground mb-2"
+                        easing={(t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))}
+                      />
+                      <p className="text-sm text-muted-foreground">Projects</p>
                     </div>
-                  </AnimatedGradientBorder>
+                  </div>
 
-                  <AnimatedGradientBorder borderRadius="0.75rem" glowAmount={5}>
-                    <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 text-center">
-                      <div className="flex flex-col items-center">
-                        <div className="p-3 bg-indigo-500/20 rounded-full mb-4">
-                          <Award className="w-6 h-6 text-indigo-300" />
-                        </div>
-                        <AnimatedCounter
-                          end={8.5}
-                          decimals={1}
-                          className="text-3xl sm:text-4xl font-bold text-foreground mb-2"
-                          easing={(t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))}
-                        />
-                        <p className="text-muted-foreground">CGPA</p>
+                  <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-800">
+                    <div className="flex flex-col items-center">
+                      <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full mb-4">
+                        <Award className="w-6 h-6 text-gray-700 dark:text-gray-300" />
                       </div>
+                      <AnimatedCounter
+                        end={8.5}
+                        decimals={1}
+                        className="text-3xl sm:text-4xl font-bold text-foreground mb-2"
+                        easing={(t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))}
+                      />
+                      <p className="text-sm text-muted-foreground">CGPA</p>
                     </div>
-                  </AnimatedGradientBorder>
+                  </div>
 
-                  <AnimatedGradientBorder borderRadius="0.75rem" glowAmount={5}>
-                    <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 text-center">
-                      <div className="flex flex-col items-center">
-                        <div className="p-3 bg-indigo-500/20 rounded-full mb-4">
-                          <Cpu className="w-6 h-6 text-indigo-300" />
-                        </div>
-                        <AnimatedCounter
-                          end={5}
-                          className="text-3xl sm:text-4xl font-bold text-foreground mb-2"
-                          easing={(t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))}
-                        />
-                        <p className="text-muted-foreground">Technologies</p>
+                  <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-800">
+                    <div className="flex flex-col items-center">
+                      <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full mb-4">
+                        <Cpu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
                       </div>
+                      <AnimatedCounter
+                        end={5}
+                        className="text-3xl sm:text-4xl font-bold text-foreground mb-2"
+                        easing={(t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))}
+                      />
+                      <p className="text-sm text-muted-foreground">Technologies</p>
                     </div>
-                  </AnimatedGradientBorder>
+                  </div>
 
-                  <AnimatedGradientBorder borderRadius="0.75rem" glowAmount={5}>
-                    <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 text-center">
-                      <div className="flex flex-col items-center">
-                        <div className="p-3 bg-indigo-500/20 rounded-full mb-4">
-                          <Globe className="w-6 h-6 text-indigo-300" />
-                        </div>
-                        <AnimatedCounter
-                          end={2}
-                          className="text-3xl sm:text-4xl font-bold text-foreground mb-2"
-                          easing={(t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))}
-                        />
-                        <p className="text-muted-foreground">Hackathons</p>
+                  <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-800">
+                    <div className="flex flex-col items-center">
+                      <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full mb-4">
+                        <Globe className="w-6 h-6 text-gray-700 dark:text-gray-300" />
                       </div>
+                      <AnimatedCounter
+                        end={2}
+                        className="text-3xl sm:text-4xl font-bold text-foreground mb-2"
+                        easing={(t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))}
+                      />
+                      <p className="text-sm text-muted-foreground">Hackathons</p>
                     </div>
-                  </AnimatedGradientBorder>
+                  </div>
                 </RevealElement>
 
                 <RevealElement delay={0.8} className="mt-8 flex flex-wrap gap-4">
@@ -512,18 +504,18 @@ export default function Home() {
         </section>
 
         <section id="skills" className="py-20 sm:py-32 px-4 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-purple-900/5 to-indigo-900/5 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-white dark:from-gray-900/50 dark:to-gray-950 pointer-events-none"></div>
           <div className="max-w-5xl mx-auto">
             <RevealText
               text="My Skills"
               as="h2"
-              className="text-3xl sm:text-4xl font-bold mb-16 text-center text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400"
+              className="text-3xl sm:text-4xl font-bold mb-16 text-center text-gray-900 dark:text-white"
             />
 
             <RevealElement className="mb-16">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                  <h3 className="text-xl font-semibold mb-6 text-indigo-300">Programming Languages</h3>
+                  <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Programming Languages</h3>
                   <div className="space-y-6">
                     {[
                       { skill: "Python", percentage: 90, color: "bg-indigo-500" },
@@ -551,7 +543,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-6 text-indigo-300">Frameworks & Tools</h3>
+                  <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Frameworks & Tools</h3>
                   <div className="space-y-6">
                     {[
                       { skill: "React.js", percentage: 85, color: "bg-cyan-500" },
@@ -584,29 +576,29 @@ export default function Home() {
             <RevealElement>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
                 {[
-                  { skill: "Python", icon: <Code className="w-6 h-6 text-indigo-300" /> },
-                  { skill: "Java", icon: <Cpu className="w-6 h-6 text-indigo-300" /> },
-                  { skill: "JavaScript", icon: <Globe className="w-6 h-6 text-indigo-300" /> },
-                  { skill: "HTML/CSS", icon: <Layers className="w-6 h-6 text-indigo-300" /> },
-                  { skill: "React.js", icon: <Code className="w-6 h-6 text-indigo-300" /> },
-                  { skill: "Node.js", icon: <Server className="w-6 h-6 text-indigo-300" /> },
-                  { skill: "SQL", icon: <Database className="w-6 h-6 text-indigo-300" /> },
-                  { skill: "Git/GitHub", icon: <Github className="w-6 h-6 text-indigo-300" /> },
+                  { skill: "Python", icon: <Code className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                  { skill: "Java", icon: <Cpu className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                  { skill: "JavaScript", icon: <Globe className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                  { skill: "HTML/CSS", icon: <Layers className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                  { skill: "React.js", icon: <Code className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                  { skill: "Node.js", icon: <Server className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                  { skill: "SQL", icon: <Database className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                  { skill: "Git/GitHub", icon: <Github className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
                 ].map((item, index) => (
                   <ClientOnly key={item.skill}>
                     <ParallaxScroll speed={0.2} direction="up">
                       <ThreeDCard className="h-full">
-                        <div className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-xl p-6 text-center h-full">
+                        <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center h-full border border-gray-200 dark:border-gray-800">
                           <motion.div
-                            className="text-4xl mb-4 mx-auto bg-gradient-to-br from-indigo-400 to-purple-400 p-4 rounded-full w-16 h-16 flex items-center justify-center"
+                            className="text-4xl mb-4 mx-auto bg-gray-100 dark:bg-gray-800 p-4 rounded-full w-16 h-16 flex items-center justify-center"
                             whileHover={{ rotateY: 360 }}
                             transition={{ duration: 0.5 }}
                           >
                             {item.icon}
                           </motion.div>
                           <motion.div
-                            className="font-semibold text-lg text-foreground"
-                            whileHover={{ color: "#d8b4fe" }}
+                            className="font-medium text-base text-foreground"
+                            whileHover={{ scale: 1.02 }}
                             transition={{ duration: 0.3 }}
                           >
                             {item.skill}
@@ -622,12 +614,12 @@ export default function Home() {
         </section>
 
         <section id="projects" className="py-20 sm:py-32 px-4 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-indigo-900/5 to-purple-900/5 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-white dark:from-gray-900/50 dark:to-gray-950 pointer-events-none"></div>
           <div className="max-w-6xl mx-auto">
             <RevealText
               text="My Projects"
               as="h2"
-              className="text-3xl sm:text-4xl font-bold mb-8 text-center text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400"
+              className="text-3xl sm:text-4xl font-bold mb-8 text-center text-gray-900 dark:text-white"
             />
 
             <RevealElement className="mb-8">
@@ -640,7 +632,7 @@ export default function Home() {
                 ]}
                 defaultTabId="all"
                 onChange={setActiveTab}
-                variant="gradient"
+                variant="pills"
                 className="mb-8 justify-center"
               />
             </RevealElement>
@@ -650,10 +642,10 @@ export default function Home() {
                 {filteredProjects.map((project, index) => (
                   <RevealElement key={project.title} delay={index * 0.1} direction="up">
                     <ThreeDCard className="h-full">
-                      <div className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl h-full flex flex-col">
+                      <div className="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-sm border border-gray-200 dark:border-gray-800 h-full flex flex-col">
                         <div className="relative h-56 overflow-hidden group">
                           <motion.div
-                            className="absolute inset-0 bg-indigo-600 mix-blend-color opacity-0 z-10"
+                            className="absolute inset-0 bg-gray-900/30"
                             whileHover={{ opacity: 0.3 }}
                             transition={{ duration: 0.3 }}
                           />
@@ -664,7 +656,7 @@ export default function Home() {
                             whileHover={{ scale: 1.1 }}
                             transition={{ duration: 0.5 }}
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-70" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                           <h3 className="absolute bottom-4 left-4 text-xl sm:text-2xl font-bold text-white z-20">
                             {project.title}
                           </h3>
@@ -673,18 +665,16 @@ export default function Home() {
                           <p className="text-muted-foreground mb-4">{project.description}</p>
                           <div className="flex flex-wrap gap-2 mb-4 mt-auto">
                             {project.tags.map((tag, i) => (
-                              <AnimatedTooltip key={i} content={`Filter by ${tag}`}>
-                                <span className="px-2 py-1 bg-indigo-900/30 text-indigo-300 text-xs rounded-full">
-                                  {tag}
-                                </span>
-                              </AnimatedTooltip>
+                              <span key={i} className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs rounded-full">
+                                {tag}
+                              </span>
                             ))}
                           </div>
                           <motion.a
                             href={project.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-indigo-400 hover:text-indigo-300 inline-flex items-center font-semibold mt-auto"
+                            className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 inline-flex items-center font-medium mt-auto"
                             whileHover={{ x: 5 }}
                             whileTap={{ scale: 0.95 }}
                           >
@@ -701,204 +691,200 @@ export default function Home() {
         </section>
 
         <section id="contact" className="py-20 sm:py-32 px-4 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-purple-900/5 to-indigo-900/5 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-white dark:from-gray-900/50 dark:to-gray-950 pointer-events-none"></div>
           <div className="max-w-5xl mx-auto">
             <RevealText
               text="Get In Touch"
               as="h2"
-              className="text-3xl sm:text-4xl font-bold mb-16 text-center text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400"
+              className="text-3xl sm:text-4xl font-bold mb-16 text-center text-gray-900 dark:text-white"
             />
 
             <div className="grid md:grid-cols-2 gap-12">
               <RevealElement direction="left">
-                <AnimatedGradientBorder borderRadius="0.75rem" glowAmount={10}>
-                  <div className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-xl p-6 shadow-xl h-full">
-                    <h3 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
-                      Contact Information
-                    </h3>
-                    <p className="text-muted-foreground mb-6">
-                      Feel free to reach out to me through any of these channels. I'm always open to discussing new
-                      projects, creative ideas, or opportunities to be part of your vision.
-                    </p>
+                <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-8 border border-gray-200 dark:border-gray-800 h-full">
+                  <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+                    Contact Information
+                  </h3>
+                  <p className="text-muted-foreground mb-6">
+                    Feel free to reach out to me through any of these channels. I'm always open to discussing new
+                    projects, creative ideas, or opportunities to be part of your vision.
+                  </p>
 
-                    <div className="space-y-4">
-                      <motion.div className="flex items-center group" whileHover={{ x: 5 }}>
-                        <div className="p-2 bg-indigo-500/20 rounded-full mr-3">
-                          <Mail className="text-indigo-400 w-5 h-5" />
-                        </div>
-                        <a
-                          href="mailto:contact@shivenpatro.com"
-                          className="text-muted-foreground group-hover:text-indigo-400 transition-colors"
-                        >
-                          contact@shivenpatro.com
-                        </a>
-                      </motion.div>
-                      <motion.div className="flex items-center group" whileHover={{ x: 5 }}>
-                        <div className="p-2 bg-indigo-500/20 rounded-full mr-3">
-                          <Github className="text-indigo-400 w-5 h-5" />
-                        </div>
-                        <a
-                          href="https://github.com/shivenpatro"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-muted-foreground group-hover:text-indigo-400 transition-colors"
-                        >
-                          github.com/shivenpatro
-                        </a>
-                      </motion.div>
-                      <motion.div className="flex items-center group" whileHover={{ x: 5 }}>
-                        <div className="p-2 bg-indigo-500/20 rounded-full mr-3">
-                          <Linkedin className="text-indigo-400 w-5 h-5" />
-                        </div>
-                        <a
-                          href="https://www.linkedin.com/in/shiven-patro-960593260/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-muted-foreground group-hover:text-indigo-400 transition-colors"
-                        >
-                          linkedin.com/in/shiven-patro
-                        </a>
-                      </motion.div>
-                      <motion.div className="flex items-center group" whileHover={{ x: 5 }}>
-                        <div className="p-2 bg-indigo-500/20 rounded-full mr-3">
-                          <Phone className="text-indigo-400 w-5 h-5" />
-                        </div>
-                        <a
-                          href="tel:+919861564032"
-                          className="text-muted-foreground group-hover:text-indigo-400 transition-colors"
-                        >
-                          +91 9861564032
-                        </a>
-                      </motion.div>
-                    </div>
-
-                    <div className="flex space-x-4 mt-8">
-                      <motion.a
+                  <div className="space-y-4">
+                    <motion.div className="flex items-center group" whileHover={{ x: 2 }}>
+                      <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full mr-3">
+                        <Mail className="text-gray-700 dark:text-gray-300 w-5 h-5" />
+                      </div>
+                      <a
+                        href="mailto:contact@shivenpatro.com"
+                        className="text-muted-foreground group-hover:text-gray-900 dark:group-hover:text-white transition-colors"
+                      >
+                        contact@shivenpatro.com
+                      </a>
+                    </motion.div>
+                    <motion.div className="flex items-center group" whileHover={{ x: 2 }}>
+                      <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full mr-3">
+                        <Github className="text-gray-700 dark:text-gray-300 w-5 h-5" />
+                      </div>
+                      <a
                         href="https://github.com/shivenpatro"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center p-3 bg-gray-200/80 dark:bg-gray-700/80 backdrop-blur-sm rounded-full text-muted-foreground hover:text-indigo-400 transition-colors duration-300"
-                        whileHover={{ scale: 1.1, rotate: 5, boxShadow: "0 0 15px rgba(139, 92, 246, 0.5)" }}
-                        whileTap={{ scale: 0.9 }}
-                        aria-label="GitHub"
+                        className="text-muted-foreground group-hover:text-gray-900 dark:group-hover:text-white transition-colors"
                       >
-                        <Github className="w-5 h-5" />
-                      </motion.a>
-                      <motion.a
+                        github.com/shivenpatro
+                      </a>
+                    </motion.div>
+                    <motion.div className="flex items-center group" whileHover={{ x: 2 }}>
+                      <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full mr-3">
+                        <Linkedin className="text-gray-700 dark:text-gray-300 w-5 h-5" />
+                      </div>
+                      <a
                         href="https://www.linkedin.com/in/shiven-patro-960593260/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center p-3 bg-gray-200/80 dark:bg-gray-700/80 backdrop-blur-sm rounded-full text-muted-foreground hover:text-indigo-400 transition-colors duration-300"
-                        whileHover={{ scale: 1.1, rotate: 5, boxShadow: "0 0 15px rgba(139, 92, 246, 0.5)" }}
-                        whileTap={{ scale: 0.9 }}
-                        aria-label="LinkedIn"
+                        className="text-muted-foreground group-hover:text-gray-900 dark:group-hover:text-white transition-colors"
                       >
-                        <Linkedin className="w-5 h-5" />
-                      </motion.a>
-                      <motion.a
-                        href="mailto:contact@shivenpatro.com"
-                        className="flex items-center justify-center p-3 bg-gray-200/80 dark:bg-gray-700/80 backdrop-blur-sm rounded-full text-muted-foreground hover:text-indigo-400 transition-colors duration-300"
-                        whileHover={{ scale: 1.1, rotate: 5, boxShadow: "0 0 15px rgba(139, 92, 246, 0.5)" }}
-                        whileTap={{ scale: 0.9 }}
-                        aria-label="Email"
+                        linkedin.com/in/shiven-patro
+                      </a>
+                    </motion.div>
+                    <motion.div className="flex items-center group" whileHover={{ x: 2 }}>
+                      <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full mr-3">
+                        <Phone className="text-gray-700 dark:text-gray-300 w-5 h-5" />
+                      </div>
+                      <a
+                        href="tel:+919861564032"
+                        className="text-muted-foreground group-hover:text-gray-900 dark:group-hover:text-white transition-colors"
                       >
-                        <Mail className="w-5 h-5" />
-                      </motion.a>
-                    </div>
-
-                    <motion.div
-                      className="mt-12 p-6 bg-gradient-to-br from-indigo-900/30 to-purple-900/30 rounded-lg border border-indigo-500/20"
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.3 }}
-                    >
-                      <h4 className="text-xl font-semibold mb-3 text-indigo-300">Let's Work Together</h4>
-                      <p className="text-muted-foreground">
-                        Looking for a passionate developer to bring your ideas to life? I'm currently available for
-                        freelance work and exciting opportunities.
-                      </p>
+                        +91 9861564032
+                      </a>
                     </motion.div>
                   </div>
-                </AnimatedGradientBorder>
+
+                  <div className="flex space-x-4 mt-8">
+                    <motion.a
+                      href="https://github.com/shivenpatro"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      aria-label="GitHub"
+                    >
+                      <Github className="w-5 h-5" />
+                    </motion.a>
+                    <motion.a
+                      href="https://www.linkedin.com/in/shiven-patro-960593260/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      aria-label="LinkedIn"
+                    >
+                      <Linkedin className="w-5 h-5" />
+                    </motion.a>
+                    <motion.a
+                      href="mailto:contact@shivenpatro.com"
+                      className="flex items-center justify-center p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      aria-label="Email"
+                    >
+                      <Mail className="w-5 h-5" />
+                    </motion.a>
+                  </div>
+
+                  <motion.div
+                    className="mt-8 p-6 bg-gray-100 dark:bg-gray-800 rounded-lg"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                  >
+                    <h4 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Let's Work Together</h4>
+                    <p className="text-muted-foreground text-sm">
+                      Looking for a passionate developer to bring your ideas to life? I'm currently available for
+                      freelance work and exciting opportunities.
+                    </p>
+                  </motion.div>
+                </div>
               </RevealElement>
 
               <RevealElement direction="right">
-                <AnimatedGradientBorder borderRadius="0.75rem" glowAmount={10}>
-                  <div className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 backdrop-blur-sm rounded-xl p-6 shadow-xl h-full">
-                    <h3 className="text-2xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
-                      Send Me a Message
-                    </h3>
-                    <div className="mb-8 relative">
-                      <motion.label
-                        htmlFor="name"
-                        className="absolute left-4 text-lg text-indigo-300 transition-all duration-300 pointer-events-none"
-                        initial={{ y: 0 }}
-                        animate={{ y: -25, scale: 0.8 }}
-                      >
-                        Name
-                      </motion.label>
-                      <motion.div
-                        className="w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500 absolute bottom-0 left-0 rounded-full"
-                        initial={{ scaleX: 0 }}
-                        whileInView={{ scaleX: 1 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                      />
-                      <input
-                        type="text"
-                        id="name"
-                        className="w-full px-4 py-3 bg-gray-200/50 dark:bg-gray-700/50 backdrop-blur-sm rounded-lg focus:outline-none text-foreground border border-gray-300 dark:border-gray-700 focus:border-indigo-500 transition-colors"
-                      />
-                    </div>
-                    <div className="mb-8 relative">
-                      <motion.label
-                        htmlFor="email"
-                        className="absolute left-4 text-lg text-indigo-300 transition-all duration-300 pointer-events-none"
-                        initial={{ y: 0 }}
-                        animate={{ y: -25, scale: 0.8 }}
-                      >
-                        Email
-                      </motion.label>
-                      <motion.div
-                        className="w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500 absolute bottom-0 left-0 rounded-full"
-                        initial={{ scaleX: 0 }}
-                        whileInView={{ scaleX: 1 }}
-                        transition={{ duration: 0.5, delay: 0.3 }}
-                      />
-                      <input
-                        type="email"
-                        id="email"
-                        className="w-full px-4 py-3 bg-gray-200/50 dark:bg-gray-700/50 backdrop-blur-sm rounded-lg focus:outline-none text-foreground border border-gray-300 dark:border-gray-700 focus:border-indigo-500 transition-colors"
-                      />
-                    </div>
-                    <div className="mb-8 relative">
-                      <label htmlFor="message" className="block mb-2 text-lg text-indigo-300">
-                        Message
-                      </label>
-                      <textarea
-                        id="message"
-                        rows={6}
-                        className="w-full px-4 py-3 bg-gray-200/50 dark:bg-gray-700/50 backdrop-blur-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-foreground border border-gray-300 dark:border-gray-700 focus:border-indigo-500 transition-colors"
-                      ></textarea>
-                    </div>
-                    <AnimatedButton
-                      onClick={() => {}}
-                      variant="gradient"
-                      fullWidth
-                      size="lg"
-                      icon={<Mail className="w-5 h-5" />}
-                      iconPosition="left"
+                <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-8 border border-gray-200 dark:border-gray-800 h-full">
+                  <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
+                    Send Me a Message
+                  </h3>
+                  <div className="mb-8 relative">
+                    <motion.label
+                      htmlFor="name"
+                      className="absolute left-4 text-base text-gray-500 dark:text-gray-400 transition-all duration-300 pointer-events-none"
+                      initial={{ y: 0 }}
+                      animate={{ y: -25, scale: 0.8 }}
                     >
-                      Send Message
-                    </AnimatedButton>
+                      Name
+                    </motion.label>
+                    <motion.div
+                      className="w-full h-0.5 bg-gray-900 dark:bg-white absolute bottom-0 left-0 rounded-full"
+                      initial={{ scaleX: 0 }}
+                      whileInView={{ scaleX: 1 }}
+                      transition={{ duration: 0.5, delay: 0.2 }}
+                    />
+                    <input
+                      type="text"
+                      id="name"
+                      className="w-full px-4 py-3 bg-white dark:bg-gray-800 rounded-lg focus:outline-none text-foreground border border-gray-300 dark:border-gray-700 focus:border-gray-900 dark:focus:border-white transition-colors"
+                    />
                   </div>
-                </AnimatedGradientBorder>
+                  <div className="mb-8 relative">
+                    <motion.label
+                      htmlFor="email"
+                      className="absolute left-4 text-base text-gray-500 dark:text-gray-400 transition-all duration-300 pointer-events-none"
+                      initial={{ y: 0 }}
+                      animate={{ y: -25, scale: 0.8 }}
+                    >
+                      Email
+                    </motion.label>
+                    <motion.div
+                      className="w-full h-0.5 bg-gray-900 dark:bg-white absolute bottom-0 left-0 rounded-full"
+                      initial={{ scaleX: 0 }}
+                      whileInView={{ scaleX: 1 }}
+                      transition={{ duration: 0.5, delay: 0.3 }}
+                    />
+                    <input
+                      type="email"
+                      id="email"
+                      className="w-full px-4 py-3 bg-white dark:bg-gray-800 rounded-lg focus:outline-none text-foreground border border-gray-300 dark:border-gray-700 focus:border-gray-900 dark:focus:border-white transition-colors"
+                    />
+                  </div>
+                  <div className="mb-8 relative">
+                    <label htmlFor="message" className="block mb-2 text-base text-gray-500 dark:text-gray-400">
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      rows={6}
+                      className="w-full px-4 py-3 bg-white dark:bg-gray-800 rounded-lg focus:outline-none text-foreground border border-gray-300 dark:border-gray-700 focus:border-gray-900 dark:focus:border-white transition-colors"
+                    ></textarea>
+                  </div>
+                  <AnimatedButton
+                    onClick={() => {}}
+                    variant="primary"
+                    fullWidth
+                    size="lg"
+                    icon={<Mail className="w-5 h-5" />}
+                    iconPosition="left"
+                  >
+                    Send Message
+                  </AnimatedButton>
+                </div>
               </RevealElement>
             </div>
           </div>
         </section>
       </main>
 
-      <footer className="bg-gray-900 py-8 sm:py-12 text-center relative z-10 border-t border-indigo-500/20">
+      <footer className="bg-gray-50 dark:bg-gray-900 py-12 text-center relative z-10 border-t border-gray-200 dark:border-gray-800">
         <div className="container mx-auto px-4">
           <motion.div
             className="mb-8"
@@ -906,7 +892,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 animate-gradient">
+            <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white animate-gradient">
               Shiven Patro
             </h2>
             <p className="text-muted-foreground">Data Science Engineer & Web Developer</p>
@@ -916,9 +902,9 @@ export default function Home() {
           <div className="flex justify-center space-x-6">
             <motion.a
               href="https://github.com/shivenpatro"
-              className="text-muted-foreground hover:text-indigo-400 transition-colors duration-300"
-              whileHover={{ scale: 1.2, rotate: 5 }}
-              whileTap={{ scale: 0.9 }}
+              className="text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
               <span className="sr-only">GitHub</span>
               <svg className="h-6 w-6 sm:h-8 sm:w-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -930,9 +916,9 @@ export default function Home() {
             </motion.a>
             <motion.a
               href="https://www.linkedin.com/in/shiven-patro-960593260/"
-              className="text-muted-foreground hover:text-indigo-400 transition-colors duration-300"
-              whileHover={{ scale: 1.2, rotate: 5 }}
-              whileTap={{ scale: 0.9 }}
+              className="text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
               <span className="sr-only">LinkedIn</span>
               <svg className="h-6 w-6 sm:h-8 sm:w-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -944,9 +930,9 @@ export default function Home() {
             </motion.a>
             <motion.a
               href="mailto:contact@shivenpatro.com"
-              className="text-muted-foreground hover:text-indigo-400 transition-colors duration-300"
-              whileHover={{ scale: 1.2, rotate: 5 }}
-              whileTap={{ scale: 0.9 }}
+              className="text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
               <span className="sr-only">Email</span>
               <svg className="h-6 w-6 sm:h-8 sm:w-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
