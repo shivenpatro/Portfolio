@@ -292,6 +292,8 @@ export default function Home() {
                       activeSection === item.toLowerCase() ? "text-gray-900 dark:text-white" : "text-muted-foreground hover:text-gray-900 dark:hover:text-white"
                     }`}
                     whileHover={{ x: 5 }}
+                    whileInView={isMobile ? { x: 2 } : {}}
+                    viewport={{ once: false, amount: 0.8 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     {item}
@@ -321,6 +323,8 @@ export default function Home() {
             }}
             className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
             whileHover={{ scale: 1.05 }}
+            whileInView={isMobile ? { scale: 1.02 } : {}}
+            viewport={{ once: true, amount: 0.8 }}
             whileTap={{ scale: 0.9 }}
             aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
           >
@@ -422,7 +426,12 @@ export default function Home() {
                 />
 
                 <RevealElement delay={0.6} className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-12">
-                  <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-800">
+                  <motion.div 
+                    className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-800"
+                    whileInView={isMobile ? { scale: 1.02, y: -5 } : {}}
+                    viewport={{ once: true, amount: 0.8 }}
+                    transition={{ duration: 0.3, delay: 0.1 }}
+                  >
                     <div className="flex flex-col items-center">
                       <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full mb-4">
                         <Code className="w-6 h-6 text-gray-700 dark:text-gray-300" />
@@ -434,9 +443,14 @@ export default function Home() {
                       />
                       <p className="text-sm text-muted-foreground">Projects</p>
                     </div>
-                  </div>
+                  </motion.div>
 
-                  <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-800">
+                  <motion.div 
+                    className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-800"
+                    whileInView={isMobile ? { scale: 1.02, y: -5 } : {}}
+                    viewport={{ once: true, amount: 0.8 }}
+                    transition={{ duration: 0.3, delay: 0.2 }}
+                  >
                     <div className="flex flex-col items-center">
                       <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full mb-4">
                         <Award className="w-6 h-6 text-gray-700 dark:text-gray-300" />
@@ -449,9 +463,14 @@ export default function Home() {
                       />
                       <p className="text-sm text-muted-foreground">CGPA</p>
                     </div>
-                  </div>
+                  </motion.div>
 
-                  <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-800">
+                  <motion.div 
+                    className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-800"
+                    whileInView={isMobile ? { scale: 1.02, y: -5 } : {}}
+                    viewport={{ once: true, amount: 0.8 }}
+                    transition={{ duration: 0.3, delay: 0.3 }}
+                  >
                     <div className="flex flex-col items-center">
                       <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full mb-4">
                         <Cpu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
@@ -463,9 +482,14 @@ export default function Home() {
                       />
                       <p className="text-sm text-muted-foreground">Technologies</p>
                     </div>
-                  </div>
+                  </motion.div>
 
-                  <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-800">
+                  <motion.div 
+                    className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-800"
+                    whileInView={isMobile ? { scale: 1.02, y: -5 } : {}}
+                    viewport={{ once: true, amount: 0.8 }}
+                    transition={{ duration: 0.3, delay: 0.4 }}
+                  >
                     <div className="flex flex-col items-center">
                       <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full mb-4">
                         <Globe className="w-6 h-6 text-gray-700 dark:text-gray-300" />
@@ -477,7 +501,7 @@ export default function Home() {
                       />
                       <p className="text-sm text-muted-foreground">Hackathons</p>
                     </div>
-                  </div>
+                  </motion.div>
                 </RevealElement>
 
                 <RevealElement delay={0.8} className="mt-8 flex flex-wrap gap-4">
@@ -592,6 +616,8 @@ export default function Home() {
                           <motion.div
                             className="text-4xl mb-4 mx-auto bg-gray-100 dark:bg-gray-800 p-4 rounded-full w-16 h-16 flex items-center justify-center"
                             whileHover={{ rotateY: 360 }}
+                            whileInView={{ rotateY: isMobile ? 360 : 0 }}
+                            viewport={{ once: true, amount: 0.8 }}
                             transition={{ duration: 0.5 }}
                           >
                             {item.icon}
@@ -599,6 +625,8 @@ export default function Home() {
                           <motion.div
                             className="font-medium text-base text-foreground"
                             whileHover={{ scale: 1.02 }}
+                            whileInView={{ scale: isMobile ? 1.02 : 1 }}
+                            viewport={{ once: true, amount: 0.8 }}
                             transition={{ duration: 0.3 }}
                           >
                             {item.skill}
@@ -647,6 +675,8 @@ export default function Home() {
                           <motion.div
                             className="absolute inset-0 bg-gray-900/30"
                             whileHover={{ opacity: 0.3 }}
+                            whileInView={isMobile ? { opacity: 0.3 } : {}}
+                            viewport={{ once: true, amount: 0.5 }}
                             transition={{ duration: 0.3 }}
                           />
                           <motion.img
@@ -654,6 +684,8 @@ export default function Home() {
                             alt={project.title}
                             className="w-full h-full object-cover"
                             whileHover={{ scale: 1.1 }}
+                            whileInView={isMobile ? { scale: 1.05 } : {}}
+                            viewport={{ once: true, amount: 0.5 }}
                             transition={{ duration: 0.5 }}
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
@@ -676,6 +708,8 @@ export default function Home() {
                             rel="noopener noreferrer"
                             className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 inline-flex items-center font-medium mt-auto"
                             whileHover={{ x: 5 }}
+                            whileInView={isMobile ? { x: 3 } : {}}
+                            viewport={{ once: true, amount: 0.8 }}
                             whileTap={{ scale: 0.95 }}
                           >
                             View Project <ExternalLink className="ml-1 w-4 h-4" />
@@ -711,7 +745,13 @@ export default function Home() {
                   </p>
 
                   <div className="space-y-4">
-                    <motion.div className="flex items-center group" whileHover={{ x: 2 }}>
+                    <motion.div 
+                      className="flex items-center group" 
+                      whileHover={{ x: 2 }}
+                      whileInView={isMobile ? { x: 2 } : {}}
+                      viewport={{ once: true, amount: 0.8 }}
+                      transition={{ duration: 0.3, delay: 0.1 }}
+                    >
                       <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full mr-3">
                         <Mail className="text-gray-700 dark:text-gray-300 w-5 h-5" />
                       </div>
@@ -722,7 +762,13 @@ export default function Home() {
                         contact@shivenpatro.com
                       </a>
                     </motion.div>
-                    <motion.div className="flex items-center group" whileHover={{ x: 2 }}>
+                    <motion.div 
+                      className="flex items-center group" 
+                      whileHover={{ x: 2 }}
+                      whileInView={isMobile ? { x: 2 } : {}}
+                      viewport={{ once: true, amount: 0.8 }}
+                      transition={{ duration: 0.3, delay: 0.2 }}
+                    >
                       <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full mr-3">
                         <Github className="text-gray-700 dark:text-gray-300 w-5 h-5" />
                       </div>
@@ -735,7 +781,13 @@ export default function Home() {
                         github.com/shivenpatro
                       </a>
                     </motion.div>
-                    <motion.div className="flex items-center group" whileHover={{ x: 2 }}>
+                    <motion.div 
+                      className="flex items-center group" 
+                      whileHover={{ x: 2 }}
+                      whileInView={isMobile ? { x: 2 } : {}}
+                      viewport={{ once: true, amount: 0.8 }}
+                      transition={{ duration: 0.3, delay: 0.3 }}
+                    >
                       <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full mr-3">
                         <Linkedin className="text-gray-700 dark:text-gray-300 w-5 h-5" />
                       </div>
@@ -748,7 +800,13 @@ export default function Home() {
                         linkedin.com/in/shiven-patro
                       </a>
                     </motion.div>
-                    <motion.div className="flex items-center group" whileHover={{ x: 2 }}>
+                    <motion.div 
+                      className="flex items-center group" 
+                      whileHover={{ x: 2 }}
+                      whileInView={isMobile ? { x: 2 } : {}}
+                      viewport={{ once: true, amount: 0.8 }}
+                      transition={{ duration: 0.3, delay: 0.4 }}
+                    >
                       <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full mr-3">
                         <Phone className="text-gray-700 dark:text-gray-300 w-5 h-5" />
                       </div>
@@ -768,6 +826,8 @@ export default function Home() {
                       rel="noopener noreferrer"
                       className="flex items-center justify-center p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
                       whileHover={{ scale: 1.05 }}
+                      whileInView={isMobile ? { scale: 1.05 } : {}}
+                      viewport={{ once: true, amount: 0.8 }}
                       whileTap={{ scale: 0.95 }}
                       aria-label="GitHub"
                     >
@@ -779,6 +839,8 @@ export default function Home() {
                       rel="noopener noreferrer"
                       className="flex items-center justify-center p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
                       whileHover={{ scale: 1.05 }}
+                      whileInView={isMobile ? { scale: 1.05 } : {}}
+                      viewport={{ once: true, amount: 0.8 }}
                       whileTap={{ scale: 0.95 }}
                       aria-label="LinkedIn"
                     >
@@ -788,6 +850,8 @@ export default function Home() {
                       href="mailto:contact@shivenpatro.com"
                       className="flex items-center justify-center p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
                       whileHover={{ scale: 1.05 }}
+                      whileInView={isMobile ? { scale: 1.05 } : {}}
+                      viewport={{ once: true, amount: 0.8 }}
                       whileTap={{ scale: 0.95 }}
                       aria-label="Email"
                     >
@@ -904,6 +968,8 @@ export default function Home() {
               href="https://github.com/shivenpatro"
               className="text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
               whileHover={{ scale: 1.1 }}
+              whileInView={isMobile ? { scale: 1.1 } : {}}
+              viewport={{ once: true, amount: 0.8 }}
               whileTap={{ scale: 0.95 }}
             >
               <span className="sr-only">GitHub</span>
@@ -918,6 +984,8 @@ export default function Home() {
               href="https://www.linkedin.com/in/shiven-patro-960593260/"
               className="text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
               whileHover={{ scale: 1.1 }}
+              whileInView={isMobile ? { scale: 1.1 } : {}}
+              viewport={{ once: true, amount: 0.8 }}
               whileTap={{ scale: 0.95 }}
             >
               <span className="sr-only">LinkedIn</span>
@@ -932,6 +1000,8 @@ export default function Home() {
               href="mailto:contact@shivenpatro.com"
               className="text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
               whileHover={{ scale: 1.1 }}
+              whileInView={isMobile ? { scale: 1.1 } : {}}
+              viewport={{ once: true, amount: 0.8 }}
               whileTap={{ scale: 0.95 }}
             >
               <span className="sr-only">Email</span>
