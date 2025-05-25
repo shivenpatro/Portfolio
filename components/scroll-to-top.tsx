@@ -114,7 +114,7 @@ export const ScrollToTop = ({
           >
             {icon || <ChevronUp className={`${sizeStyles.icon}`} style={{ color }} />}
           </motion.button>
-          {showLabel && <span className={`mt-1 ${sizeStyles.fontSize} text-gray-600 dark:text-gray-400`}>{label}</span>}
+          {showLabel && <span className={`mt-1 ${sizeStyles.fontSize} text-muted-foreground`}>{label}</span>}
         </motion.div>
       )}
     </AnimatePresence>

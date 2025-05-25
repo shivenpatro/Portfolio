@@ -82,35 +82,35 @@ export const AnimatedTabs = ({
       case "underline":
         return {
           container: "border-b border-gray-200 dark:border-gray-700",
-          tab: "px-4 py-2 text-gray-500 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-indigo-400",
+          tab: "px-4 py-2 text-muted-foreground hover:text-indigo-500 dark:hover:text-indigo-400",
           activeTab: "text-indigo-600 dark:text-indigo-400",
           indicator: "h-0.5 bg-indigo-600 dark:bg-indigo-400 bottom-0",
         }
       case "pills":
         return {
           container: "gap-2",
-          tab: "px-4 py-2 text-gray-500 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-indigo-400 rounded-full",
-          activeTab: "text-white",
+          tab: "px-4 py-2 text-muted-foreground hover:text-indigo-500 dark:hover:text-indigo-400 rounded-full",
+          activeTab: "text-white dark:text-white",
           indicator: "bg-indigo-600 dark:bg-indigo-500 rounded-full -z-10",
         }
       case "boxed":
         return {
           container: "bg-gray-100 dark:bg-gray-800 p-1 rounded-lg",
-          tab: "px-4 py-2 text-gray-500 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-indigo-400 rounded-md",
+          tab: "px-4 py-2 text-muted-foreground hover:text-indigo-500 dark:hover:text-indigo-400 rounded-md",
           activeTab: "text-indigo-600 dark:text-indigo-400",
-          indicator: "bg-white dark:bg-gray-700 rounded-md shadow-sm -z-10",
+          indicator: "bg-background dark:bg-gray-700 rounded-md shadow-sm -z-10",
         }
       case "gradient":
         return {
           container: "gap-2",
-          tab: "px-4 py-2 text-gray-500 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-indigo-400 rounded-full",
-          activeTab: "text-white",
+          tab: "px-4 py-2 text-muted-foreground hover:text-indigo-500 dark:hover:text-indigo-400 rounded-full",
+          activeTab: "text-white dark:text-white",
           indicator: "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full -z-10",
         }
       default:
         return {
           container: "border-b border-gray-200 dark:border-gray-700",
-          tab: "px-4 py-2 text-gray-500 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-indigo-400",
+          tab: "px-4 py-2 text-muted-foreground hover:text-indigo-500 dark:hover:text-indigo-400",
           activeTab: "text-indigo-600 dark:text-indigo-400",
           indicator: "h-0.5 bg-indigo-600 dark:bg-indigo-400 bottom-0",
         }

@@ -16,10 +16,10 @@ export const SkillProgress = ({ skill, percentage, color = "bg-indigo-500" }: Sk
   return (
     <div ref={ref} className="mb-4">
       <div className="flex justify-between mb-1">
-        <span className="text-base font-medium text-gray-300">{skill}</span>
-        <span className="text-sm font-medium text-gray-400">{percentage}%</span>
+        <span className="text-base font-medium text-foreground">{skill}</span>
+        <span className="text-sm font-medium text-muted-foreground">{percentage}%</span>
       </div>
-      <div className="w-full bg-gray-700 rounded-full h-2.5">
+      <div className="w-full bg-gray-300 dark:bg-gray-700 rounded-full h-2.5">
         <motion.div
           className={`h-2.5 rounded-full ${color}`}
           initial={{ width: 0 }}

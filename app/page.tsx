@@ -246,7 +246,7 @@ export default function Home() {
         <nav className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 flex justify-between items-center">
           <div className="flex items-center">
             <motion.button
-              className="sm:hidden mr-4 text-gray-300 hover:text-indigo-400"
+              className="sm:hidden mr-4 text-muted-foreground hover:text-indigo-400"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
               whileHover={{ scale: 1.1 }}
@@ -289,7 +289,7 @@ export default function Home() {
                   <motion.button
                     onClick={() => scrollToSection(item.toLowerCase())}
                     className={`relative text-base sm:text-lg font-medium ${
-                      activeSection === item.toLowerCase() ? "text-indigo-400" : "text-gray-300 hover:text-indigo-400"
+                      activeSection === item.toLowerCase() ? "text-indigo-400" : "text-muted-foreground hover:text-indigo-400"
                     }`}
                     whileHover={{ x: 5 }}
                     whileTap={{ scale: 0.95 }}
@@ -379,8 +379,8 @@ export default function Home() {
             transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
             whileHover={{ scale: 1.1 }}
           >
-            <p className="text-white text-sm mb-2">Scroll Down</p>
-            <ChevronDown className="text-white w-6 h-6" />
+            <p className="text-foreground text-sm mb-2">Scroll Down</p>
+            <ChevronDown className="text-foreground w-6 h-6" />
           </motion.div>
         </section>
 
@@ -409,14 +409,14 @@ export default function Home() {
               <div>
                 <RevealText
                   text="Hello! I'm Shiven Patro, an aspiring Data Science Engineer with a strong academic foundation and experience in Web Development. Currently pursuing BTech CSE at VIT-AP with a CGPA of 8.5/10."
-                  className="text-lg sm:text-xl mb-6 text-gray-300 leading-relaxed"
+                  className="text-lg sm:text-xl mb-6 text-muted-foreground leading-relaxed"
                   delay={0.2}
                   preserveWhitespace={true}
                 />
 
                 <RevealText
                   text="I'm passionately leveraging AI & LLM models to gain expertise in Data Science, Machine Learning, and other software domains, including Cloud Computing and Web Technologies, to build web applications with simple solutions."
-                  className="text-lg sm:text-xl text-gray-300 leading-relaxed"
+                  className="text-lg sm:text-xl text-muted-foreground leading-relaxed"
                   delay={0.4}
                   preserveWhitespace={true}
                 />
@@ -430,10 +430,10 @@ export default function Home() {
                         </div>
                         <AnimatedCounter
                           end={10}
-                          className="text-3xl sm:text-4xl font-bold text-white mb-2"
+                          className="text-3xl sm:text-4xl font-bold text-foreground mb-2"
                           easing={(t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))}
                         />
-                        <p className="text-gray-400">Projects</p>
+                        <p className="text-muted-foreground">Projects</p>
                       </div>
                     </div>
                   </AnimatedGradientBorder>
@@ -447,10 +447,10 @@ export default function Home() {
                         <AnimatedCounter
                           end={8.5}
                           decimals={1}
-                          className="text-3xl sm:text-4xl font-bold text-white mb-2"
+                          className="text-3xl sm:text-4xl font-bold text-foreground mb-2"
                           easing={(t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))}
                         />
-                        <p className="text-gray-400">CGPA</p>
+                        <p className="text-muted-foreground">CGPA</p>
                       </div>
                     </div>
                   </AnimatedGradientBorder>
@@ -463,10 +463,10 @@ export default function Home() {
                         </div>
                         <AnimatedCounter
                           end={5}
-                          className="text-3xl sm:text-4xl font-bold text-white mb-2"
+                          className="text-3xl sm:text-4xl font-bold text-foreground mb-2"
                           easing={(t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))}
                         />
-                        <p className="text-gray-400">Technologies</p>
+                        <p className="text-muted-foreground">Technologies</p>
                       </div>
                     </div>
                   </AnimatedGradientBorder>
@@ -479,10 +479,10 @@ export default function Home() {
                         </div>
                         <AnimatedCounter
                           end={2}
-                          className="text-3xl sm:text-4xl font-bold text-white mb-2"
+                          className="text-3xl sm:text-4xl font-bold text-foreground mb-2"
                           easing={(t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))}
                         />
-                        <p className="text-gray-400">Hackathons</p>
+                        <p className="text-muted-foreground">Hackathons</p>
                       </div>
                     </div>
                   </AnimatedGradientBorder>
@@ -534,8 +534,8 @@ export default function Home() {
                     ].map((item, index) => (
                       <div key={item.skill} className="mb-4">
                         <div className="flex justify-between mb-1">
-                          <span className="text-base font-medium text-gray-300">{item.skill}</span>
-                          <span className="text-sm font-medium text-gray-400">{item.percentage}%</span>
+                          <span className="text-base font-medium text-foreground">{item.skill}</span>
+                          <span className="text-sm font-medium text-muted-foreground">{item.percentage}%</span>
                         </div>
                         <div className="w-full bg-gray-700 rounded-full h-2.5 overflow-hidden">
                           <motion.div
@@ -562,8 +562,8 @@ export default function Home() {
                     ].map((item, index) => (
                       <div key={item.skill} className="mb-4">
                         <div className="flex justify-between mb-1">
-                          <span className="text-base font-medium text-gray-300">{item.skill}</span>
-                          <span className="text-sm font-medium text-gray-400">{item.percentage}%</span>
+                          <span className="text-base font-medium text-foreground">{item.skill}</span>
+                          <span className="text-sm font-medium text-muted-foreground">{item.percentage}%</span>
                         </div>
                         <div className="w-full bg-gray-700 rounded-full h-2.5 overflow-hidden">
                           <motion.div
@@ -605,7 +605,7 @@ export default function Home() {
                             {item.icon}
                           </motion.div>
                           <motion.div
-                            className="font-semibold text-lg text-white"
+                            className="font-semibold text-lg text-foreground"
                             whileHover={{ color: "#d8b4fe" }}
                             transition={{ duration: 0.3 }}
                           >
@@ -670,7 +670,7 @@ export default function Home() {
                           </h3>
                         </div>
                         <div className="p-6 flex-grow flex flex-col">
-                          <p className="text-gray-300 dark:text-gray-400 mb-4">{project.description}</p>
+                          <p className="text-muted-foreground mb-4">{project.description}</p>
                           <div className="flex flex-wrap gap-2 mb-4 mt-auto">
                             {project.tags.map((tag, i) => (
                               <AnimatedTooltip key={i} content={`Filter by ${tag}`}>
@@ -716,7 +716,7 @@ export default function Home() {
                     <h3 className="text-2xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
                       Contact Information
                     </h3>
-                    <p className="text-gray-300 mb-6">
+                    <p className="text-muted-foreground mb-6">
                       Feel free to reach out to me through any of these channels. I'm always open to discussing new
                       projects, creative ideas, or opportunities to be part of your vision.
                     </p>
@@ -728,7 +728,7 @@ export default function Home() {
                         </div>
                         <a
                           href="mailto:contact@shivenpatro.com"
-                          className="text-gray-300 group-hover:text-indigo-400 transition-colors"
+                          className="text-muted-foreground group-hover:text-indigo-400 transition-colors"
                         >
                           contact@shivenpatro.com
                         </a>
@@ -741,7 +741,7 @@ export default function Home() {
                           href="https://github.com/shivenpatro"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-gray-300 group-hover:text-indigo-400 transition-colors"
+                          className="text-muted-foreground group-hover:text-indigo-400 transition-colors"
                         >
                           github.com/shivenpatro
                         </a>
@@ -754,7 +754,7 @@ export default function Home() {
                           href="https://www.linkedin.com/in/shiven-patro-960593260/"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-gray-300 group-hover:text-indigo-400 transition-colors"
+                          className="text-muted-foreground group-hover:text-indigo-400 transition-colors"
                         >
                           linkedin.com/in/shiven-patro
                         </a>
@@ -765,7 +765,7 @@ export default function Home() {
                         </div>
                         <a
                           href="tel:+919861564032"
-                          className="text-gray-300 group-hover:text-indigo-400 transition-colors"
+                          className="text-muted-foreground group-hover:text-indigo-400 transition-colors"
                         >
                           +91 9861564032
                         </a>
@@ -777,7 +777,7 @@ export default function Home() {
                         href="https://github.com/shivenpatro"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center p-3 bg-gray-800/80 dark:bg-gray-700/80 backdrop-blur-sm rounded-full text-gray-400 hover:text-indigo-400 transition-colors duration-300"
+                        className="flex items-center justify-center p-3 bg-gray-200/80 dark:bg-gray-700/80 backdrop-blur-sm rounded-full text-muted-foreground hover:text-indigo-400 transition-colors duration-300"
                         whileHover={{ scale: 1.1, rotate: 5, boxShadow: "0 0 15px rgba(139, 92, 246, 0.5)" }}
                         whileTap={{ scale: 0.9 }}
                         aria-label="GitHub"
@@ -788,7 +788,7 @@ export default function Home() {
                         href="https://www.linkedin.com/in/shiven-patro-960593260/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center p-3 bg-gray-800/80 dark:bg-gray-700/80 backdrop-blur-sm rounded-full text-gray-400 hover:text-indigo-400 transition-colors duration-300"
+                        className="flex items-center justify-center p-3 bg-gray-200/80 dark:bg-gray-700/80 backdrop-blur-sm rounded-full text-muted-foreground hover:text-indigo-400 transition-colors duration-300"
                         whileHover={{ scale: 1.1, rotate: 5, boxShadow: "0 0 15px rgba(139, 92, 246, 0.5)" }}
                         whileTap={{ scale: 0.9 }}
                         aria-label="LinkedIn"
@@ -797,7 +797,7 @@ export default function Home() {
                       </motion.a>
                       <motion.a
                         href="mailto:contact@shivenpatro.com"
-                        className="flex items-center justify-center p-3 bg-gray-800/80 dark:bg-gray-700/80 backdrop-blur-sm rounded-full text-gray-400 hover:text-indigo-400 transition-colors duration-300"
+                        className="flex items-center justify-center p-3 bg-gray-200/80 dark:bg-gray-700/80 backdrop-blur-sm rounded-full text-muted-foreground hover:text-indigo-400 transition-colors duration-300"
                         whileHover={{ scale: 1.1, rotate: 5, boxShadow: "0 0 15px rgba(139, 92, 246, 0.5)" }}
                         whileTap={{ scale: 0.9 }}
                         aria-label="Email"
@@ -813,7 +813,7 @@ export default function Home() {
                       transition={{ duration: 0.5, delay: 0.3 }}
                     >
                       <h4 className="text-xl font-semibold mb-3 text-indigo-300">Let's Work Together</h4>
-                      <p className="text-gray-400">
+                      <p className="text-muted-foreground">
                         Looking for a passionate developer to bring your ideas to life? I'm currently available for
                         freelance work and exciting opportunities.
                       </p>
@@ -846,7 +846,7 @@ export default function Home() {
                       <input
                         type="text"
                         id="name"
-                        className="w-full px-4 py-3 bg-gray-800/50 dark:bg-gray-700/50 backdrop-blur-sm rounded-lg focus:outline-none text-white border border-gray-700 focus:border-indigo-500 transition-colors"
+                        className="w-full px-4 py-3 bg-gray-200/50 dark:bg-gray-700/50 backdrop-blur-sm rounded-lg focus:outline-none text-foreground border border-gray-300 dark:border-gray-700 focus:border-indigo-500 transition-colors"
                       />
                     </div>
                     <div className="mb-8 relative">
@@ -867,7 +867,7 @@ export default function Home() {
                       <input
                         type="email"
                         id="email"
-                        className="w-full px-4 py-3 bg-gray-800/50 dark:bg-gray-700/50 backdrop-blur-sm rounded-lg focus:outline-none text-white border border-gray-700 focus:border-indigo-500 transition-colors"
+                        className="w-full px-4 py-3 bg-gray-200/50 dark:bg-gray-700/50 backdrop-blur-sm rounded-lg focus:outline-none text-foreground border border-gray-300 dark:border-gray-700 focus:border-indigo-500 transition-colors"
                       />
                     </div>
                     <div className="mb-8 relative">
@@ -877,7 +877,7 @@ export default function Home() {
                       <textarea
                         id="message"
                         rows={6}
-                        className="w-full px-4 py-3 bg-gray-800/50 dark:bg-gray-700/50 backdrop-blur-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white border border-gray-700 focus:border-indigo-500 transition-colors"
+                        className="w-full px-4 py-3 bg-gray-200/50 dark:bg-gray-700/50 backdrop-blur-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-foreground border border-gray-300 dark:border-gray-700 focus:border-indigo-500 transition-colors"
                       ></textarea>
                     </div>
                     <AnimatedButton
@@ -909,14 +909,14 @@ export default function Home() {
             <h2 className="text-3xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 animate-gradient">
               Shiven Patro
             </h2>
-            <p className="text-gray-400">Data Science Engineer & Web Developer</p>
+            <p className="text-muted-foreground">Data Science Engineer & Web Developer</p>
           </motion.div>
 
-          <p className="text-gray-400 mb-6">&copy; {new Date().getFullYear()} Shiven Patro. All rights reserved.</p>
+          <p className="text-muted-foreground mb-6">&copy; {new Date().getFullYear()} Shiven Patro. All rights reserved.</p>
           <div className="flex justify-center space-x-6">
             <motion.a
               href="https://github.com/shivenpatro"
-              className="text-gray-400 hover:text-indigo-400 transition-colors duration-300"
+              className="text-muted-foreground hover:text-indigo-400 transition-colors duration-300"
               whileHover={{ scale: 1.2, rotate: 5 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -930,7 +930,7 @@ export default function Home() {
             </motion.a>
             <motion.a
               href="https://www.linkedin.com/in/shiven-patro-960593260/"
-              className="text-gray-400 hover:text-indigo-400 transition-colors duration-300"
+              className="text-muted-foreground hover:text-indigo-400 transition-colors duration-300"
               whileHover={{ scale: 1.2, rotate: 5 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -944,7 +944,7 @@ export default function Home() {
             </motion.a>
             <motion.a
               href="mailto:contact@shivenpatro.com"
-              className="text-gray-400 hover:text-indigo-400 transition-colors duration-300"
+              className="text-muted-foreground hover:text-indigo-400 transition-colors duration-300"
               whileHover={{ scale: 1.2, rotate: 5 }}
               whileTap={{ scale: 0.9 }}
             >
