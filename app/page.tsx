@@ -413,14 +413,14 @@ export default function Home() {
               <div>
                 <RevealText
                   text="Hello! I'm Shiven Patro, an aspiring Data Science Engineer with a strong academic foundation and experience in Web Development. Currently pursuing BTech CSE at VIT-AP with a CGPA of 8.5/10."
-                  className="text-lg sm:text-xl mb-6 text-muted-foreground leading-relaxed"
+                  className="text-lg sm:text-xl mb-6 leading-relaxed"
                   delay={0.2}
                   preserveWhitespace={true}
                 />
 
                 <RevealText
                   text="I'm passionately leveraging AI & LLM models to gain expertise in Data Science, Machine Learning, and other software domains, including Cloud Computing and Web Technologies, to build web applications with simple solutions."
-                  className="text-lg sm:text-xl text-muted-foreground leading-relaxed"
+                  className="text-lg sm:text-xl leading-relaxed"
                   delay={0.4}
                   preserveWhitespace={true}
                 />
@@ -694,7 +694,7 @@ export default function Home() {
                           </h3>
                         </div>
                         <div className="p-6 flex-grow flex flex-col">
-                          <p className="text-muted-foreground mb-4">{project.description}</p>
+                          <p className="mb-4">{project.description}</p>
                           <div className="flex flex-wrap gap-2 mb-4 mt-auto">
                             {project.tags.map((tag, i) => (
                               <span key={i} className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs rounded-full">
@@ -739,7 +739,7 @@ export default function Home() {
                   <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
                     Contact Information
                   </h3>
-                  <p className="text-muted-foreground mb-6">
+                  <p className="mb-6">
                     Feel free to reach out to me through any of these channels. I'm always open to discussing new
                     projects, creative ideas, or opportunities to be part of your vision.
                   </p>
@@ -866,7 +866,7 @@ export default function Home() {
                     transition={{ duration: 0.5, delay: 0.3 }}
                   >
                     <h4 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Let's Work Together</h4>
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-sm">
                       Looking for a passionate developer to bring your ideas to life? I'm currently available for
                       freelance work and exciting opportunities.
                     </p>
@@ -959,7 +959,7 @@ export default function Home() {
             <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white animate-gradient">
               Shiven Patro
             </h2>
-            <p className="text-muted-foreground">Data Science Engineer & Web Developer</p>
+            <p>Data Science Engineer & Web Developer</p>
           </motion.div>
 
           <p className="text-muted-foreground mb-6">&copy; {new Date().getFullYear()} Shiven Patro. All rights reserved.</p>
