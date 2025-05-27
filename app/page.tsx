@@ -413,14 +413,14 @@ export default function Home() {
               <div>
                 <RevealText
                   text="Hello! I'm Shiven Patro, an aspiring Data Science Engineer with a strong academic foundation and experience in Web Development. Currently pursuing BTech CSE at VIT-AP with a CGPA of 8.5/10."
-                  className="text-lg sm:text-xl mb-6 leading-relaxed"
+                  className="text-lg sm:text-xl mb-6 leading-relaxed text-gray-900 dark:text-white"
                   delay={0.2}
                   preserveWhitespace={true}
                 />
 
                 <RevealText
                   text="I'm passionately leveraging AI & LLM models to gain expertise in Data Science, Machine Learning, and other software domains, including Cloud Computing and Web Technologies, to build web applications with simple solutions."
-                  className="text-lg sm:text-xl leading-relaxed"
+                  className="text-lg sm:text-xl leading-relaxed text-gray-900 dark:text-white"
                   delay={0.4}
                   preserveWhitespace={true}
                 />
@@ -550,10 +550,10 @@ export default function Home() {
                     ].map((item, index) => (
                       <div key={item.skill} className="mb-4">
                         <div className="flex justify-between mb-1">
-                          <span className="text-base font-medium text-foreground">{item.skill}</span>
+                          <span className="text-base font-medium text-gray-900 dark:text-white">{item.skill}</span>
                           <span className="text-sm font-medium text-muted-foreground">{item.percentage}%</span>
                         </div>
-                        <div className="w-full bg-gray-700 rounded-full h-2.5 overflow-hidden">
+                        <div className="w-full bg-gray-300 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden">
                           <motion.div
                             className={`h-2.5 rounded-full ${item.color}`}
                             initial={{ width: 0 }}
@@ -578,10 +578,10 @@ export default function Home() {
                     ].map((item, index) => (
                       <div key={item.skill} className="mb-4">
                         <div className="flex justify-between mb-1">
-                          <span className="text-base font-medium text-foreground">{item.skill}</span>
+                          <span className="text-base font-medium text-gray-900 dark:text-white">{item.skill}</span>
                           <span className="text-sm font-medium text-muted-foreground">{item.percentage}%</span>
                         </div>
-                        <div className="w-full bg-gray-700 rounded-full h-2.5 overflow-hidden">
+                        <div className="w-full bg-gray-300 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden">
                           <motion.div
                             className={`h-2.5 rounded-full ${item.color}`}
                             initial={{ width: 0 }}
@@ -623,7 +623,7 @@ export default function Home() {
                             {item.icon}
                           </motion.div>
                           <motion.div
-                            className="font-medium text-base text-foreground"
+                            className="font-medium text-base text-gray-900 dark:text-white"
                             whileHover={{ scale: 1.02 }}
                             whileInView={{ scale: isMobile ? 1.02 : 1 }}
                             viewport={{ once: true, amount: 0.8 }}
