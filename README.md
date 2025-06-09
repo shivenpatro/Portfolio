@@ -1,9 +1,6 @@
 # Enhanced Interactive Portfolio
 
 A modern, interactive personal portfolio website showcasing my skills, projects, and experience as a Data Science Engineer and Web Developer. Built with Next.js and React, featuring smooth animations, responsive design, and interactive UI elements.
-![Screenshot 2025-05-16 055921](https://github.com/user-attachments/assets/0a405338-9a79-4a9c-8ec4-d4ed2bd5abee)
-
-![Screenshot 2025-05-16 060110](https://github.com/user-attachments/assets/713bb7b9-bce8-4bb6-af6a-91e4996f00a1)
 
 ## 🌟 Live Demo
 
