@@ -37,7 +37,6 @@ import { HydrationBoundary } from "@/components/hydration-boundary"
 import { useIsMobile } from "@/hooks/use-mobile"
 
 // Dynamic imports for components that might cause hydration issues
-const ResumeModal = dynamic(() => import("@/components/resume-modal").then(mod => mod.ResumeModal), { ssr: false })
 const AnimatedBackground = dynamic(() => import("@/components/animated-background").then(mod => mod.AnimatedBackground), { ssr: false })
 const AnimatedCursor = dynamic(() => import("@/components/animated-cursor").then(mod => mod.AnimatedCursor), { ssr: false })
 const ParallaxScroll = dynamic(() => import("@/components/parallax-scroll").then(mod => mod.ParallaxScroll), { ssr: false })
@@ -52,7 +51,6 @@ export default function Home() {
   const [isTouchDevice, setIsTouchDevice] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isResumeModalOpen, setIsResumeModalOpen] = useState(false)
   const [activeTab, setActiveTab] = useState("all")
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(scrollYProgress, [0, 0.05], [1, 0])
@@ -163,6 +161,15 @@ export default function Home() {
     }
   }, [isMobile])
 
+  const handleDownloadResume = () => {
+    const link = document.createElement('a');
+    link.href = '/Shiven_Patro_Resume.pdf';
+    link.download = 'Shiven_Patro_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const projects = [
     {
       title: "HashChat",
@@ -231,9 +238,6 @@ export default function Home() {
       </ClientOnly>
       <ClientOnly>
         <AnimatedBackground variant="particles" intensity={isMobile ? 0.3 : 0.5} />
-      </ClientOnly>
-      <ClientOnly>
-        <ResumeModal isOpen={isResumeModalOpen} onClose={() => setIsResumeModalOpen(false)} />
       </ClientOnly>
       <ClientOnly>
         <ScrollProgress color="#8b5cf6" height={3} />
@@ -365,7 +369,7 @@ export default function Home() {
                   Learn More
                 </AnimatedButton>
                 <AnimatedButton
-                  onClick={() => setIsResumeModalOpen(true)}
+                  onClick={handleDownloadResume}
                   variant="outline"
                   icon={<Download className="w-5 h-5" />}
                   iconPosition="right"
@@ -514,7 +518,7 @@ export default function Home() {
                     Contact Me
                   </AnimatedButton>
                   <AnimatedButton
-                    onClick={() => setIsResumeModalOpen(true)}
+                    onClick={handleDownloadResume}
                     variant="outline"
                     icon={<Download className="w-5 h-5" />}
                     iconPosition="left"
