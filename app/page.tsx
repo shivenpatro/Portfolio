@@ -389,7 +389,7 @@ export default function Home() {
         </section>
 
         <section id="about" className="py-20 sm:py-32 px-4 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-white dark:from-gray-900/50 dark:to-gray-950 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-transparent dark:from-gray-900/10 dark:to-transparent pointer-events-none"></div>
           <div className="max-w-5xl mx-auto">
             <RevealText
               text="About Me"
@@ -528,7 +528,7 @@ export default function Home() {
         </section>
 
         <section id="skills" className="py-20 sm:py-32 px-4 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-white dark:from-gray-900/50 dark:to-gray-950 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-transparent dark:from-gray-900/10 dark:to-transparent pointer-events-none"></div>
           <div className="max-w-5xl mx-auto">
             <RevealText
               text="My Skills"
@@ -642,7 +642,7 @@ export default function Home() {
         </section>
 
         <section id="projects" className="py-20 sm:py-32 px-4 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-white dark:from-gray-900/50 dark:to-gray-950 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-transparent dark:from-gray-900/10 dark:to-transparent pointer-events-none"></div>
           <div className="max-w-6xl mx-auto">
             <RevealText
               text="My Projects"
@@ -666,7 +666,7 @@ export default function Home() {
             </RevealElement>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-12">
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="popLayout">
                 {filteredProjects.map((project, index) => (
                   <RevealElement key={project.title} delay={index * 0.1} direction="up">
                     <ThreeDCard className="h-full">
@@ -725,7 +725,7 @@ export default function Home() {
         </section>
 
         <section id="contact" className="py-20 sm:py-32 px-4 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-white dark:from-gray-900/50 dark:to-gray-950 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-transparent dark:from-gray-900/10 dark:to-transparent pointer-events-none"></div>
           <div className="max-w-5xl mx-auto">
             <RevealText
               text="Get In Touch"
@@ -734,12 +734,12 @@ export default function Home() {
             />
 
             <div className="grid md:grid-cols-2 gap-12">
-              <RevealElement direction="left">
+              <RevealElement direction="left" className="text-gray-900 dark:text-gray-100">
                 <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-8 border border-gray-200 dark:border-gray-800 h-full">
                   <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
                     Contact Information
                   </h3>
-                  <p className="mb-6">
+                  <p className="mb-6 text-gray-900 dark:text-gray-100">
                     Feel free to reach out to me through any of these channels. I'm always open to discussing new
                     projects, creative ideas, or opportunities to be part of your vision.
                   </p>
@@ -753,11 +753,11 @@ export default function Home() {
                       transition={{ duration: 0.3, delay: 0.1 }}
                     >
                       <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full mr-3">
-                        <Mail className="text-gray-700 dark:text-gray-300 w-5 h-5" />
+                        <Mail className="text-blue-600 dark:text-blue-400 w-5 h-5" />
                       </div>
                       <a
                         href="mailto:contact@shivenpatro.com"
-                        className="text-muted-foreground group-hover:text-gray-900 dark:group-hover:text-white transition-colors"
+                        className="text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors"
                       >
                         contact@shivenpatro.com
                       </a>
@@ -770,13 +770,13 @@ export default function Home() {
                       transition={{ duration: 0.3, delay: 0.2 }}
                     >
                       <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full mr-3">
-                        <Github className="text-gray-700 dark:text-gray-300 w-5 h-5" />
+                        <Github className="text-blue-600 dark:text-blue-400 w-5 h-5" />
                       </div>
                       <a
                         href="https://github.com/shivenpatro"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-muted-foreground group-hover:text-gray-900 dark:group-hover:text-white transition-colors"
+                        className="text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors"
                       >
                         github.com/shivenpatro
                       </a>
@@ -789,13 +789,13 @@ export default function Home() {
                       transition={{ duration: 0.3, delay: 0.3 }}
                     >
                       <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full mr-3">
-                        <Linkedin className="text-gray-700 dark:text-gray-300 w-5 h-5" />
+                        <Linkedin className="text-blue-600 dark:text-blue-400 w-5 h-5" />
                       </div>
                       <a
                         href="https://www.linkedin.com/in/shiven-patro-960593260/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-muted-foreground group-hover:text-gray-900 dark:group-hover:text-white transition-colors"
+                        className="text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors"
                       >
                         linkedin.com/in/shiven-patro
                       </a>
@@ -808,11 +808,11 @@ export default function Home() {
                       transition={{ duration: 0.3, delay: 0.4 }}
                     >
                       <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full mr-3">
-                        <Phone className="text-gray-700 dark:text-gray-300 w-5 h-5" />
+                        <Phone className="text-blue-600 dark:text-blue-400 w-5 h-5" />
                       </div>
                       <a
                         href="tel:+919861564032"
-                        className="text-muted-foreground group-hover:text-gray-900 dark:group-hover:text-white transition-colors"
+                        className="text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors"
                       >
                         +91 9861564032
                       </a>
@@ -860,13 +860,13 @@ export default function Home() {
                   </div>
 
                   <motion.div
-                    className="mt-8 p-6 bg-gray-100 dark:bg-gray-800 rounded-lg"
+                    className="mt-8 p-6 bg-gray-100 dark:bg-gray-800 rounded-lg text-gray-900 dark:text-gray-100"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
                   >
                     <h4 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Let's Work Together</h4>
-                    <p className="text-sm">
+                    <p className="text-sm text-gray-900 dark:text-gray-100">
                       Looking for a passionate developer to bring your ideas to life? I'm currently available for
                       freelance work and exciting opportunities.
                     </p>
