@@ -31,13 +31,15 @@ import { AnimatedButton } from "@/components/animated-button"
 import { AnimatedTabs } from "@/components/animated-tabs"
 import { AnimatedTooltip } from "@/components/animated-tooltip"
 import { AnimatedCounter } from "@/components/animated-counter"
+import { StatCard } from "@/components/stat-card"
 import { TextCarousel } from "@/components/text-carousel"
 import { ClientOnly } from "@/components/client-only"
 import { HydrationBoundary } from "@/components/hydration-boundary"
 import { useIsMobile } from "@/hooks/use-mobile"
 
 // Dynamic imports for components that might cause hydration issues
-const AnimatedBackground = dynamic(() => import("@/components/animated-background").then(mod => mod.AnimatedBackground), { ssr: false })
+const PortfolioSidekick = dynamic(() => import("@/components/portfolio-sidekick"), { ssr: false });
+const Beams = dynamic(() => import("@/components/Beams"), { ssr: false })
 const AnimatedCursor = dynamic(() => import("@/components/animated-cursor").then(mod => mod.AnimatedCursor), { ssr: false })
 const ParallaxScroll = dynamic(() => import("@/components/parallax-scroll").then(mod => mod.ParallaxScroll), { ssr: false })
 const ThreeDCard = dynamic(() => import("@/components/3d-card").then(mod => mod.ThreeDCard), { ssr: false })
@@ -234,11 +236,25 @@ export default function Home() {
         className={`${isDarkMode ? "dark" : ""} bg-white dark:bg-gray-950 text-gray-900 dark:text-white min-h-screen font-sans ${isTouchDevice ? "" : "cursor-none"}`}
       >
       <ClientOnly>
-        {!isTouchDevice && <AnimatedCursor />}
+        {!isTouchDevice && <PortfolioSidekick />}
       </ClientOnly>
       <ClientOnly>
-        <AnimatedBackground variant="particles" intensity={isMobile ? 0.3 : 0.5} />
+        {!isTouchDevice && <AnimatedCursor />}
       </ClientOnly>
+      <div className="absolute top-0 left-0 w-full h-screen z-0">
+        <ClientOnly>
+            <Beams
+                beamWidth={2}
+                beamHeight={15}
+                beamNumber={12}
+                lightColor="#ffffff"
+                speed={2}
+                noiseIntensity={1.75}
+                scale={0.2}
+                rotation={0}
+            />
+        </ClientOnly>
+      </div>
       <ClientOnly>
         <ScrollProgress color="#8b5cf6" height={3} />
       </ClientOnly>
@@ -429,83 +445,32 @@ export default function Home() {
                   preserveWhitespace={true}
                 />
 
-                <RevealElement delay={0.6} className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-12">
-                  <motion.div 
-                    className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-800"
-                    whileInView={isMobile ? { scale: 1.02, y: -5 } : {}}
-                    viewport={{ once: true, amount: 0.8 }}
-                    transition={{ duration: 0.3, delay: 0.1 }}
-                  >
-                    <div className="flex flex-col items-center">
-                      <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full mb-4">
-                        <Code className="w-6 h-6 text-gray-700 dark:text-gray-300" />
-                      </div>
-                      <AnimatedCounter
-                        end={10}
-                        className="text-3xl sm:text-4xl font-bold text-foreground mb-2"
-                        easing={(t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))}
-                      />
-                      <p className="text-sm text-muted-foreground">Projects</p>
-                    </div>
-                  </motion.div>
-
-                  <motion.div 
-                    className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-800"
-                    whileInView={isMobile ? { scale: 1.02, y: -5 } : {}}
-                    viewport={{ once: true, amount: 0.8 }}
-                    transition={{ duration: 0.3, delay: 0.2 }}
-                  >
-                    <div className="flex flex-col items-center">
-                      <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full mb-4">
-                        <Award className="w-6 h-6 text-gray-700 dark:text-gray-300" />
-                      </div>
-                      <AnimatedCounter
-                        end={8.5}
-                        decimals={1}
-                        className="text-3xl sm:text-4xl font-bold text-foreground mb-2"
-                        easing={(t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))}
-                      />
-                      <p className="text-sm text-muted-foreground">CGPA</p>
-                    </div>
-                  </motion.div>
-
-                  <motion.div 
-                    className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-800"
-                    whileInView={isMobile ? { scale: 1.02, y: -5 } : {}}
-                    viewport={{ once: true, amount: 0.8 }}
-                    transition={{ duration: 0.3, delay: 0.3 }}
-                  >
-                    <div className="flex flex-col items-center">
-                      <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full mb-4">
-                        <Cpu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
-                      </div>
-                      <AnimatedCounter
-                        end={5}
-                        className="text-3xl sm:text-4xl font-bold text-foreground mb-2"
-                        easing={(t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))}
-                      />
-                      <p className="text-sm text-muted-foreground">Technologies</p>
-                    </div>
-                  </motion.div>
-
-                  <motion.div 
-                    className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center border border-gray-200 dark:border-gray-800"
-                    whileInView={isMobile ? { scale: 1.02, y: -5 } : {}}
-                    viewport={{ once: true, amount: 0.8 }}
-                    transition={{ duration: 0.3, delay: 0.4 }}
-                  >
-                    <div className="flex flex-col items-center">
-                      <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full mb-4">
-                        <Globe className="w-6 h-6 text-gray-700 dark:text-gray-300" />
-                      </div>
-                      <AnimatedCounter
-                        end={2}
-                        className="text-3xl sm:text-4xl font-bold text-foreground mb-2"
-                        easing={(t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))}
-                      />
-                      <p className="text-sm text-muted-foreground">Hackathons</p>
-                    </div>
-                  </motion.div>
+                <RevealElement delay={0.6} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 place-items-center mt-12">
+                  <StatCard 
+                    icon={<Code className="w-6 h-6 text-blue-500" />}
+                    value={10}
+                    label="Projects"
+                    delay={0}
+                  />
+                  <StatCard 
+                    icon={<Award className="w-6 h-6 text-purple-500" />}
+                    value={8.5}
+                    label="CGPA"
+                    decimals={1}
+                    delay={0.2}
+                  />
+                  <StatCard 
+                    icon={<Cpu className="w-6 h-6 text-green-500" />}
+                    value={5}
+                    label="Technologies"
+                    delay={0.4}
+                  />
+                  <StatCard 
+                    icon={<Globe className="w-6 h-6 text-orange-500" />}
+                    value={2}
+                    label="Hackathons"
+                    delay={0.6}
+                  />
                 </RevealElement>
 
                 <RevealElement delay={0.8} className="mt-8 flex flex-wrap gap-4">
