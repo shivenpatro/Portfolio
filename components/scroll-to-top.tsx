@@ -22,7 +22,7 @@ export const ScrollToTop = ({
   size = "md",
   position = "bottom-right",
   color = "white",
-  backgroundColor = "#8b5cf6",
+  backgroundColor = "#34d399",
   className = "",
   icon,
   showLabel = false,
@@ -120,4 +120,3 @@ export const ScrollToTop = ({
     </AnimatePresence>
   )
 }
-

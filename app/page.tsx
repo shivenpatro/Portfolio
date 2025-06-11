@@ -26,6 +26,7 @@ import {
 
 // Import static components
 import { RevealText } from "@/components/reveal-text"
+import DecryptedText from "@/components/decrypted-text"
 import { RevealElement } from "@/components/reveal-element"
 import { AnimatedButton } from "@/components/animated-button"
 import { AnimatedTabs } from "@/components/animated-tabs"
@@ -36,10 +37,11 @@ import { TextCarousel } from "@/components/text-carousel"
 import { ClientOnly } from "@/components/client-only"
 import { HydrationBoundary } from "@/components/hydration-boundary"
 import { useIsMobile } from "@/hooks/use-mobile"
+import ScrambledText from "@/components/scrambled-text"
 
 // Dynamic imports for components that might cause hydration issues
 const PortfolioSidekick = dynamic(() => import("@/components/portfolio-sidekick"), { ssr: false });
-const Beams = dynamic(() => import("@/components/Beams"), { ssr: false })
+const PixelatedImage = dynamic(() => import("@/components/pixelated-image").then(mod => mod.default), { ssr: false })
 const AnimatedCursor = dynamic(() => import("@/components/animated-cursor").then(mod => mod.AnimatedCursor), { ssr: false })
 const ParallaxScroll = dynamic(() => import("@/components/parallax-scroll").then(mod => mod.ParallaxScroll), { ssr: false })
 const ThreeDCard = dynamic(() => import("@/components/3d-card").then(mod => mod.ThreeDCard), { ssr: false })
@@ -233,7 +235,7 @@ export default function Home() {
   return (
     <HydrationBoundary>
       <div
-        className={`${isDarkMode ? "dark" : ""} bg-white dark:bg-gray-950 text-gray-900 dark:text-white min-h-screen font-sans ${isTouchDevice ? "" : "cursor-none"}`}
+        className={`${isDarkMode ? "dark" : ""} bg-background text-foreground min-h-screen font-sans ${isTouchDevice ? "" : "cursor-none"}`}
       >
       <ClientOnly>
         {!isTouchDevice && <PortfolioSidekick />}
@@ -243,30 +245,29 @@ export default function Home() {
       </ClientOnly>
       <div className="absolute top-0 left-0 w-full h-screen z-0">
         <ClientOnly>
-            <Beams
-                beamWidth={2}
-                beamHeight={15}
-                beamNumber={12}
-                lightColor="#ffffff"
-                speed={2}
-                noiseIntensity={1.75}
-                scale={0.2}
-                rotation={0}
-            />
+          <PixelatedImage 
+            src="https://images.unsplash.com/photo-1709990742347-07f67cc136cf?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Hero Background"
+            className="w-full h-full object-cover object-center"
+            grid={15}
+            mouse={0.13}
+            strength={0.15}
+            relaxation={0.9}
+          />
         </ClientOnly>
       </div>
       <ClientOnly>
-        <ScrollProgress color="#8b5cf6" height={3} />
+        <ScrollProgress color="#34d399" height={3} />
       </ClientOnly>
       <ClientOnly>
-        <ScrollToTop backgroundColor="rgba(139, 92, 246, 0.8)" />
+        <ScrollToTop backgroundColor="rgba(52, 211, 153, 0.8)" />
       </ClientOnly>
 
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-800/50">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
         <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center">
             <motion.button
-              className="sm:hidden mr-4 text-muted-foreground hover:text-gray-900 dark:hover:text-white"
+              className="sm:hidden mr-4 text-muted-foreground hover:text-foreground"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
               whileHover={{ scale: 1.1 }}
@@ -296,7 +297,7 @@ export default function Home() {
             <motion.ul
               className={`${
                 isMenuOpen
-                  ? "flex flex-col fixed top-[72px] left-0 right-0 bg-white/95 dark:bg-gray-950/95 backdrop-blur-md p-6 shadow-lg border-b border-gray-200 dark:border-gray-800 z-50"
+                  ? "flex flex-col fixed top-[72px] left-0 right-0 bg-background/95 backdrop-blur-md p-6 shadow-lg border-b border-border z-50"
                   : "hidden"
               } sm:flex sm:flex-row sm:static sm:shadow-none sm:p-0 sm:bg-transparent sm:space-x-8 sm:border-none sm:z-auto`}
               initial={isMenuOpen ? { height: 0, opacity: 0 } : undefined}
@@ -309,7 +310,7 @@ export default function Home() {
                   <motion.button
                     onClick={() => scrollToSection(item.toLowerCase())}
                     className={`relative text-base sm:text-lg font-medium ${
-                      activeSection === item.toLowerCase() ? "text-gray-900 dark:text-white" : "text-muted-foreground hover:text-gray-900 dark:hover:text-white"
+                      activeSection === item.toLowerCase() ? "text-foreground" : "text-muted-foreground hover:text-foreground"
                     }`}
                     whileHover={{ x: 5 }}
                     whileInView={isMobile ? { x: 2 } : {}}
@@ -319,7 +320,7 @@ export default function Home() {
                     {item}
                     {activeSection === item.toLowerCase() && (
                       <motion.span
-                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gray-900 dark:bg-white"
+                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary"
                         layoutId="activeSection"
                         transition={{ type: "spring", stiffness: 500, damping: 30 }}
                       />
@@ -341,7 +342,7 @@ export default function Home() {
                 localStorage.setItem("theme", "light")
               }
             }}
-            className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+            className="p-2 rounded-full bg-muted border border-border"
             whileHover={{ scale: 1.05 }}
             whileInView={isMobile ? { scale: 1.02 } : {}}
             viewport={{ once: true, amount: 0.8 }}
@@ -370,7 +371,7 @@ export default function Home() {
               <div className="h-12 overflow-hidden text-center">
                 <TextCarousel
                   phrases={["Data Science Engineer", "Web Developer", "AI Enthusiast"]}
-                  className="text-xl sm:text-2xl md:text-3xl font-light text-gray-600 dark:text-gray-400"
+                  className="text-xl sm:text-2xl md:text-3xl font-light text-muted-foreground"
                 />
               </div>
             </RevealElement>
@@ -409,13 +410,17 @@ export default function Home() {
         </section>
 
         <section id="about" className="py-20 sm:py-32 px-4 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-transparent dark:from-gray-900/10 dark:to-transparent pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-background/50 to-transparent pointer-events-none"></div>
           <div className="max-w-5xl mx-auto">
-            <RevealText
-              text="About Me"
-              as="h2"
-              className="text-3xl sm:text-4xl font-bold mb-16 text-center text-gray-900 dark:text-white"
-            />
+            <h2 className="text-3xl sm:text-4xl font-bold mb-16 text-center text-foreground">
+              <DecryptedText
+                text="About Me"
+                animateOn="view"
+                revealDirection="center"
+                sequential
+                className="text-foreground"
+              />
+            </h2>
 
             <div className="flex flex-col md:flex-row items-center">
               <RevealElement direction="left" className="mb-12 md:mb-0 md:mr-16">
@@ -431,42 +436,52 @@ export default function Home() {
               </RevealElement>
 
               <div>
-                <RevealText
-                  text="Hello! I'm Shiven Patro, an aspiring Data Science Engineer with a strong academic foundation and experience in Web Development. Currently pursuing BTech CSE at VIT-AP with a CGPA of 8.5/10."
-                  className="text-lg sm:text-xl mb-6 leading-relaxed text-gray-900 dark:text-white"
-                  delay={0.2}
-                  preserveWhitespace={true}
-                />
+                <p className="text-lg sm:text-xl mb-6 leading-relaxed text-foreground">
+                  <DecryptedText
+                    text="Hello! I'm Shiven Patro, an aspiring Data Science Engineer with a strong academic foundation and experience in Web Development. Currently pursuing BTech CSE at VIT-AP with a CGPA of 8.5/10."
+                    animateOn="view"
+                    sequential
+                    revealDirection="start"
+                    speed={15}
+                    useOriginalCharsOnly
+                    lockHeight
+                  />
+                </p>
 
-                <RevealText
-                  text="I'm passionately leveraging AI & LLM models to gain expertise in Data Science, Machine Learning, and other software domains, including Cloud Computing and Web Technologies, to build web applications with simple solutions."
-                  className="text-lg sm:text-xl leading-relaxed text-gray-900 dark:text-white"
-                  delay={0.4}
-                  preserveWhitespace={true}
-                />
+                <p className="text-lg sm:text-xl leading-relaxed text-foreground">
+                  <DecryptedText
+                    text="I'm passionately leveraging AI & LLM models to gain expertise in Data Science, Machine Learning, and other software domains, including Cloud Computing and Web Technologies, to build web applications with simple solutions."
+                    animateOn="view"
+                    sequential
+                    revealDirection="start"
+                    useOriginalCharsOnly
+                    lockHeight
+                    speed={15}
+                  />
+                </p>
 
                 <RevealElement delay={0.6} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 place-items-center mt-12">
                   <StatCard 
-                    icon={<Code className="w-6 h-6 text-blue-500" />}
+                    icon={<Code className="w-6 h-6 text-primary" />}
                     value={10}
                     label="Projects"
                     delay={0}
                   />
                   <StatCard 
-                    icon={<Award className="w-6 h-6 text-purple-500" />}
+                    icon={<Award className="w-6 h-6 text-primary" />}
                     value={8.5}
                     label="CGPA"
                     decimals={1}
                     delay={0.2}
                   />
                   <StatCard 
-                    icon={<Cpu className="w-6 h-6 text-green-500" />}
+                    icon={<Cpu className="w-6 h-6 text-primary" />}
                     value={5}
                     label="Technologies"
                     delay={0.4}
                   />
                   <StatCard 
-                    icon={<Globe className="w-6 h-6 text-orange-500" />}
+                    icon={<Globe className="w-6 h-6 text-primary" />}
                     value={2}
                     label="Hackathons"
                     delay={0.6}
@@ -497,34 +512,46 @@ export default function Home() {
         </section>
 
         <section id="skills" className="py-20 sm:py-32 px-4 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-transparent dark:from-gray-900/10 dark:to-transparent pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-background/50 to-transparent pointer-events-none"></div>
           <div className="max-w-5xl mx-auto">
-            <RevealText
-              text="My Skills"
-              as="h2"
-              className="text-3xl sm:text-4xl font-bold mb-16 text-center text-gray-900 dark:text-white"
-            />
+            <h2 className="text-3xl sm:text-4xl font-bold mb-16 text-center text-foreground">
+              <ScrambledText radius={120} duration={1} speed={0.4}>
+                <DecryptedText
+                  text="My Skills"
+                  animateOn="view"
+                  revealDirection="center"
+                  sequential
+                  className="text-foreground"
+                />
+              </ScrambledText>
+            </h2>
 
             <RevealElement className="mb-16">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                  <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Programming Languages</h3>
+                  <h3 className="text-xl font-semibold mb-6 text-foreground">
+                    <ScrambledText radius={120} duration={1} speed={0.4}>
+                      <DecryptedText text="Programming Languages" animateOn="view" sequential />
+                    </ScrambledText>
+                  </h3>
                   <div className="space-y-6">
                     {[
-                      { skill: "Python", percentage: 90, color: "bg-indigo-500" },
-                      { skill: "JavaScript", percentage: 85, color: "bg-purple-500" },
-                      { skill: "Java", percentage: 80, color: "bg-pink-500" },
-                      { skill: "HTML/CSS", percentage: 95, color: "bg-blue-500" },
-                      { skill: "SQL", percentage: 75, color: "bg-green-500" },
+                      { skill: "Python", percentage: 90 },
+                      { skill: "JavaScript", percentage: 85 },
+                      { skill: "Java", percentage: 80 },
+                      { skill: "HTML/CSS", percentage: 95 },
+                      { skill: "SQL", percentage: 75 },
                     ].map((item, index) => (
                       <div key={item.skill} className="mb-4">
                         <div className="flex justify-between mb-1">
-                          <span className="text-base font-medium text-gray-900 dark:text-white">{item.skill}</span>
+                          <span className="text-base font-medium text-foreground">
+                            <DecryptedText text={item.skill} animateOn="view" sequential />
+                          </span>
                           <span className="text-sm font-medium text-muted-foreground">{item.percentage}%</span>
                         </div>
-                        <div className="w-full bg-gray-300 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden">
+                        <div className="w-full bg-muted rounded-full h-2.5 overflow-hidden">
                           <motion.div
-                            className={`h-2.5 rounded-full ${item.color}`}
+                            className="h-2.5 rounded-full bg-primary"
                             initial={{ width: 0 }}
                             whileInView={{ width: `${item.percentage}%` }}
                             transition={{ duration: 1, delay: index * 0.1, ease: "easeOut" }}
@@ -536,23 +563,29 @@ export default function Home() {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Frameworks & Tools</h3>
+                  <h3 className="text-xl font-semibold mb-6 text-foreground">
+                    <ScrambledText radius={120} duration={1} speed={0.4}>
+                      <DecryptedText text="Frameworks & Tools" animateOn="view" sequential />
+                    </ScrambledText>
+                  </h3>
                   <div className="space-y-6">
                     {[
-                      { skill: "React.js", percentage: 85, color: "bg-cyan-500" },
-                      { skill: "Node.js", percentage: 75, color: "bg-yellow-500" },
-                      { skill: "Tailwind CSS", percentage: 90, color: "bg-teal-500" },
-                      { skill: "Git/GitHub", percentage: 85, color: "bg-red-500" },
-                      { skill: "NumPy/Pandas", percentage: 80, color: "bg-orange-500" },
+                      { skill: "React.js", percentage: 85 },
+                      { skill: "Node.js", percentage: 75 },
+                      { skill: "Tailwind CSS", percentage: 90 },
+                      { skill: "Git/GitHub", percentage: 85 },
+                      { skill: "NumPy/Pandas", percentage: 80 },
                     ].map((item, index) => (
                       <div key={item.skill} className="mb-4">
                         <div className="flex justify-between mb-1">
-                          <span className="text-base font-medium text-gray-900 dark:text-white">{item.skill}</span>
+                          <span className="text-base font-medium text-foreground">
+                            <DecryptedText text={item.skill} animateOn="view" sequential />
+                          </span>
                           <span className="text-sm font-medium text-muted-foreground">{item.percentage}%</span>
                         </div>
-                        <div className="w-full bg-gray-300 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden">
+                        <div className="w-full bg-muted rounded-full h-2.5 overflow-hidden">
                           <motion.div
-                            className={`h-2.5 rounded-full ${item.color}`}
+                            className="h-2.5 rounded-full bg-primary"
                             initial={{ width: 0 }}
                             whileInView={{ width: `${item.percentage}%` }}
                             transition={{ duration: 1, delay: index * 0.1, ease: "easeOut" }}
@@ -598,7 +631,7 @@ export default function Home() {
                             viewport={{ once: true, amount: 0.8 }}
                             transition={{ duration: 0.3 }}
                           >
-                            {item.skill}
+                            <DecryptedText text={item.skill} animateOn="view" sequential />
                           </motion.div>
                         </div>
                       </ThreeDCard>
@@ -613,11 +646,11 @@ export default function Home() {
         <section id="projects" className="py-20 sm:py-32 px-4 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-transparent dark:from-gray-900/10 dark:to-transparent pointer-events-none"></div>
           <div className="max-w-6xl mx-auto">
-            <RevealText
-              text="My Projects"
-              as="h2"
-              className="text-3xl sm:text-4xl font-bold mb-8 text-center text-gray-900 dark:text-white"
-            />
+            <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-center text-gray-900 dark:text-white">
+              <ScrambledText radius={120} duration={1} speed={0.4}>
+                <DecryptedText text="My Projects" animateOn="view" sequential revealDirection="center" />
+              </ScrambledText>
+            </h2>
 
             <RevealElement className="mb-8">
               <AnimatedTabs
@@ -659,7 +692,7 @@ export default function Home() {
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                           <h3 className="absolute bottom-4 left-4 text-xl sm:text-2xl font-bold text-white z-20">
-                            {project.title}
+                            <DecryptedText text={project.title} animateOn="view" sequential parentClassName="text-white" />
                           </h3>
                         </div>
                         <div className="p-6 flex-grow flex flex-col">
@@ -696,11 +729,17 @@ export default function Home() {
         <section id="contact" className="py-20 sm:py-32 px-4 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-transparent dark:from-gray-900/10 dark:to-transparent pointer-events-none"></div>
           <div className="max-w-5xl mx-auto">
-            <RevealText
-              text="Get In Touch"
-              as="h2"
-              className="text-3xl sm:text-4xl font-bold mb-16 text-center text-gray-900 dark:text-white"
-            />
+            <h2 className="text-3xl sm:text-4xl font-bold mb-16 text-center text-gray-900 dark:text-white">
+              <ScrambledText radius={120} duration={1} speed={0.4}>
+                <DecryptedText
+                  text="Get In Touch"
+                  animateOn="view"
+                  revealDirection="center"
+                  sequential
+                  className="text-gray-900 dark:text-white"
+                />
+              </ScrambledText>
+            </h2>
 
             <div className="grid md:grid-cols-2 gap-12">
               <RevealElement direction="left" className="text-gray-900 dark:text-gray-100">
@@ -721,12 +760,12 @@ export default function Home() {
                       viewport={{ once: true, amount: 0.8 }}
                       transition={{ duration: 0.3, delay: 0.1 }}
                     >
-                      <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full mr-3">
-                        <Mail className="text-blue-600 dark:text-blue-400 w-5 h-5" />
+                      <div className="p-2 bg-muted rounded-full mr-3">
+                        <Mail className="text-primary w-5 h-5" />
                       </div>
                       <a
                         href="mailto:contact@shivenpatro.com"
-                        className="text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors"
+                        className="text-primary group-hover:text-primary/80 transition-colors"
                       >
                         contact@shivenpatro.com
                       </a>
@@ -738,14 +777,14 @@ export default function Home() {
                       viewport={{ once: true, amount: 0.8 }}
                       transition={{ duration: 0.3, delay: 0.2 }}
                     >
-                      <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full mr-3">
-                        <Github className="text-blue-600 dark:text-blue-400 w-5 h-5" />
+                      <div className="p-2 bg-muted rounded-full mr-3">
+                        <Github className="text-primary w-5 h-5" />
                       </div>
                       <a
                         href="https://github.com/shivenpatro"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors"
+                        className="text-primary group-hover:text-primary/80 transition-colors"
                       >
                         github.com/shivenpatro
                       </a>
@@ -757,14 +796,14 @@ export default function Home() {
                       viewport={{ once: true, amount: 0.8 }}
                       transition={{ duration: 0.3, delay: 0.3 }}
                     >
-                      <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full mr-3">
-                        <Linkedin className="text-blue-600 dark:text-blue-400 w-5 h-5" />
+                      <div className="p-2 bg-muted rounded-full mr-3">
+                        <Linkedin className="text-primary w-5 h-5" />
                       </div>
                       <a
                         href="https://www.linkedin.com/in/shiven-patro-960593260/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors"
+                        className="text-primary group-hover:text-primary/80 transition-colors"
                       >
                         linkedin.com/in/shiven-patro
                       </a>
@@ -776,12 +815,12 @@ export default function Home() {
                       viewport={{ once: true, amount: 0.8 }}
                       transition={{ duration: 0.3, delay: 0.4 }}
                     >
-                      <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-full mr-3">
-                        <Phone className="text-blue-600 dark:text-blue-400 w-5 h-5" />
+                      <div className="p-2 bg-muted rounded-full mr-3">
+                        <Phone className="text-primary w-5 h-5" />
                       </div>
                       <a
                         href="tel:+919861564032"
-                        className="text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors"
+                        className="text-primary group-hover:text-primary/80 transition-colors"
                       >
                         +91 9861564032
                       </a>
@@ -846,7 +885,7 @@ export default function Home() {
               <RevealElement direction="right">
                 <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-8 border border-gray-200 dark:border-gray-800 h-full">
                   <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
-                    Send Me a Message
+                    <DecryptedText text="Send Me a Message" animateOn="view" sequential />
                   </h3>
                   <div className="mb-8 relative">
                     <motion.label

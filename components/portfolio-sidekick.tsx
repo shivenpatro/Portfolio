@@ -101,8 +101,8 @@ const PortfolioSidekick = () => {
         >
           <motion.svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
             {/* Antenna */}
-            <motion.line x1="50" y1="15" x2="50" y2="0" stroke="#A78BFA" strokeWidth="3" />
-            <motion.circle cx="50" cy="15" r="5" fill="#A78BFA" />
+            <motion.line x1="50" y1="15" x2="50" y2="0" stroke="#34d399" strokeWidth="3" />
+            <motion.circle cx="50" cy="15" r="5" fill="#34d399" />
             
             {/* Head */}
             <motion.g variants={duckAnimation} animate={isIdle ? 'hidden' : 'visible'} transition={{ type: 'spring', stiffness: 300, damping: 15 }}>
@@ -116,8 +116,8 @@ const PortfolioSidekick = () => {
 
             <defs>
               <linearGradient id="paint0_linear_1_2" x1="50" y1="0" x2="50" y2="100" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#8B5CF6" />
-                <stop offset="1" stopColor="#6366F1" />
+                <stop stopColor="#34d399" />
+                <stop offset="1" stopColor="#10b981" />
               </linearGradient>
             </defs>
           </motion.svg>

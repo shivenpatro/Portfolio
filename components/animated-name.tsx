@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { motion, useAnimation } from "framer-motion"
 
 interface AnimatedNameProps {
@@ -27,6 +27,7 @@ export const AnimatedName = ({
   const controls = useAnimation()
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const letters = name.split("")
+  const containerRef = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => {
     const sequence = async () => {
@@ -46,8 +47,28 @@ export const AnimatedName = ({
     sequence()
   }, [controls, initialDelay, staggerDelay])
 
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const canvas = document.getElementById('pixelated-canvas')
+      if (canvas) {
+        const event = new MouseEvent('mousemove', {
+          clientX: e.clientX,
+          clientY: e.clientY,
+        })
+        canvas.dispatchEvent(event)
+      }
+    }
+
+    container.addEventListener('mousemove', handleMouseMove)
+    return () => container.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
   return (
     <motion.h1
+      ref={containerRef}
       className={`flex justify-center items-center flex-wrap ${className}`}
       style={{
         fontSize,
@@ -85,4 +106,3 @@ export const AnimatedName = ({
     </motion.h1>
   )
 }
-

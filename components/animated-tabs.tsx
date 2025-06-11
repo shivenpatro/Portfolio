@@ -81,38 +81,38 @@ export const AnimatedTabs = ({
     switch (variant) {
       case "underline":
         return {
-          container: "border-b border-gray-200 dark:border-gray-700",
-          tab: "px-4 py-2 text-muted-foreground hover:text-indigo-500 dark:hover:text-indigo-400",
-          activeTab: "text-indigo-600 dark:text-indigo-400",
-          indicator: "h-0.5 bg-indigo-600 dark:bg-indigo-400 bottom-0",
+          container: "border-b border-border",
+          tab: "px-4 py-2 text-muted-foreground hover:text-primary",
+          activeTab: "text-primary",
+          indicator: "h-0.5 bg-primary bottom-0",
         }
       case "pills":
         return {
           container: "gap-2",
-          tab: "px-4 py-2 text-muted-foreground hover:text-indigo-500 dark:hover:text-indigo-400 rounded-full",
-          activeTab: "text-white",
-          indicator: "bg-gray-900 dark:bg-white rounded-full -z-10",
+          tab: "px-4 py-2 text-muted-foreground hover:text-primary rounded-full",
+          activeTab: "text-primary-foreground",
+          indicator: "bg-primary rounded-full -z-10",
         }
       case "boxed":
         return {
-          container: "bg-gray-100 dark:bg-gray-800 p-1 rounded-lg",
-          tab: "px-4 py-2 text-muted-foreground hover:text-indigo-500 dark:hover:text-indigo-400 rounded-md",
-          activeTab: "text-gray-900 dark:text-white",
-          indicator: "bg-background dark:bg-gray-700 rounded-md shadow-sm -z-10",
+          container: "bg-muted p-1 rounded-lg",
+          tab: "px-4 py-2 text-muted-foreground hover:text-primary rounded-md",
+          activeTab: "text-foreground",
+          indicator: "bg-background rounded-md shadow-sm -z-10",
         }
       case "gradient":
         return {
           container: "gap-2",
-          tab: "px-4 py-2 text-muted-foreground hover:text-gray-900 dark:hover:text-white rounded-full",
-          activeTab: "text-white",
-          indicator: "bg-gray-900 dark:bg-white rounded-full -z-10",
+          tab: "px-4 py-2 text-muted-foreground hover:text-foreground rounded-full",
+          activeTab: "text-primary-foreground",
+          indicator: "bg-primary rounded-full -z-10",
         }
       default:
         return {
-          container: "border-b border-gray-200 dark:border-gray-700",
-          tab: "px-4 py-2 text-muted-foreground hover:text-indigo-500 dark:hover:text-indigo-400",
-          activeTab: "text-indigo-600 dark:text-indigo-400",
-          indicator: "h-0.5 bg-indigo-600 dark:bg-indigo-400 bottom-0",
+          container: "border-b border-border",
+          tab: "px-4 py-2 text-muted-foreground hover:text-primary",
+          activeTab: "text-primary",
+          indicator: "h-0.5 bg-primary bottom-0",
         }
     }
   }
@@ -150,4 +150,3 @@ export const AnimatedTabs = ({
     </div>
   )
 }
-

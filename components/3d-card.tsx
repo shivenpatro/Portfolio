@@ -23,8 +23,8 @@ const isMobileDevice = () => typeof window !== "undefined" && window.matchMedia(
 export const ThreeDCard = ({
   children,
   className = "",
-  glareColor = "rgba(255, 255, 255, 0.4)",
-  borderColor = "rgba(255, 255, 255, 0.1)",
+  glareColor = "rgba(52, 211, 153, 0.1)",
+  borderColor = "rgba(52, 211, 153, 0.1)",
   shadowColor = "rgba(0, 0, 0, 0.3)",
   perspective = 1000,
   tiltAmount = 10,
@@ -126,4 +126,3 @@ export const ThreeDCard = ({
     </motion.div>
   )
 }
-

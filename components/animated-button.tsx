@@ -39,17 +39,17 @@ export const AnimatedButton = ({
   const getVariantStyles = () => {
     switch (variant) {
       case "primary":
-        return "bg-indigo-600 hover:bg-indigo-500 text-white"
+        return "bg-primary hover:bg-primary/90 text-primary-foreground"
       case "secondary":
-        return "bg-purple-600 hover:bg-purple-500 text-white"
+        return "bg-secondary hover:bg-secondary/90 text-secondary-foreground"
       case "outline":
-        return "bg-transparent border border-indigo-500 text-indigo-500 hover:bg-indigo-500/10"
+        return "bg-transparent border border-primary text-primary hover:bg-primary/10"
       case "ghost":
-        return "bg-transparent hover:bg-indigo-500/10 text-indigo-500"
+        return "bg-transparent hover:bg-primary/10 text-primary"
       case "gradient":
         return "text-white"
       default:
-        return "bg-indigo-600 hover:bg-indigo-500 text-white"
+        return "bg-primary hover:bg-primary/90 text-primary-foreground"
     }
   }
 
@@ -134,4 +134,3 @@ export const AnimatedButton = ({
     </motion.button>
   )
 }
-

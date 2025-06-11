@@ -11,7 +11,7 @@ interface ScrollProgressProps {
 }
 
 export const ScrollProgress = ({
-  color = "#8b5cf6",
+  color = "#34d399",
   height = 4,
   position = "top",
   zIndex = 50,
@@ -30,4 +30,3 @@ export const ScrollProgress = ({
     </motion.div>
   )
 }
-
