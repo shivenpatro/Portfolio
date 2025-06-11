@@ -49,6 +49,7 @@ const AnimatedGradientBorder = dynamic(() => import("@/components/animated-gradi
 const ScrollProgress = dynamic(() => import("@/components/scroll-progress").then(mod => mod.ScrollProgress), { ssr: false })
 const ScrollToTop = dynamic(() => import("@/components/scroll-to-top").then(mod => mod.ScrollToTop), { ssr: false })
 const AnimatedName = dynamic(() => import("@/components/animated-name").then(mod => mod.AnimatedName), { ssr: false })
+const AnimatedBackground = dynamic(() => import("@/components/animated-background"), { ssr: false })
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home")
@@ -409,8 +410,14 @@ export default function Home() {
           </motion.div>
         </section>
 
-        <section id="about" className="py-20 sm:py-32 px-4 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-background/50 to-transparent pointer-events-none"></div>
+        {/* Sections with animated background */}
+        <div className="relative">
+          <ClientOnly>
+            <AnimatedBackground />
+          </ClientOnly>
+          
+          <section id="about" className="py-20 sm:py-32 px-4 relative">
+            <div className="absolute inset-0 bg-gradient-to-b from-background/50 to-transparent pointer-events-none"></div>
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl sm:text-4xl font-bold mb-16 text-center text-foreground">
               <DecryptedText
@@ -954,6 +961,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+        </div>
       </main>
 
       <footer className="bg-gray-50 dark:bg-gray-900 py-12 text-center relative z-10 border-t border-gray-200 dark:border-gray-800">
