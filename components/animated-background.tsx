@@ -11,11 +11,11 @@ export default function AnimatedBackground() {
   const [mounted, setMounted] = useState(false)
   const [init, setInit] = useState(false)
   const { theme } = useTheme()
-  
+
   useEffect(() => {
     setMounted(true)
   }, [])
-  
+
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY)
@@ -107,15 +107,11 @@ export default function AnimatedBackground() {
         outModes: {
           default: "out",
         },
-        random: true,
-        speed: 0.8,
+        random: false,
+        speed: 0.3,
         straight: false,
         attract: {
-          enable: true,
-          rotate: {
-            x: 600,
-            y: 1200,
-          },
+          enable: false,
         },
       },
       number: {
@@ -124,13 +120,13 @@ export default function AnimatedBackground() {
           width: 1920,
           height: 1080,
         },
-        value: 100,
+        value: 75,
       },
       opacity: {
-        value: { min: 0.1, max: 0.5 },
+        value: { min: 0.15, max: 0.4 },
         animation: {
           enable: true,
-          speed: 0.5,
+          speed: 0.2,
           sync: false,
           startValue: "random",
         },
@@ -139,10 +135,10 @@ export default function AnimatedBackground() {
         type: ["circle", "triangle"],
       },
       size: {
-        value: { min: 1, max: 4 },
+        value: { min: 1, max: 3 },
         animation: {
           enable: true,
-          speed: 2,
+          speed: 0.8,
           sync: false,
           startValue: "random",
         },
@@ -164,7 +160,7 @@ export default function AnimatedBackground() {
           position: "absolute",
           width: "100%",
           height: "100%",
-          transform: `translateY(${scrollY * 0.1}px)`,
+          transform: `translateY(${scrollY * 0.02}px)`,
         }}
       />
       
