@@ -12,6 +12,9 @@ export default function AnimatedBackground() {
   const [init, setInit] = useState(false)
   const { theme } = useTheme()
 
+  // Apply a very gentle blur based on scroll position (max 1px)
+  const scrollBlur = Math.min(scrollY / 3000, 1)
+
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -160,7 +163,7 @@ export default function AnimatedBackground() {
           position: "absolute",
           width: "100%",
           height: "100%",
-          transform: `translateY(${scrollY * 0.02}px)`,
+          filter: `blur(${scrollBlur}px)`,
         }}
       />
       
