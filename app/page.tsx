@@ -51,6 +51,11 @@ const ScrollToTop = dynamic(() => import("@/components/scroll-to-top").then(mod 
 const AnimatedName = dynamic(() => import("@/components/animated-name").then(mod => mod.AnimatedName), { ssr: false })
 const AnimatedBackground = dynamic(() => import("@/components/animated-background"), { ssr: false })
 
+// Lazy-load the heavy WebGL skill solar system
+const SkillSolarSystem = dynamic(() => import("@/components/skill-solar-system"), {
+  ssr: false,
+});
+
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home")
   const [isTouchDevice, setIsTouchDevice] = useState(false)
@@ -659,6 +664,28 @@ export default function Home() {
                 ))}
               </div>
             </RevealElement>
+          </div>
+        </section>
+
+        <section id="skill-system-3d" className="py-20 sm:py-32 px-4 relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-background/50 to-transparent pointer-events-none"></div>
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-16 text-center text-foreground">
+              <ScrambledText radius={120} duration={1} speed={0.4}>
+                <DecryptedText
+                  text="Skill Solar System"
+                  animateOn="view"
+                  revealDirection="center"
+                  sequential
+                  className="text-foreground"
+                />
+              </ScrambledText>
+            </h2>
+
+            {/* 3-D Skill Solar System (desktop only, lazy-loaded) */}
+            <div className="mb-16 hidden md:block">
+              <SkillSolarSystem />
+            </div>
           </div>
         </section>
 
