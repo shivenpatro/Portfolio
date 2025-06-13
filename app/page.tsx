@@ -51,8 +51,8 @@ const ScrollToTop = dynamic(() => import("@/components/scroll-to-top").then(mod 
 const AnimatedName = dynamic(() => import("@/components/animated-name").then(mod => mod.AnimatedName), { ssr: false })
 const AnimatedBackground = dynamic(() => import("@/components/animated-background"), { ssr: false })
 
-// Lazy-load the heavy WebGL skill solar system
-const SkillSolarSystem = dynamic(() => import("@/components/skill-solar-system"), {
+// Lazy-load the new three-js hero so it only runs on the client
+const OrbitalHero = dynamic(() => import("@/components/orbital-hero").then((m) => m.OrbitalHero), {
   ssr: false,
 });
 
@@ -249,7 +249,7 @@ export default function Home() {
       <ClientOnly>
         {!isTouchDevice && <AnimatedCursor />}
       </ClientOnly>
-      <div className="absolute top-0 left-0 w-full h-screen z-0">
+      <div className="absolute top-0 left-0 w-full h-screen z-0 pointer-events-none">
         <ClientOnly>
           <PixelatedImage 
             src="https://images.unsplash.com/photo-1709990742347-07f67cc136cf?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -260,6 +260,12 @@ export default function Home() {
             strength={0.15}
             relaxation={0.9}
           />
+        </ClientOnly>
+      </div>
+      {/* Orbital 3-D system behind foreground content */}
+      <div className="absolute top-0 left-0 w-full h-screen z-0">
+        <ClientOnly>
+          <OrbitalHero />
         </ClientOnly>
       </div>
       <ClientOnly>
@@ -664,28 +670,6 @@ export default function Home() {
                 ))}
               </div>
             </RevealElement>
-          </div>
-        </section>
-
-        <section id="skill-system-3d" className="py-20 sm:py-32 px-4 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-background/50 to-transparent pointer-events-none"></div>
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-16 text-center text-foreground">
-              <ScrambledText radius={120} duration={1} speed={0.4}>
-                <DecryptedText
-                  text="Skill Solar System"
-                  animateOn="view"
-                  revealDirection="center"
-                  sequential
-                  className="text-foreground"
-                />
-              </ScrambledText>
-            </h2>
-
-            {/* 3-D Skill Solar System (desktop only, lazy-loaded) */}
-            <div className="mb-16 hidden md:block">
-              <SkillSolarSystem />
-            </div>
           </div>
         </section>
 
