@@ -420,13 +420,15 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-b from-background/50 to-transparent pointer-events-none"></div>
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl sm:text-4xl font-bold mb-16 text-center text-foreground">
-              <DecryptedText
-                text="About Me"
-                animateOn="view"
-                revealDirection="center"
-                sequential
-                className="text-foreground"
-              />
+              <ScrambledText radius={120} duration={1} speed={0.4}>
+                <DecryptedText
+                  text="About Me"
+                  animateOn="view"
+                  revealDirection="center"
+                  sequential
+                  className="text-foreground"
+                />
+              </ScrambledText>
             </h2>
 
             <div className="flex flex-col md:flex-row items-center">
@@ -444,27 +446,31 @@ export default function Home() {
 
               <div>
                 <p className="text-lg sm:text-xl mb-6 leading-relaxed text-foreground">
-                  <DecryptedText
-                    text="Hello! I'm Shiven Patro, an aspiring Data Science Engineer with a strong academic foundation and experience in Web Development. Currently pursuing BTech CSE at VIT-AP with a CGPA of 8.5/10."
-                    animateOn="view"
-                    sequential
-                    revealDirection="start"
-                    speed={15}
-                    useOriginalCharsOnly
-                    lockHeight
-                  />
+                  <ScrambledText radius={120} duration={1} speed={0.4}>
+                    <DecryptedText
+                      text="Hello! I'm Shiven Patro, an aspiring Data Science Engineer with a strong academic foundation and experience in Web Development. Currently pursuing BTech CSE at VIT-AP with a CGPA of 8.5/10."
+                      animateOn="view"
+                      sequential
+                      revealDirection="start"
+                      speed={15}
+                      useOriginalCharsOnly
+                      lockHeight
+                    />
+                  </ScrambledText>
                 </p>
 
                 <p className="text-lg sm:text-xl leading-relaxed text-foreground">
-                  <DecryptedText
-                    text="I'm passionately leveraging AI & LLM models to gain expertise in Data Science, Machine Learning, and other software domains, including Cloud Computing and Web Technologies, to build web applications with simple solutions."
-                    animateOn="view"
-                    sequential
-                    revealDirection="start"
-                    useOriginalCharsOnly
-                    lockHeight
-                    speed={15}
-                  />
+                  <ScrambledText radius={120} duration={1} speed={0.4}>
+                    <DecryptedText
+                      text="I'm passionately leveraging AI & LLM models to gain expertise in Data Science, Machine Learning, and other software domains, including Cloud Computing and Web Technologies, to build web applications with simple solutions."
+                      animateOn="view"
+                      sequential
+                      revealDirection="start"
+                      useOriginalCharsOnly
+                      lockHeight
+                      speed={15}
+                    />
+                  </ScrambledText>
                 </p>
 
                 <RevealElement delay={0.6} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 place-items-center mt-12">
@@ -552,7 +558,9 @@ export default function Home() {
                       <div key={item.skill} className="mb-4">
                         <div className="flex justify-between mb-1">
                           <span className="text-base font-medium text-foreground">
-                            <DecryptedText text={item.skill} animateOn="view" sequential />
+                            <ScrambledText>
+                              <DecryptedText text={item.skill} animateOn="view" sequential />
+                            </ScrambledText>
                           </span>
                           <span className="text-sm font-medium text-muted-foreground">{item.percentage}%</span>
                         </div>
@@ -586,7 +594,9 @@ export default function Home() {
                       <div key={item.skill} className="mb-4">
                         <div className="flex justify-between mb-1">
                           <span className="text-base font-medium text-foreground">
-                            <DecryptedText text={item.skill} animateOn="view" sequential />
+                            <ScrambledText>
+                              <DecryptedText text={item.skill} animateOn="view" sequential />
+                            </ScrambledText>
                           </span>
                           <span className="text-sm font-medium text-muted-foreground">{item.percentage}%</span>
                         </div>
@@ -638,7 +648,9 @@ export default function Home() {
                             viewport={{ once: true, amount: 0.8 }}
                             transition={{ duration: 0.3 }}
                           >
-                            <DecryptedText text={item.skill} animateOn="view" sequential />
+                            <ScrambledText>
+                              <DecryptedText text={item.skill} animateOn="view" sequential />
+                            </ScrambledText>
                           </motion.div>
                         </div>
                       </ThreeDCard>
@@ -752,11 +764,13 @@ export default function Home() {
               <RevealElement direction="left" className="text-gray-900 dark:text-gray-100">
                 <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-8 border border-gray-200 dark:border-gray-800 h-full">
                   <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
-                    Contact Information
+                    <ScrambledText>Contact Information</ScrambledText>
                   </h3>
                   <p className="mb-6 text-gray-900 dark:text-gray-100">
-                    Feel free to reach out to me through any of these channels. I'm always open to discussing new
-                    projects, creative ideas, or opportunities to be part of your vision.
+                    <ScrambledText>
+                      Feel free to reach out to me through any of these channels. I'm always open to discussing new
+                      projects, creative ideas, or opportunities to be part of your vision.
+                    </ScrambledText>
                   </p>
 
                   <div className="space-y-4">
@@ -880,7 +894,9 @@ export default function Home() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
                   >
-                    <h4 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Let's Work Together</h4>
+                    <h4 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
+                      <ScrambledText>Let's Work Together</ScrambledText>
+                    </h4>
                     <p className="text-sm text-gray-900 dark:text-gray-100">
                       Looking for a passionate developer to bring your ideas to life? I'm currently available for
                       freelance work and exciting opportunities.
@@ -892,7 +908,9 @@ export default function Home() {
               <RevealElement direction="right">
                 <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-8 border border-gray-200 dark:border-gray-800 h-full">
                   <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
-                    <DecryptedText text="Send Me a Message" animateOn="view" sequential />
+                    <ScrambledText>
+                      <DecryptedText text="Send Me a Message" animateOn="view" sequential />
+                    </ScrambledText>
                   </h3>
                   <div className="mb-8 relative">
                     <motion.label

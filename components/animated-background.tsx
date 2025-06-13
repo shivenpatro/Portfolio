@@ -7,25 +7,12 @@ import type { Container, ISourceOptions } from "@tsparticles/engine"
 import { useTheme } from "next-themes"
 
 export default function AnimatedBackground() {
-  const [scrollY, setScrollY] = useState(0)
   const [mounted, setMounted] = useState(false)
   const [init, setInit] = useState(false)
   const { theme } = useTheme()
 
-  // Apply a very gentle blur based on scroll position (max 1px)
-  const scrollBlur = Math.min(scrollY / 3000, 1)
-
   useEffect(() => {
     setMounted(true)
-  }, [])
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY)
-    }
-    
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   // Initialize tsParticles engine
@@ -110,11 +97,15 @@ export default function AnimatedBackground() {
         outModes: {
           default: "out",
         },
-        random: false,
-        speed: 0.3,
+        random: true,
+        speed: 0.8,
         straight: false,
         attract: {
-          enable: false,
+          enable: true,
+          rotate: {
+            x: 600,
+            y: 1200,
+          },
         },
       },
       number: {
@@ -123,13 +114,13 @@ export default function AnimatedBackground() {
           width: 1920,
           height: 1080,
         },
-        value: 75,
+        value: 100,
       },
       opacity: {
-        value: { min: 0.15, max: 0.4 },
+        value: { min: 0.1, max: 0.5 },
         animation: {
           enable: true,
-          speed: 0.2,
+          speed: 0.5,
           sync: false,
           startValue: "random",
         },
@@ -138,10 +129,10 @@ export default function AnimatedBackground() {
         type: ["circle", "triangle"],
       },
       size: {
-        value: { min: 1, max: 3 },
+        value: { min: 1, max: 4 },
         animation: {
           enable: true,
-          speed: 0.8,
+          speed: 2,
           sync: false,
           startValue: "random",
         },
@@ -163,7 +154,6 @@ export default function AnimatedBackground() {
           position: "absolute",
           width: "100%",
           height: "100%",
-          filter: `blur(${scrollBlur}px)`,
         }}
       />
       

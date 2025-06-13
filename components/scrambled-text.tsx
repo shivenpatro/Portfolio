@@ -36,18 +36,41 @@ const ScrambledText: React.FC<ScrambledTextProps> = ({
     let splitInstance: any = null;
 
     const makeSplit = () => {
-      if (splitInstance) splitInstance.revert();
+      // Revert any previous SplitText instance
+      if (splitInstance) {
+        splitInstance.revert();
+        splitInstance = null;
+      }
 
-      splitInstance = SplitText.create(element, {
-        type: "chars",
-        charsClass: "char",
-      });
-      charsRef.current = (splitInstance.chars || []) as HTMLElement[];
+      // If DecryptedText already produced per-character spans, reuse them instead of re-wrapping.
+      const existingChars = element.querySelectorAll<HTMLElement>(
+        "span[aria-hidden='true'] span"
+      );
 
+      if (existingChars.length > 0) {
+        charsRef.current = Array.from(existingChars);
+      } else {
+        // Fallback to GSAP SplitText (e.g. for headings without DecryptedText)
+        splitInstance = SplitText.create(element, {
+          type: "chars",
+          charsClass: "char",
+        });
+        charsRef.current = (splitInstance.chars || []) as HTMLElement[];
+      }
+
+      // Ensure each character span has baseline data for scrambleText
       charsRef.current.forEach((c) => {
+        const original = c.textContent || "";
+        // Detect both regular (\u0020) and non-breaking (\u00A0) spaces
+        const isSpace = original === " " || original === "\u00A0";
+
+        if (isSpace) {
+          c.innerHTML = "&nbsp;"; // keep visual width for space
+          c.setAttribute("data-is-space", "true"); // mark for later skipping
+        }
         gsap.set(c, {
-          display: "inline-block",
-          attr: { "data-content": c.innerHTML },
+          display: isSpace ? "inline-block" : "inline-block",
+          attr: { "data-content": original },
         });
       });
     };
@@ -55,6 +78,9 @@ const ScrambledText: React.FC<ScrambledTextProps> = ({
     // pointer move handler (shared)
     const handleMove = (e: PointerEvent) => {
       charsRef.current.forEach((c) => {
+        // Skip any span we identified as a space so it never gets scrambled
+        // (covers both regular and non-breaking spaces)
+        if (c.dataset.isSpace === "true") return;
         const rect = c.getBoundingClientRect();
         const dx = e.clientX - (rect.left + rect.width / 2);
         const dy = e.clientY - (rect.top + rect.height / 2);
@@ -75,34 +101,45 @@ const ScrambledText: React.FC<ScrambledTextProps> = ({
       });
     };
 
-    // Observe mutations to know when decrypted text stabilizes
-    let timer: NodeJS.Timeout | null = null;
-    const observer = new MutationObserver(() => {
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => {
-        makeSplit();
-        observer.disconnect();
-      }, 250); // wait until no mutation for 250ms
-    });
-
-    observer.observe(element, { characterData: true, childList: true, subtree: true });
-
-    // Initial attempt (in case text already static)
+    // Run an initial split (for static text or headings)
     makeSplit();
 
+    // Listen for a custom event fired by DecryptedText when its animation completes
+    const handleDecryptComplete = () => {
+      makeSplit();
+    };
+
+    element.addEventListener("decryptComplete", handleDecryptComplete as EventListener);
+
+    const handlePointerLeave = () => {
+      // Force-reset all characters to their original content when pointer leaves
+      charsRef.current.forEach((c) => {
+        gsap.killTweensOf(c);
+        const isSpace = c.dataset.isSpace === "true";
+        if (isSpace) {
+          // Restore the non-breaking space entity to preserve width
+          c.innerHTML = "&nbsp;";
+        } else {
+          c.textContent = c.getAttribute("data-content") || c.textContent || "";
+        }
+      });
+    };
+
     rootRef.current.addEventListener("pointermove", handleMove);
+    rootRef.current.addEventListener("pointerleave", handlePointerLeave);
 
     return () => {
       rootRef.current?.removeEventListener("pointermove", handleMove);
-      observer.disconnect();
+      rootRef.current?.removeEventListener("pointerleave", handlePointerLeave);
+      element.removeEventListener("decryptComplete", handleDecryptComplete as EventListener);
       if (splitInstance) splitInstance.revert();
     };
   }, [radius, duration, speed, scrambleChars]);
 
   return (
-    <div ref={rootRef} className={`scrambled-wrapper ${className}`} style={style}>
+    <span ref={rootRef} className={`scrambled-wrapper ${className}`} style={style}>
       <span className="inline-block m-0 p-0">{children}</span>
-    </div>
+    </span>
   );
 };
 

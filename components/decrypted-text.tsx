@@ -141,6 +141,7 @@ export default function DecryptedText({
             }
             clearInterval(interval);
             setIsScrambling(false);
+            containerRef.current?.dispatchEvent(new CustomEvent("decryptComplete", { bubbles: true }));
             return prevRevealed;
           }
           setDisplayText(shuffleText(text, prevRevealed));
@@ -150,6 +151,7 @@ export default function DecryptedText({
             setIsScrambling(false);
             setDisplayText(text);
             if (animateOn === "view") setHasAnimated(true);
+            containerRef.current?.dispatchEvent(new CustomEvent("decryptComplete", { bubbles: true }));
           }
           return prevRevealed;
         });
