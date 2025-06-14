@@ -51,11 +51,6 @@ const ScrollToTop = dynamic(() => import("@/components/scroll-to-top").then(mod 
 const AnimatedName = dynamic(() => import("@/components/animated-name").then(mod => mod.AnimatedName), { ssr: false })
 const AnimatedBackground = dynamic(() => import("@/components/animated-background"), { ssr: false })
 
-// Lazy-load the new three-js hero so it only runs on the client
-const OrbitalHero = dynamic(() => import("@/components/orbital-hero").then((m) => m.OrbitalHero), {
-  ssr: false,
-});
-
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home")
   const [isTouchDevice, setIsTouchDevice] = useState(false)
@@ -249,7 +244,7 @@ export default function Home() {
       <ClientOnly>
         {!isTouchDevice && <AnimatedCursor />}
       </ClientOnly>
-      <div className="absolute top-0 left-0 w-full h-screen z-0 pointer-events-none">
+      <div className="absolute top-0 left-0 w-full h-screen z-0">
         <ClientOnly>
           <PixelatedImage 
             src="https://images.unsplash.com/photo-1709990742347-07f67cc136cf?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -260,12 +255,6 @@ export default function Home() {
             strength={0.15}
             relaxation={0.9}
           />
-        </ClientOnly>
-      </div>
-      {/* Orbital 3-D system behind foreground content */}
-      <div className="absolute top-0 left-0 w-full h-screen z-0">
-        <ClientOnly>
-          <OrbitalHero />
         </ClientOnly>
       </div>
       <ClientOnly>
