@@ -1,10 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import Script from 'next/script'
-import dynamic from 'next/dynamic'
-
-// Lazy load bug spawner on client side only
-const BugSpawner = dynamic(() => import('@/components/bug-spawner'), { ssr: false });
 
 export const metadata: Metadata = {
   title: 'Shiven Patro - Portfolio',
@@ -22,8 +18,6 @@ export default function RootLayout({
       <head />
       <body suppressHydrationWarning>
         {children}
-        {/* Mini-game bug hunt spawner */}
-        <BugSpawner />
         {/* This script helps with hydration issues caused by browser extensions */}
         <Script id="handle-hydration" strategy="afterInteractive">
           {`
