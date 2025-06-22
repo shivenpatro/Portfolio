@@ -12,6 +12,7 @@ interface AnimatedButtonProps {
   disabled?: boolean
   icon?: ReactNode
   iconPosition?: "left" | "right"
+  iconAnimation?: "launch" | "slide"
   fullWidth?: boolean
   gradientColors?: string[]
   hoverScale?: number
@@ -29,6 +30,7 @@ export const AnimatedButton = ({
   disabled = false,
   icon,
   iconPosition = "left",
+  iconAnimation = undefined,
   fullWidth = false,
   gradientColors = ["#6366f1", "#8b5cf6", "#d946ef"],
   hoverScale = 1.05,
@@ -85,6 +87,23 @@ export const AnimatedButton = ({
     return {}
   }
 
+  const renderIcon = () => {
+    if (!icon) return null;
+    const motionProps =
+      iconAnimation === "launch"
+        ? {
+            whileHover: { y: -2, x: 2 },
+            transition: { type: "spring", stiffness: 300 },
+          }
+        : iconAnimation === "slide"
+        ? { whileHover: { x: 5 }, transition: { duration: 0.25, ease: "easeOut" } }
+        : {};
+
+    return (
+      <motion.span {...motionProps}>{icon}</motion.span>
+    );
+  };
+
   return (
     <motion.button
       onClick={onClick}
@@ -128,9 +147,9 @@ export const AnimatedButton = ({
           : {}
       }
     >
-      {icon && iconPosition === "left" && <span className="mr-2">{icon}</span>}
+      {icon && iconPosition === "left" && <span className="mr-2">{renderIcon()}</span>}
       {children}
-      {icon && iconPosition === "right" && <span className="ml-2">{icon}</span>}
+      {icon && iconPosition === "right" && <span className="ml-2">{renderIcon()}</span>}
     </motion.button>
   )
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import Particles, { initParticlesEngine } from "@tsparticles/react"
 import { loadSlim } from "@tsparticles/slim"
 import type { Container, ISourceOptions } from "@tsparticles/engine"
@@ -30,9 +30,8 @@ export default function AnimatedBackground() {
 
   const isDark = mounted ? theme === "dark" : true
 
-  if (!init) return null
-
-  const options: ISourceOptions = {
+  // Memoize configuration so it's only recreated when theme changes (avoids unnecessary re-inits)
+  const options = useMemo<ISourceOptions>(() => ({
     fullScreen: false,
     background: {
       color: {
@@ -55,9 +54,7 @@ export default function AnimatedBackground() {
           enable: true,
           mode: "push",
         },
-        resize: {
-          enable: true,
-        },
+        resize: { enable: true },
       },
       modes: {
         grab: {
@@ -142,7 +139,9 @@ export default function AnimatedBackground() {
     smooth: true,
     pauseOnBlur: true,
     pauseOnOutsideViewport: true,
-  }
+  }), [isDark])
+
+  if (!init) return null
 
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden">

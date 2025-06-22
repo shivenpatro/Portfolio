@@ -22,6 +22,7 @@ import {
   Download,
   ArrowRight,
   Phone,
+  Cloud,
 } from "lucide-react"
 
 // Import static components
@@ -38,6 +39,7 @@ import { ClientOnly } from "@/components/client-only"
 import { HydrationBoundary } from "@/components/hydration-boundary"
 import { useIsMobile } from "@/hooks/use-mobile"
 import ScrambledText from "@/components/scrambled-text"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 // Dynamic imports for components that might cause hydration issues
 const PortfolioSidekick = dynamic(() => import("@/components/portfolio-sidekick"), { ssr: false });
@@ -50,6 +52,7 @@ const ScrollProgress = dynamic(() => import("@/components/scroll-progress").then
 const ScrollToTop = dynamic(() => import("@/components/scroll-to-top").then(mod => mod.ScrollToTop), { ssr: false })
 const AnimatedName = dynamic(() => import("@/components/animated-name").then(mod => mod.AnimatedName), { ssr: false })
 const AnimatedBackground = dynamic(() => import("@/components/animated-background"), { ssr: false })
+const ProjectsCarousel = dynamic(() => import("@/components/projects-carousel").then(mod => mod.default), { ssr: false })
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home")
@@ -168,8 +171,8 @@ export default function Home() {
 
   const handleDownloadResume = () => {
     const link = document.createElement('a');
-    link.href = '/Shiven_Patro_Resume.pdf';
-    link.download = 'Shiven_Patro_Resume.pdf';
+    link.href = '/Shiven_CV.pdf';
+    link.download = 'Shiven_CV.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -331,27 +334,16 @@ export default function Home() {
               ))}
             </motion.ul>
           </div>
-          <motion.button
-            onClick={() => {
-              const newDarkMode = !isDarkMode
-              setIsDarkMode(newDarkMode)
-              if (newDarkMode) {
-                document.documentElement.classList.add("dark")
-                localStorage.setItem("theme", "dark")
-              } else {
-                document.documentElement.classList.remove("dark")
-                localStorage.setItem("theme", "light")
-              }
-            }}
-            className="p-2 rounded-full bg-muted border border-border"
-            whileHover={{ scale: 1.05 }}
-            whileInView={isMobile ? { scale: 1.02 } : {}}
-            viewport={{ once: true, amount: 0.8 }}
-            whileTap={{ scale: 0.9 }}
-            aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-          >
-            {isDarkMode ? <Sun className="w-5 h-5 sm:w-6 sm:h-6" /> : <Moon className="w-5 h-5 sm:w-6 sm:h-6" />}
-          </motion.button>
+          <ThemeToggle isDark={isDarkMode} onToggle={(v: boolean)=>{
+            setIsDarkMode(v);
+            if(v){
+              document.documentElement.classList.add("dark");
+              localStorage.setItem("theme","dark");
+            }else{
+              document.documentElement.classList.remove("dark");
+              localStorage.setItem("theme","light");
+            }
+          }}/>
         </nav>
       </header>
 
@@ -383,6 +375,7 @@ export default function Home() {
                   variant="primary"
                   icon={<ArrowRight className="w-5 h-5" />}
                   iconPosition="right"
+                  iconAnimation="slide"
                 >
                   Learn More
                 </AnimatedButton>
@@ -391,6 +384,7 @@ export default function Home() {
                   variant="outline"
                   icon={<Download className="w-5 h-5" />}
                   iconPosition="right"
+                  iconAnimation="launch"
                 >
                   Download Resume
                 </AnimatedButton>
@@ -415,40 +409,43 @@ export default function Home() {
           <ClientOnly>
             <AnimatedBackground />
           </ClientOnly>
-          
-          <section id="about" className="py-20 sm:py-32 px-4 relative">
-            <div className="absolute inset-0 bg-gradient-to-b from-background/50 to-transparent pointer-events-none"></div>
+
+        <section id="about" className="py-20 sm:py-32 px-4 relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-background/50 to-transparent pointer-events-none"></div>
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl sm:text-4xl font-bold mb-16 text-center text-foreground">
               <ScrambledText radius={120} duration={1} speed={0.4}>
                 <DecryptedText
-                  text="About Me"
+              text="About Me"
                   animateOn="view"
                   revealDirection="center"
                   sequential
                   className="text-foreground"
-                />
+            />
               </ScrambledText>
             </h2>
 
             <div className="flex flex-col md:flex-row items-center">
               <RevealElement direction="left" className="mb-12 md:mb-0 md:mr-16">
-                <ClientOnly>
-                  <ThreeDCard className="w-48 h-48 sm:w-64 sm:h-64 overflow-hidden">
-                    <img
-                      src="./images/profile-photo.jpg"
-                      alt="Shiven Patro"
-                      className="rounded-full w-full h-full object-cover object-top"
-                    />
-                  </ThreeDCard>
-                </ClientOnly>
+                <div className="relative group">
+                  <div className="absolute inset-0 rounded-full bg-emerald-500/70 blur-[5rem] opacity-0 group-hover:opacity-100 transition duration-300 pointer-events-none -z-10" />
+                  <ClientOnly>
+                    <ThreeDCard className="w-48 h-48 sm:w-64 sm:h-64 overflow-hidden">
+                      <img
+                        src="./images/profile-photo.jpg"
+                        alt="Shiven Patro"
+                        className="rounded-full w-full h-full object-cover object-top"
+                      />
+                    </ThreeDCard>
+                  </ClientOnly>
+                </div>
               </RevealElement>
 
               <div>
                 <p className="text-lg sm:text-xl mb-6 leading-relaxed text-foreground">
                   <ScrambledText radius={120} duration={1} speed={0.4}>
                     <DecryptedText
-                      text="Hello! I'm Shiven Patro, an aspiring Data Science Engineer with a strong academic foundation and experience in Web Development. Currently pursuing BTech CSE at VIT-AP with a CGPA of 8.5/10."
+                  text="Hello! I'm Shiven Patro, an aspiring Data Science Engineer with a strong academic foundation and experience in Web Development. Currently pursuing BTech CSE at VIT-AP with a CGPA of 8.5/10."
                       animateOn="view"
                       sequential
                       revealDirection="start"
@@ -462,14 +459,14 @@ export default function Home() {
                 <p className="text-lg sm:text-xl leading-relaxed text-foreground">
                   <ScrambledText radius={120} duration={1} speed={0.4}>
                     <DecryptedText
-                      text="I'm passionately leveraging AI & LLM models to gain expertise in Data Science, Machine Learning, and other software domains, including Cloud Computing and Web Technologies, to build web applications with simple solutions."
+                  text="I'm passionately leveraging AI & LLM models to gain expertise in Data Science, Machine Learning, and other software domains, including Cloud Computing and Web Technologies, to build web applications with simple solutions."
                       animateOn="view"
                       sequential
                       revealDirection="start"
                       useOriginalCharsOnly
                       lockHeight
                       speed={15}
-                    />
+                />
                   </ScrambledText>
                 </p>
 
@@ -529,13 +526,7 @@ export default function Home() {
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl sm:text-4xl font-bold mb-16 text-center text-foreground">
               <ScrambledText radius={120} duration={1} speed={0.4}>
-                <DecryptedText
-                  text="My Skills"
-                  animateOn="view"
-                  revealDirection="center"
-                  sequential
-                  className="text-foreground"
-                />
+                <DecryptedText text="My Skills" animateOn="view" revealDirection="center" sequential />
               </ScrambledText>
             </h2>
 
@@ -623,37 +614,45 @@ export default function Home() {
                   { skill: "Java", icon: <Cpu className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
                   { skill: "JavaScript", icon: <Globe className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
                   { skill: "HTML/CSS", icon: <Layers className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                  { skill: "TypeScript", icon: <Code className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
                   { skill: "React.js", icon: <Code className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
                   { skill: "Node.js", icon: <Server className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                  { skill: "Docker", icon: <Layers className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                  { skill: "AWS", icon: <Cloud className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
                   { skill: "SQL", icon: <Database className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                  { skill: "Pandas", icon: <Database className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
                   { skill: "Git/GitHub", icon: <Github className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
                 ].map((item, index) => (
                   <ClientOnly key={item.skill}>
                     <ParallaxScroll speed={0.2} direction="up">
-                      <ThreeDCard className="h-full">
-                        <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center h-full border border-gray-200 dark:border-gray-800">
-                          <motion.div
-                            className="text-4xl mb-4 mx-auto bg-gray-100 dark:bg-gray-800 p-4 rounded-full w-16 h-16 flex items-center justify-center"
-                            whileHover={{ rotateY: 360 }}
-                            whileInView={{ rotateY: isMobile ? 360 : 0 }}
-                            viewport={{ once: true, amount: 0.8 }}
-                            transition={{ duration: 0.5 }}
-                          >
-                            {item.icon}
-                          </motion.div>
-                          <motion.div
-                            className="font-medium text-base text-gray-900 dark:text-white"
-                            whileHover={{ scale: 1.02 }}
-                            whileInView={{ scale: isMobile ? 1.02 : 1 }}
-                            viewport={{ once: true, amount: 0.8 }}
-                            transition={{ duration: 0.3 }}
-                          >
-                            <ScrambledText>
-                              <DecryptedText text={item.skill} animateOn="view" sequential />
-                            </ScrambledText>
-                          </motion.div>
-                        </div>
-                      </ThreeDCard>
+                      <div className="relative group h-full">
+                        {/* Glow overlay */}
+                        <div className="absolute inset-0 rounded-lg bg-emerald-500/60 blur-[5rem] opacity-0 group-hover:opacity-100 transition duration-300 pointer-events-none -z-10" />
+                        <ThreeDCard className="h-full">
+                          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center h-full border border-gray-200 dark:border-gray-800">
+                            <motion.div
+                              className="text-4xl mb-4 mx-auto bg-gray-100 dark:bg-gray-800 p-4 rounded-full w-16 h-16 flex items-center justify-center"
+                              whileHover={{ rotateY: 360 }}
+                              whileInView={{ rotateY: isMobile ? 360 : 0 }}
+                              viewport={{ once: true, amount: 0.8 }}
+                              transition={{ duration: 0.5 }}
+                            >
+                              {item.icon}
+                            </motion.div>
+                            <motion.div
+                              className="font-medium text-base text-gray-900 dark:text-white"
+                              whileHover={{ scale: 1.02 }}
+                              whileInView={{ scale: isMobile ? 1.02 : 1 }}
+                              viewport={{ once: true, amount: 0.8 }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              <ScrambledText>
+                                <DecryptedText text={item.skill} animateOn="view" sequential />
+                              </ScrambledText>
+                            </motion.div>
+                          </div>
+                        </ThreeDCard>
+                      </div>
                     </ParallaxScroll>
                   </ClientOnly>
                 ))}
@@ -686,62 +685,7 @@ export default function Home() {
               />
             </RevealElement>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-12">
-              <AnimatePresence mode="popLayout">
-                {filteredProjects.map((project, index) => (
-                  <RevealElement key={project.title} delay={index * 0.1} direction="up">
-                    <ThreeDCard className="h-full">
-                      <div className="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-sm border border-gray-200 dark:border-gray-800 h-full flex flex-col">
-                        <div className="relative h-56 overflow-hidden group">
-                          <motion.div
-                            className="absolute inset-0 bg-gray-900/30"
-                            whileHover={{ opacity: 0.3 }}
-                            whileInView={isMobile ? { opacity: 0.3 } : {}}
-                            viewport={{ once: true, amount: 0.5 }}
-                            transition={{ duration: 0.3 }}
-                          />
-                          <motion.img
-                            src={project.image}
-                            alt={project.title}
-                            className="w-full h-full object-cover"
-                            whileHover={{ scale: 1.1 }}
-                            whileInView={isMobile ? { scale: 1.05 } : {}}
-                            viewport={{ once: true, amount: 0.5 }}
-                            transition={{ duration: 0.5 }}
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                          <h3 className="absolute bottom-4 left-4 text-xl sm:text-2xl font-bold text-white z-20">
-                            <DecryptedText text={project.title} animateOn="view" sequential parentClassName="text-white" />
-                          </h3>
-                        </div>
-                        <div className="p-6 flex-grow flex flex-col">
-                          <p className="mb-4">{project.description}</p>
-                          <div className="flex flex-wrap gap-2 mb-4 mt-auto">
-                            {project.tags.map((tag, i) => (
-                              <span key={i} className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs rounded-full">
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                          <motion.a
-                            href={project.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-300 inline-flex items-center font-medium mt-auto"
-                            whileHover={{ x: 5 }}
-                            whileInView={isMobile ? { x: 3 } : {}}
-                            viewport={{ once: true, amount: 0.8 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            View Project <ExternalLink className="ml-1 w-4 h-4" />
-                          </motion.a>
-                        </div>
-                      </div>
-                    </ThreeDCard>
-                  </RevealElement>
-                ))}
-              </AnimatePresence>
-            </div>
+            <ProjectsCarousel projects={filteredProjects} onContactClick={() => scrollToSection('contact')} />
           </div>
         </section>
 
@@ -751,12 +695,12 @@ export default function Home() {
             <h2 className="text-3xl sm:text-4xl font-bold mb-16 text-center text-gray-900 dark:text-white">
               <ScrambledText radius={120} duration={1} speed={0.4}>
                 <DecryptedText
-                  text="Get In Touch"
+              text="Get In Touch"
                   animateOn="view"
                   revealDirection="center"
                   sequential
                   className="text-gray-900 dark:text-white"
-                />
+            />
               </ScrambledText>
             </h2>
 
@@ -768,8 +712,8 @@ export default function Home() {
                   </h3>
                   <p className="mb-6 text-gray-900 dark:text-gray-100">
                     <ScrambledText>
-                      Feel free to reach out to me through any of these channels. I'm always open to discussing new
-                      projects, creative ideas, or opportunities to be part of your vision.
+                    Feel free to reach out to me through any of these channels. I'm always open to discussing new
+                    projects, creative ideas, or opportunities to be part of your vision.
                     </ScrambledText>
                   </p>
 

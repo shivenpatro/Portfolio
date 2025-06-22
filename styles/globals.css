@@ -4,6 +4,7 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 @layer utilities {
@@ -91,4 +92,44 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* ----- Swiper custom styles for Projects Carousel ----- */
+.swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.4);
+  opacity: 1;
+}
+.dark .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.2);
+}
+.swiper-pagination-bullet-active {
+  background: #4CAF50 !important; /* primary accent */
+}
+
+/* === Theme Toggle Circular Reveal Helper === */
+body.theme-changing::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: var(--next-bg);
+  transform-origin: var(--reveal-x) var(--reveal-y);
+  transform: scale(0);
+  border-radius: 50%;
+  transition: transform 0.6s ease-out, opacity 0.3s ease-out 0.6s;
+  opacity: 1;
+  z-index: 9999;
+  pointer-events: none;
+}
+body.theme-changing.reveal-active::before {
+  transform: scale(1);
+}
+/* fade out after theme swap */
+body.theme-changing.reveal-fade::before {
+  opacity: 0;
+}
+/* === End Helper === */
+
+/* optional: smoother text/icon colour change */
+body.theme-changing *, body.theme-changing svg {
+  transition: color 0.35s ease, fill 0.35s ease;
 }
