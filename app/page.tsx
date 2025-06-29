@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { debounce } from "lodash"
 import dynamic from "next/dynamic"
@@ -43,7 +43,6 @@ import { ThemeToggle } from "@/components/theme-toggle"
 
 // Dynamic imports for components that might cause hydration issues
 const PortfolioSidekick = dynamic(() => import("@/components/portfolio-sidekick"), { ssr: false });
-const PixelatedImage = dynamic(() => import("@/components/pixelated-image").then(mod => mod.default), { ssr: false })
 const AnimatedCursor = dynamic(() => import("@/components/animated-cursor").then(mod => mod.AnimatedCursor), { ssr: false })
 const ParallaxScroll = dynamic(() => import("@/components/parallax-scroll").then(mod => mod.ParallaxScroll), { ssr: false })
 const ThreeDCard = dynamic(() => import("@/components/3d-card").then(mod => mod.ThreeDCard), { ssr: false })
@@ -247,19 +246,6 @@ export default function Home() {
       <ClientOnly>
         {!isTouchDevice && <AnimatedCursor />}
       </ClientOnly>
-      <div className="absolute top-0 left-0 w-full h-screen z-0">
-        <ClientOnly>
-          <PixelatedImage 
-            src="https://images.unsplash.com/photo-1709990742347-07f67cc136cf?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Hero Background"
-            className="w-full h-full object-cover object-center"
-            grid={15}
-            mouse={0.13}
-            strength={0.15}
-            relaxation={0.9}
-          />
-        </ClientOnly>
-      </div>
       <ClientOnly>
         <ScrollProgress color="#34d399" height={3} />
       </ClientOnly>
