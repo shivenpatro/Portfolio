@@ -40,8 +40,6 @@ import { HydrationBoundary } from "@/components/hydration-boundary"
 import { useIsMobile } from "@/hooks/use-mobile"
 import ScrambledText from "@/components/scrambled-text"
 import { ThemeToggle } from "@/components/theme-toggle"
-
-// New Parallax Components
 import { ParallaxContainer } from "@/components/parallax-container"
 import { ParallaxBackground } from "@/components/parallax-background"
 import { ParallaxText } from "@/components/parallax-text"
@@ -253,14 +251,10 @@ export default function Home() {
       <ClientOnly>
         {!isTouchDevice && <AnimatedCursor />}
       </ClientOnly>
-      
-      {/* Floating Elements for Parallax Effect */}
       <ClientOnly>
         <FloatingElements />
       </ClientOnly>
-
-      {/* Hero Background with Parallax */}
-      <ParallaxBackground className="fixed inset-0 z-0" speed={0.5}>
+      <div className="absolute top-0 left-0 w-full h-screen z-0">
         <ClientOnly>
           <PixelatedImage 
             src="https://images.unsplash.com/photo-1709990742347-07f67cc136cf?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -272,8 +266,7 @@ export default function Home() {
             relaxation={0.9}
           />
         </ClientOnly>
-      </ParallaxBackground>
-
+      </div>
       <ClientOnly>
         <ScrollProgress color="#34d399" height={3} />
       </ClientOnly>
@@ -363,48 +356,58 @@ export default function Home() {
 
       <main className="relative z-10">
         <section id="home" className="h-screen flex items-center justify-center relative overflow-hidden">
-          <ParallaxContainer speed={0.3} className="absolute inset-0 z-10 flex items-center justify-center">
-            <div className="w-full max-w-4xl px-4">
-              <AnimatedName
-                name="Shiven Patro"
-                className="mb-8 text-center"
-                fontSize="clamp(3rem, 10vw, 6rem)"
-              />
-            </div>
-          </ParallaxContainer>
+          <ParallaxBackground speed={0.3} className="absolute inset-0 z-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
+          </ParallaxBackground>
 
-          <ParallaxContainer speed={0.2} className="relative z-20 text-center w-full max-w-xl mx-auto px-4 mt-32">
-            <RevealElement>
-              <div className="h-12 overflow-hidden text-center">
-                <TextCarousel
-                  phrases={["Data Science Engineer", "Web Developer", "AI Enthusiast"]}
-                  className="text-xl sm:text-2xl md:text-3xl font-light text-muted-foreground"
+          <div className="absolute inset-0 z-10 flex items-center justify-center">
+            <div className="w-full max-w-4xl px-4">
+              <ParallaxContainer speed={0.2}>
+                <AnimatedName
+                  name="Shiven Patro"
+                  className="mb-8 text-center"
+                  fontSize="clamp(3rem, 10vw, 6rem)"
                 />
-              </div>
-            </RevealElement>
-            <RevealElement delay={0.4} direction="up">
-              <div className="mt-12 flex flex-wrap justify-center gap-4">
-                <AnimatedButton
-                  onClick={() => scrollToSection("about")}
-                  variant="primary"
-                  icon={<ArrowRight className="w-5 h-5" />}
-                  iconPosition="right"
-                  iconAnimation="slide"
-                >
-                  Learn More
-                </AnimatedButton>
-                <AnimatedButton
-                  onClick={handleDownloadResume}
-                  variant="outline"
-                  icon={<Download className="w-5 h-5" />}
-                  iconPosition="right"
-                  iconAnimation="launch"
-                >
-                  Download Resume
-                </AnimatedButton>
-              </div>
-            </RevealElement>
-          </ParallaxContainer>
+              </ParallaxContainer>
+            </div>
+          </div>
+
+          <div className="relative z-20 text-center w-full max-w-xl mx-auto px-4 mt-32">
+            <ParallaxContainer speed={0.4}>
+              <RevealElement>
+                <div className="h-12 overflow-hidden text-center">
+                  <TextCarousel
+                    phrases={["Data Science Engineer", "Web Developer", "AI Enthusiast"]}
+                    className="text-xl sm:text-2xl md:text-3xl font-light text-muted-foreground"
+                  />
+                </div>
+              </RevealElement>
+            </ParallaxContainer>
+            <ParallaxContainer speed={0.6}>
+              <RevealElement delay={0.4} direction="up">
+                <div className="mt-12 flex flex-wrap justify-center gap-4">
+                  <AnimatedButton
+                    onClick={() => scrollToSection("about")}
+                    variant="primary"
+                    icon={<ArrowRight className="w-5 h-5" />}
+                    iconPosition="right"
+                    iconAnimation="slide"
+                  >
+                    Learn More
+                  </AnimatedButton>
+                  <AnimatedButton
+                    onClick={handleDownloadResume}
+                    variant="outline"
+                    icon={<Download className="w-5 h-5" />}
+                    iconPosition="right"
+                    iconAnimation="launch"
+                  >
+                    Download Resume
+                  </AnimatedButton>
+                </div>
+              </RevealElement>
+            </ParallaxContainer>
+          </div>
 
           <motion.div
             className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center cursor-pointer z-20"
@@ -425,24 +428,19 @@ export default function Home() {
           </ClientOnly>
 
         <section id="about" className="py-20 sm:py-32 px-4 relative">
-          <ParallaxBackground className="absolute inset-0 bg-gradient-to-b from-background/50 to-transparent pointer-events-none" speed={0.2} />
-          <div className="max-w-5xl mx-auto">
-            <ParallaxText speed={0.1} direction="right">
+          <ParallaxBackground speed={0.2} className="absolute inset-0">
+            <div className="bg-gradient-to-b from-background/50 to-transparent pointer-events-none h-full" />
+          </ParallaxBackground>
+          
+          <div className="max-w-5xl mx-auto relative z-10">
+            <ParallaxText speed={0.3} direction="right">
               <h2 className="text-3xl sm:text-4xl font-bold mb-16 text-center text-foreground">
-                <ScrambledText radius={120} duration={1} speed={0.4}>
-                  <DecryptedText
-                text="About Me"
-                    animateOn="view"
-                    revealDirection="center"
-                    sequential
-                    className="text-foreground"
-              />
-                </ScrambledText>
+                About Me
               </h2>
             </ParallaxText>
 
             <div className="flex flex-col md:flex-row items-center">
-              <ParallaxContainer speed={0.3} direction="up" className="mb-12 md:mb-0 md:mr-16">
+              <ParallaxContainer speed={0.4} className="mb-12 md:mb-0 md:mr-16">
                 <RevealElement direction="left">
                   <div className="relative group">
                     <div className="absolute inset-0 rounded-full bg-emerald-500/70 blur-[5rem] opacity-0 group-hover:opacity-100 transition duration-300 pointer-events-none -z-10" />
@@ -459,105 +457,86 @@ export default function Home() {
                 </RevealElement>
               </ParallaxContainer>
 
-              <ParallaxContainer speed={0.15}>
-                <p className="text-lg sm:text-xl mb-6 leading-relaxed text-foreground">
-                  <ScrambledText radius={120} duration={1} speed={0.4}>
-                    <DecryptedText
-                  text="Hello! I'm Shiven Patro, an aspiring Data Science Engineer with a strong academic foundation and experience in Web Development. Currently pursuing BTech CSE at VIT-AP with a CGPA of 8.5/10."
-                      animateOn="view"
-                      sequential
-                      revealDirection="start"
-                      speed={15}
-                      useOriginalCharsOnly
-                      lockHeight
+              <ParallaxContainer speed={0.2}>
+                <div>
+                  <p className="text-lg sm:text-xl mb-6 leading-relaxed text-foreground">
+                    Hello! I'm Shiven Patro, an aspiring Data Science Engineer with a strong academic foundation and experience in Web Development. Currently pursuing BTech CSE at VIT-AP with a CGPA of 8.5/10.
+                  </p>
+
+                  <p className="text-lg sm:text-xl leading-relaxed text-foreground">
+                    I'm passionately leveraging AI & LLM models to gain expertise in Data Science, Machine Learning, and other software domains, including Cloud Computing and Web Technologies, to build web applications with simple solutions.
+                  </p>
+
+                  <RevealElement delay={0.6} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 place-items-center mt-12">
+                    <StatCard 
+                      icon={<Code className="w-6 h-6 text-primary" />}
+                      value={10}
+                      label="Projects"
+                      delay={0}
                     />
-                  </ScrambledText>
-                </p>
+                    <StatCard 
+                      icon={<Award className="w-6 h-6 text-primary" />}
+                      value={8.5}
+                      label="CGPA"
+                      decimals={1}
+                      delay={0.2}
+                    />
+                    <StatCard 
+                      icon={<Cpu className="w-6 h-6 text-primary" />}
+                      value={5}
+                      label="Technologies"
+                      delay={0.4}
+                    />
+                    <StatCard 
+                      icon={<Globe className="w-6 h-6 text-primary" />}
+                      value={2}
+                      label="Hackathons"
+                      delay={0.6}
+                    />
+                  </RevealElement>
 
-                <p className="text-lg sm:text-xl leading-relaxed text-foreground">
-                  <ScrambledText radius={120} duration={1} speed={0.4}>
-                    <DecryptedText
-                  text="I'm passionately leveraging AI & LLM models to gain expertise in Data Science, Machine Learning, and other software domains, including Cloud Computing and Web Technologies, to build web applications with simple solutions."
-                      animateOn="view"
-                      sequential
-                      revealDirection="start"
-                      useOriginalCharsOnly
-                      lockHeight
-                      speed={15}
-                />
-                  </ScrambledText>
-                </p>
-
-                <RevealElement delay={0.6} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 place-items-center mt-12">
-                  <StatCard 
-                    icon={<Code className="w-6 h-6 text-primary" />}
-                    value={10}
-                    label="Projects"
-                    delay={0}
-                  />
-                  <StatCard 
-                    icon={<Award className="w-6 h-6 text-primary" />}
-                    value={8.5}
-                    label="CGPA"
-                    decimals={1}
-                    delay={0.2}
-                  />
-                  <StatCard 
-                    icon={<Cpu className="w-6 h-6 text-primary" />}
-                    value={5}
-                    label="Technologies"
-                    delay={0.4}
-                  />
-                  <StatCard 
-                    icon={<Globe className="w-6 h-6 text-primary" />}
-                    value={2}
-                    label="Hackathons"
-                    delay={0.6}
-                  />
-                </RevealElement>
-
-                <RevealElement delay={0.8} className="mt-8 flex flex-wrap gap-4">
-                  <AnimatedButton
-                    onClick={() => scrollToSection("contact")}
-                    variant="primary"
-                    icon={<Mail className="w-5 h-5" />}
-                    iconPosition="left"
-                  >
-                    Contact Me
-                  </AnimatedButton>
-                  <AnimatedButton
-                    onClick={handleDownloadResume}
-                    variant="outline"
-                    icon={<Download className="w-5 h-5" />}
-                    iconPosition="left"
-                  >
-                    Download Resume
-                  </AnimatedButton>
-                </RevealElement>
+                  <RevealElement delay={0.8} className="mt-8 flex flex-wrap gap-4">
+                    <AnimatedButton
+                      onClick={() => scrollToSection("contact")}
+                      variant="primary"
+                      icon={<Mail className="w-5 h-5" />}
+                      iconPosition="left"
+                    >
+                      Contact Me
+                    </AnimatedButton>
+                    <AnimatedButton
+                      onClick={handleDownloadResume}
+                      variant="outline"
+                      icon={<Download className="w-5 h-5" />}
+                      iconPosition="left"
+                    >
+                      Download Resume
+                    </AnimatedButton>
+                  </RevealElement>
+                </div>
               </ParallaxContainer>
             </div>
           </div>
         </section>
 
         <section id="skills" className="py-20 sm:py-32 px-4 relative">
-          <ParallaxBackground className="absolute inset-0 bg-gradient-to-b from-background/50 to-transparent pointer-events-none" speed={0.3} />
-          <div className="max-w-5xl mx-auto">
-            <ParallaxText speed={0.2} direction="left">
+          <ParallaxBackground speed={0.15} className="absolute inset-0">
+            <div className="bg-gradient-to-b from-background/50 to-transparent pointer-events-none h-full" />
+          </ParallaxBackground>
+          
+          <div className="max-w-5xl mx-auto relative z-10">
+            <ParallaxText speed={0.25} direction="left">
               <h2 className="text-3xl sm:text-4xl font-bold mb-16 text-center text-foreground">
-                <ScrambledText radius={120} duration={1} speed={0.4}>
-                  <DecryptedText text="My Skills" animateOn="view" revealDirection="center" sequential />
-                </ScrambledText>
+                My Skills
               </h2>
             </ParallaxText>
 
-            <ParallaxContainer speed={0.1} className="mb-16">
-              <RevealElement>
+            <ParallaxContainer speed={0.3}>
+              <RevealElement className="mb-16">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
                     <h3 className="text-xl font-semibold mb-6 text-foreground">
-                      <ScrambledText radius={120} duration={1} speed={0.4}>
-                        <DecryptedText text="Programming Languages" animateOn="view" sequential />
-                      </ScrambledText>
+                      Programming Languages
                     </h3>
                     <div className="space-y-6">
                       {[
@@ -570,9 +549,7 @@ export default function Home() {
                         <div key={item.skill} className="mb-4">
                           <div className="flex justify-between mb-1">
                             <span className="text-base font-medium text-foreground">
-                              <ScrambledText>
-                                <DecryptedText text={item.skill} animateOn="view" sequential />
-                              </ScrambledText>
+                              {item.skill}
                             </span>
                             <span className="text-sm font-medium text-muted-foreground">{item.percentage}%</span>
                           </div>
@@ -591,9 +568,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold mb-6 text-foreground">
-                      <ScrambledText radius={120} duration={1} speed={0.4}>
-                        <DecryptedText text="Frameworks & Tools" animateOn="view" sequential />
-                      </ScrambledText>
+                      Frameworks & Tools
                     </h3>
                     <div className="space-y-6">
                       {[
@@ -606,9 +581,7 @@ export default function Home() {
                         <div key={item.skill} className="mb-4">
                           <div className="flex justify-between mb-1">
                             <span className="text-base font-medium text-foreground">
-                              <ScrambledText>
-                                <DecryptedText text={item.skill} animateOn="view" sequential />
-                              </ScrambledText>
+                              {item.skill}
                             </span>
                             <span className="text-sm font-medium text-muted-foreground">{item.percentage}%</span>
                           </div>
@@ -629,73 +602,74 @@ export default function Home() {
               </RevealElement>
             </ParallaxContainer>
 
-            <RevealElement>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
-                {[
-                  { skill: "Python", icon: <Code className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                  { skill: "Java", icon: <Cpu className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                  { skill: "JavaScript", icon: <Globe className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                  { skill: "HTML/CSS", icon: <Layers className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                  { skill: "TypeScript", icon: <Code className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                  { skill: "React.js", icon: <Code className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                  { skill: "Node.js", icon: <Server className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                  { skill: "Docker", icon: <Layers className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                  { skill: "AWS", icon: <Cloud className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                  { skill: "SQL", icon: <Database className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                  { skill: "Pandas", icon: <Database className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                  { skill: "Git/GitHub", icon: <Github className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                ].map((item, index) => (
-                  <ClientOnly key={item.skill}>
-                    <ParallaxScroll speed={0.2} direction="up">
-                      <div className="relative group h-full">
-                        {/* Glow overlay */}
-                        <div className="absolute inset-0 rounded-lg bg-emerald-500/60 blur-[5rem] opacity-0 group-hover:opacity-100 transition duration-300 pointer-events-none -z-10" />
-                        <ThreeDCard className="h-full">
-                          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center h-full border border-gray-200 dark:border-gray-800">
-                            <motion.div
-                              className="text-4xl mb-4 mx-auto bg-gray-100 dark:bg-gray-800 p-4 rounded-full w-16 h-16 flex items-center justify-center"
-                              whileHover={{ rotateY: 360 }}
-                              whileInView={{ rotateY: isMobile ? 360 : 0 }}
-                              viewport={{ once: true, amount: 0.8 }}
-                              transition={{ duration: 0.5 }}
-                            >
-                              {item.icon}
-                            </motion.div>
-                            <motion.div
-                              className="font-medium text-base text-gray-900 dark:text-white"
-                              whileHover={{ scale: 1.02 }}
-                              whileInView={{ scale: isMobile ? 1.02 : 1 }}
-                              viewport={{ once: true, amount: 0.8 }}
-                              transition={{ duration: 0.3 }}
-                            >
-                              <ScrambledText>
-                                <DecryptedText text={item.skill} animateOn="view" sequential />
-                              </ScrambledText>
-                            </motion.div>
-                          </div>
-                        </ThreeDCard>
-                      </div>
-                    </ParallaxScroll>
-                  </ClientOnly>
-                ))}
-              </div>
-            </RevealElement>
+            <ParallaxContainer speed={0.4}>
+              <RevealElement>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
+                  {[
+                    { skill: "Python", icon: <Code className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                    { skill: "Java", icon: <Cpu className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                    { skill: "JavaScript", icon: <Globe className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                    { skill: "HTML/CSS", icon: <Layers className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                    { skill: "TypeScript", icon: <Code className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                    { skill: "React.js", icon: <Code className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                    { skill: "Node.js", icon: <Server className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                    { skill: "Docker", icon: <Layers className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                    { skill: "AWS", icon: <Cloud className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                    { skill: "SQL", icon: <Database className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                    { skill: "Pandas", icon: <Database className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                    { skill: "Git/GitHub", icon: <Github className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                  ].map((item, index) => (
+                    <ClientOnly key={item.skill}>
+                      <ParallaxScroll speed={0.2} direction="up">
+                        <div className="relative group h-full">
+                          {/* Glow overlay */}
+                          <div className="absolute inset-0 rounded-lg bg-emerald-500/60 blur-[5rem] opacity-0 group-hover:opacity-100 transition duration-300 pointer-events-none -z-10" />
+                          <ThreeDCard className="h-full">
+                            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 text-center h-full border border-gray-200 dark:border-gray-800">
+                              <motion.div
+                                className="text-4xl mb-4 mx-auto bg-gray-100 dark:bg-gray-800 p-4 rounded-full w-16 h-16 flex items-center justify-center"
+                                whileHover={{ rotateY: 360 }}
+                                whileInView={{ rotateY: isMobile ? 360 : 0 }}
+                                viewport={{ once: true, amount: 0.8 }}
+                                transition={{ duration: 0.5 }}
+                              >
+                                {item.icon}
+                              </motion.div>
+                              <motion.div
+                                className="font-medium text-base text-gray-900 dark:text-white"
+                                whileHover={{ scale: 1.02 }}
+                                whileInView={{ scale: isMobile ? 1.02 : 1 }}
+                                viewport={{ once: true, amount: 0.8 }}
+                                transition={{ duration: 0.3 }}
+                              >
+                                {item.skill}
+                              </motion.div>
+                            </div>
+                          </ThreeDCard>
+                        </div>
+                      </ParallaxScroll>
+                    </ClientOnly>
+                  ))}
+                </div>
+              </RevealElement>
+            </ParallaxContainer>
           </div>
         </section>
 
         <section id="projects" className="py-20 sm:py-32 px-4 relative">
-          <ParallaxBackground className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-transparent dark:from-gray-900/10 dark:to-transparent pointer-events-none" speed={0.4} />
-          <div className="max-w-6xl mx-auto">
-            <ParallaxText speed={0.3} direction="right">
+          <ParallaxBackground speed={0.1} className="absolute inset-0">
+            <div className="bg-gradient-to-b from-gray-50/50 to-transparent dark:from-gray-900/10 dark:to-transparent pointer-events-none h-full" />
+          </ParallaxBackground>
+          
+          <div className="max-w-6xl mx-auto relative z-10">
+            <ParallaxText speed={0.2} direction="right">
               <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-center text-gray-900 dark:text-white">
-                <ScrambledText radius={120} duration={1} speed={0.4}>
-                  <DecryptedText text="My Projects" animateOn="view" sequential revealDirection="center" />
-                </ScrambledText>
+                My Projects
               </h2>
             </ParallaxText>
 
-            <ParallaxContainer speed={0.1} className="mb-8">
-              <RevealElement>
+            <ParallaxContainer speed={0.3}>
+              <RevealElement className="mb-8">
                 <AnimatedTabs
                   tabs={[
                     { id: "all", label: "All Projects" },
@@ -711,41 +685,34 @@ export default function Home() {
               </RevealElement>
             </ParallaxContainer>
 
-            <ParallaxContainer speed={0.05}>
+            <ParallaxContainer speed={0.4}>
               <ProjectsCarousel projects={filteredProjects} onContactClick={() => scrollToSection('contact')} />
             </ParallaxContainer>
           </div>
         </section>
 
         <section id="contact" className="py-20 sm:py-32 px-4 relative">
-          <ParallaxBackground className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-transparent dark:from-gray-900/10 dark:to-transparent pointer-events-none" speed={0.2} />
-          <div className="max-w-5xl mx-auto">
-            <ParallaxText speed={0.2} direction="left">
+          <ParallaxBackground speed={0.1} className="absolute inset-0">
+            <div className="bg-gradient-to-b from-gray-50/50 to-transparent dark:from-gray-900/10 dark:to-transparent pointer-events-none h-full" />
+          </ParallaxBackground>
+          
+          <div className="max-w-5xl mx-auto relative z-10">
+            <ParallaxText speed={0.15} direction="left">
               <h2 className="text-3xl sm:text-4xl font-bold mb-16 text-center text-gray-900 dark:text-white">
-                <ScrambledText radius={120} duration={1} speed={0.4}>
-                  <DecryptedText
-                text="Get In Touch"
-                    animateOn="view"
-                    revealDirection="center"
-                    sequential
-                    className="text-gray-900 dark:text-white"
-              />
-                </ScrambledText>
+                Get In Touch
               </h2>
             </ParallaxText>
 
             <div className="grid md:grid-cols-2 gap-12">
-              <ParallaxContainer speed={0.1} direction="up">
+              <ParallaxContainer speed={0.2}>
                 <RevealElement direction="left" className="text-gray-900 dark:text-gray-100">
                   <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-8 border border-gray-200 dark:border-gray-800 h-full">
                     <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
-                      <ScrambledText>Contact Information</ScrambledText>
+                      Contact Information
                     </h3>
                     <p className="mb-6 text-gray-900 dark:text-gray-100">
-                      <ScrambledText>
                       Feel free to reach out to me through any of these channels. I'm always open to discussing new
                       projects, creative ideas, or opportunities to be part of your vision.
-                      </ScrambledText>
                     </p>
 
                     <div className="space-y-4">
@@ -870,7 +837,7 @@ export default function Home() {
                       transition={{ duration: 0.5, delay: 0.3 }}
                     >
                       <h4 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
-                        <ScrambledText>Let's Work Together</ScrambledText>
+                        Let's Work Together
                       </h4>
                       <p className="text-sm text-gray-900 dark:text-gray-100">
                         Looking for a passionate developer to bring your ideas to life? I'm currently available for
@@ -881,13 +848,11 @@ export default function Home() {
                 </RevealElement>
               </ParallaxContainer>
 
-              <ParallaxContainer speed={0.15} direction="up">
+              <ParallaxContainer speed={0.25}>
                 <RevealElement direction="right">
                   <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-8 border border-gray-200 dark:border-gray-800 h-full">
                     <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
-                      <ScrambledText>
-                        <DecryptedText text="Send Me a Message" animateOn="view" sequential />
-                      </ScrambledText>
+                      Send Me a Message
                     </h3>
                     <div className="mb-8 relative">
                       <motion.label
@@ -962,75 +927,73 @@ export default function Home() {
 
       <footer className="bg-gray-50 dark:bg-gray-900 py-12 text-center relative z-10 border-t border-gray-200 dark:border-gray-800">
         <div className="container mx-auto px-4">
-          <ParallaxContainer speed={0.1}>
-            <motion.div
-              className="mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white animate-gradient">
-                Shiven Patro
-              </h2>
-              <p>Data Science Engineer & Web Developer</p>
-            </motion.div>
+          <motion.div
+            className="mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white animate-gradient">
+              Shiven Patro
+            </h2>
+            <p>Data Science Engineer & Web Developer</p>
+          </motion.div>
 
-            <p className="text-muted-foreground mb-6">&copy; {new Date().getFullYear()} Shiven Patro. All rights reserved.</p>
-            <div className="flex justify-center space-x-6">
-              <motion.a
-                href="https://github.com/shivenpatro"
-                className="text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
-                whileHover={{ scale: 1.1 }}
-                whileInView={isMobile ? { scale: 1.1 } : {}}
-                viewport={{ once: true, amount: 0.8 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="sr-only">GitHub</span>
-                <svg className="h-6 w-6 sm:h-8 sm:w-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path
-                    fillRule="evenodd"
-                    d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                  />
-                </svg>
-              </motion.a>
-              <motion.a
-                href="https://www.linkedin.com/in/shiven-patro-960593260/"
-                className="text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
-                whileHover={{ scale: 1.1 }}
-                whileInView={isMobile ? { scale: 1.1 } : {}}
-                viewport={{ once: true, amount: 0.8 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="sr-only">LinkedIn</span>
-                <svg className="h-6 w-6 sm:h-8 sm:w-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path
-                    fillRule="evenodd"
-                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
-                  />
-                </svg>
-              </motion.a>
-              <motion.a
-                href="mailto:contact@shivenpatro.com"
-                className="text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
-                whileHover={{ scale: 1.1 }}
-                whileInView={isMobile ? { scale: 1.1 } : {}}
-                viewport={{ once: true, amount: 0.8 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="sr-only">Email</span>
-                <svg className="h-6 w-6 sm:h-8 sm:w-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path
-                    fillRule="evenodd"
-                    d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
-                  />
-                  <path
-                    fillRule="evenodd"
-                    d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
-                  />
-                </svg>
-              </motion.a>
-            </div>
-          </ParallaxContainer>
+          <p className="text-muted-foreground mb-6">&copy; {new Date().getFullYear()} Shiven Patro. All rights reserved.</p>
+          <div className="flex justify-center space-x-6">
+            <motion.a
+              href="https://github.com/shivenpatro"
+              className="text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
+              whileHover={{ scale: 1.1 }}
+              whileInView={isMobile ? { scale: 1.1 } : {}}
+              viewport={{ once: true, amount: 0.8 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span className="sr-only">GitHub</span>
+              <svg className="h-6 w-6 sm:h-8 sm:w-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fillRule="evenodd"
+                  d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                />
+              </svg>
+            </motion.a>
+            <motion.a
+              href="https://www.linkedin.com/in/shiven-patro-960593260/"
+              className="text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
+              whileHover={{ scale: 1.1 }}
+              whileInView={isMobile ? { scale: 1.1 } : {}}
+              viewport={{ once: true, amount: 0.8 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span className="sr-only">LinkedIn</span>
+              <svg className="h-6 w-6 sm:h-8 sm:w-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fillRule="evenodd"
+                  d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+                />
+              </svg>
+            </motion.a>
+            <motion.a
+              href="mailto:contact@shivenpatro.com"
+              className="text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
+              whileHover={{ scale: 1.1 }}
+              whileInView={isMobile ? { scale: 1.1 } : {}}
+              viewport={{ once: true, amount: 0.8 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span className="sr-only">Email</span>
+              <svg className="h-6 w-6 sm:h-8 sm:w-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fillRule="evenodd"
+                  d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
+                />
+                <path
+                  fillRule="evenodd"
+                  d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
+                />
+              </svg>
+            </motion.a>
+          </div>
         </div>
       </footer>
     </div>
