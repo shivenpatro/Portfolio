@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:local": "next dev -p 3001",
     "build": "next build",
+    "build:dev": "next build -d && echo 'Development build complete - this will NOT affect your live site'",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "preview": "next build && next start"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
