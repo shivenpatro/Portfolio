@@ -24,6 +24,7 @@ import {
   Phone,
   Cloud,
 } from "lucide-react"
+import Image from "next/image";
 
 // Import static components
 import { RevealText } from "@/components/reveal-text"
@@ -39,11 +40,21 @@ import { ClientOnly } from "@/components/client-only"
 import { HydrationBoundary } from "@/components/hydration-boundary"
 import { useIsMobile } from "@/hooks/use-mobile"
 import ScrambledText from "@/components/scrambled-text"
-import { ThemeToggle } from "@/components/theme-toggle"
 import { ParallaxContainer } from "@/components/parallax-container"
 import { ParallaxBackground } from "@/components/parallax-background"
 import { ParallaxText } from "@/components/parallax-text"
 import { FloatingElements } from "@/components/floating-elements"
+import TypingText from "@/components/typing-text"
+import VariableProximity from "@/components/variable-proximity"
+import ContactForm from "@/components/contact-form"
+import { SkillProgress } from "@/components/skill-progress"
+import Magnet from "@/components/magnetic-button"
+import { ExperienceTimelineModern } from "@/components/experience-timeline-modern";
+import { useRouter } from "next/navigation";
+import { AnimatedName } from "@/components/animated-name"
+import { WavyText } from "@/components/wavy-text";
+import { WritingsMarquee } from "@/components/writings-marquee";
+import { ImmersiveProjects } from "@/components/immersive-projects";
 
 // Dynamic imports for components that might cause hydration issues
 const PortfolioSidekick = dynamic(() => import("@/components/portfolio-sidekick"), { ssr: false });
@@ -53,34 +64,65 @@ const ThreeDCard = dynamic(() => import("@/components/3d-card").then(mod => mod.
 const AnimatedGradientBorder = dynamic(() => import("@/components/animated-gradient-border").then(mod => mod.AnimatedGradientBorder), { ssr: false })
 const ScrollProgress = dynamic(() => import("@/components/scroll-progress").then(mod => mod.ScrollProgress), { ssr: false })
 const ScrollToTop = dynamic(() => import("@/components/scroll-to-top").then(mod => mod.ScrollToTop), { ssr: false })
-const AnimatedName = dynamic(() => import("@/components/animated-name").then(mod => mod.AnimatedName), { ssr: false })
 const AnimatedBackground = dynamic(() => import("@/components/animated-background"), { ssr: false })
 const ProjectsCarousel = dynamic(() => import("@/components/projects-carousel").then(mod => mod.default), { ssr: false })
+const SplineScene = dynamic(() => import("@/components/spline-scene"), { ssr: false });
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home")
   const [isTouchDevice, setIsTouchDevice] = useState(false)
-  const [isDarkMode, setIsDarkMode] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeTab, setActiveTab] = useState("all")
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(scrollYProgress, [0, 0.05], [1, 0])
   const scrollingRef = useRef(false)
   const isMobile = useIsMobile()
+  const navContainer = useRef<HTMLUListElement>(null);
+  const aboutRef = useRef<HTMLDivElement>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
+  const skillsRef = useRef<HTMLDivElement>(null);
+  const [aboutDone1, setAboutDone1] = useState(false);
+  const [aboutDone2, setAboutDone2] = useState(false);
+
+  const isDarkMode = true;
 
   useEffect(() => {
-    // Check for saved theme preference or use system preference
-    const savedTheme = localStorage.getItem("theme")
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+    // Function to hide watermark both in DOM and within spline-viewer shadow roots
+    const hideSplineBranding = () => {
+      // 1) Attempt to hide any anchor/link branding injected into DOM
+      const domLogo = document.querySelector('a[href*="spline.design"], div[data-branding]');
+      if (domLogo instanceof HTMLElement) {
+        domLogo.style.display = 'none';
+      }
 
-    if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
-      setIsDarkMode(true)
-      document.documentElement.classList.add("dark")
-    } else {
-      setIsDarkMode(false)
-      document.documentElement.classList.remove("dark")
-    }
-  }, [])
+      // 2) Look inside every <spline-viewer> shadowRoot and hide branding inside
+      document.querySelectorAll('spline-viewer').forEach((viewer) => {
+        const shadow = (viewer as any).shadowRoot as ShadowRoot | null;
+        if (shadow) {
+          const shadowBrand = shadow.querySelector('[slot="branding"], .branding, div[part="branding"], a[href*="spline.design"]');
+          if (shadowBrand instanceof HTMLElement) {
+            shadowBrand.style.display = 'none';
+          }
+        }
+      });
+    };
+
+    // Run once at mount
+    hideSplineBranding();
+
+    // Observe mutations to keep hiding if it reappears
+    const observer = new MutationObserver(() => hideSplineBranding());
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.add("dark");
+  }, []);
 
   useEffect(() => {
     setIsTouchDevice("ontouchstart" in window || navigator.maxTouchPoints > 0)
@@ -292,6 +334,7 @@ export default function Home() {
               )}
             </AnimatePresence>
             <motion.ul
+              ref={navContainer}
               className={`${
                 isMenuOpen
                   ? "flex flex-col fixed top-[72px] left-0 right-0 bg-background/95 backdrop-blur-md p-6 shadow-lg border-b border-border z-50"
@@ -302,11 +345,11 @@ export default function Home() {
               exit={isMenuOpen ? { height: 0, opacity: 0 } : undefined}
               transition={{ duration: 0.3 }}
             >
-              {["Home", "About", "Skills", "Projects", "Contact"].map((item) => (
+              {["Home", "About", "Skills", "Projects", "Writings", "Experience", "Contact"].map((item) => (
                 <motion.li key={item} className="mb-4 sm:mb-0">
                   <motion.button
                     onClick={() => scrollToSection(item.toLowerCase())}
-                    className={`relative text-base sm:text-lg font-medium ${
+                    className={`relative text-base sm:text-lg font-normal font-roboto-slab ${
                       activeSection === item.toLowerCase() ? "text-foreground" : "text-muted-foreground hover:text-foreground"
                     }`}
                     whileHover={{ x: 5 }}
@@ -314,14 +357,14 @@ export default function Home() {
                     viewport={{ once: false, amount: 0.8 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <ScrambledText>
-                      <DecryptedText
-                        text={item}
-                        animateOn="view"
-                        sequential
-                        className="text-foreground"
+                    <VariableProximity
+                      label={item}
+                      containerRef={navContainer as any}
+                      fromFontVariationSettings="'wght' 400, 'slnt' 0"
+                      toFontVariationSettings="'wght' 700, 'slnt' -10"
+                      radius={80}
+                      fontFamily="'Roboto Slab', serif"
                       />
-                    </ScrambledText>
                     {activeSection === item.toLowerCase() && (
                       <motion.span
                         className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary"
@@ -334,16 +377,6 @@ export default function Home() {
               ))}
             </motion.ul>
           </div>
-          <ThemeToggle isDark={isDarkMode} onToggle={(v: boolean)=>{
-            setIsDarkMode(v);
-            if(v){
-              document.documentElement.classList.add("dark");
-              localStorage.setItem("theme","dark");
-            }else{
-              document.documentElement.classList.remove("dark");
-              localStorage.setItem("theme","light");
-            }
-          }}/>
         </nav>
       </header>
 
@@ -353,20 +386,36 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
           </ParallaxBackground>
 
-          <div className="absolute inset-0 z-10 flex items-center justify-center">
-            <ParallaxContainer speed={0.2} className="w-full max-w-4xl px-4">
+          <div className="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center h-full relative z-10">
+            {/* Left Column */}
+            <div className="text-left">
+              <ParallaxContainer speed={0.15}>
+                <TypingText text="Welcome!!" className="text-4xl sm:text-5xl font-semibold text-primary mb-4 whitespace-nowrap" speed={200} loop fontFamily="'Manufacturing Consent', system-ui" />
+              </ParallaxContainer>
+
+              <ParallaxContainer speed={0.2}>
               <AnimatedName
                 name="Shiven Patro"
-                className="mb-8 text-center"
-                fontSize="clamp(3rem, 10vw, 6rem)"
+                  className="mb-4" // Reduced margin
+                  fontSize="clamp(3rem, 7vw, 6rem)"
+                color="#3b82f6"
+                hoverColor="#60a5fa"
               />
             </ParallaxContainer>
-          </div>
 
-          <div className="relative z-20 text-center w-full max-w-xl mx-auto px-4 mt-32">
+              <ParallaxContainer speed={0.3}>
+                <WavyText 
+                  text="Crafting the future, one line of code at a time." 
+                  className="text-lg sm:text-xl md:text-2xl font-normal text-gray-400 mb-8"
+                  delay={1.2}
+                  duration={0.8}
+                  style={{ fontFamily: "'Dancing Script', cursive" }}
+                />
+              </ParallaxContainer>
+
             <ParallaxContainer speed={0.4}>
               <RevealElement>
-                <div className="h-12 overflow-hidden text-center">
+                  <div className="h-12 overflow-hidden">
                   <TextCarousel
                     phrases={["Data Science Engineer", "Web Developer", "AI Enthusiast"]}
                     className="text-xl sm:text-2xl md:text-3xl font-light text-muted-foreground"
@@ -376,7 +425,8 @@ export default function Home() {
             </ParallaxContainer>
             <ParallaxContainer speed={0.6}>
               <RevealElement delay={0.4} direction="up">
-                <div className="mt-12 flex flex-wrap justify-center gap-4">
+                  <div className="mt-12 flex flex-wrap justify-start gap-4">
+                  <Magnet>
                   <AnimatedButton
                     onClick={() => scrollToSection("about")}
                     variant="primary"
@@ -386,18 +436,38 @@ export default function Home() {
                   >
                     Learn More
                   </AnimatedButton>
-                  <AnimatedButton
-                    onClick={handleDownloadResume}
-                    variant="outline"
-                    icon={<Download className="w-5 h-5" />}
-                    iconPosition="right"
-                    iconAnimation="launch"
-                  >
-                    Download Resume
-                  </AnimatedButton>
+                  </Magnet>
+                  <Magnet>
+                    <a href="https://github.com/shivenpatro" target="_blank" rel="noopener noreferrer">
+                      <AnimatedButton
+                        variant="outline"
+                        icon={<Github className="w-5 h-5" />}
+                        iconPosition="right"
+                        iconAnimation="launch"
+                      >
+                        Checkout my work
+                      </AnimatedButton>
+                    </a>
+                  </Magnet>
                 </div>
               </RevealElement>
             </ParallaxContainer>
+            </div>
+
+            {/* Right Column */}
+            <div className="relative h-full w-full hidden md:flex items-center justify-center">
+              <div className="relative">
+                <ClientOnly>
+                  <SplineScene
+                    scene="https://prod.spline.design/ASxYx2DPkJX2MQRO/scene.splinecode"
+                    className="w-full h-full"
+                    style={{ filter: "drop-shadow(0 25px 25px rgba(0,0,0,0.55))" }}
+                  />
+                </ClientOnly>
+                {/* Ground glow */}
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-72 h-20 bg-emerald-500/25 blur-3xl rounded-full pointer-events-none" />
+              </div>
+            </div>
           </div>
 
           <motion.div
@@ -445,36 +515,70 @@ export default function Home() {
             <div className="flex flex-col md:flex-row items-center">
               <ParallaxContainer speed={0.3} direction="up" className="mb-12 md:mb-0 md:mr-16">
                 <RevealElement direction="left">
-                  <div className="relative group">
-                    <div className="absolute inset-0 rounded-full bg-emerald-500/70 blur-[5rem] opacity-0 group-hover:opacity-100 transition duration-300 pointer-events-none -z-10" />
                     <ClientOnly>
-                      <ThreeDCard className="w-48 h-48 sm:w-64 sm:h-64 overflow-hidden">
+                    <div className="relative group w-48 h-48 sm:w-64 sm:h-64">
+                      <motion.div
+                        className="absolute -inset-3 rounded-full bg-emerald-500 blur-2xl pointer-events-none -z-10"
+                        initial={{ opacity: 0.6, scale: 1 }}
+                        animate={{ opacity: [0.5, 0.9, 0.5], scale: [1, 1.1, 1] }}
+                        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                        whileHover={{ opacity: 1, scale: 1 }}
+                      />
+                      <ThreeDCard className="w-full h-full rounded-full overflow-hidden">
                         <img
                           src="./images/profile-photo.jpg"
                           alt="Shiven Patro"
-                          className="rounded-full w-full h-full object-cover object-top"
+                          className="w-full h-full object-cover object-top"
                         />
                       </ThreeDCard>
-                    </ClientOnly>
                   </div>
+                  </ClientOnly>
                 </RevealElement>
               </ParallaxContainer>
 
               <ParallaxContainer speed={0.4} direction="down">
-                <div>
+                <div ref={aboutRef as any}>
                   <p className="text-lg sm:text-xl mb-6 leading-relaxed text-foreground">
-                    <ScrambledText radius={120} duration={1} speed={0.4}>
-                      Hello! I'm Shiven Patro, an aspiring Data Science Engineer with a strong academic foundation and experience in Web Development. Currently pursuing BTech CSE at VIT-AP with a CGPA of 8.5/10.
-                    </ScrambledText>
+                    {aboutDone1 ? (
+                      <VariableProximity
+                        label="Hello! I'm Shiven Patro, an aspiring Data Science Engineer with a strong academic foundation and experience in Web Development. Currently pursuing BTech CSE at VIT-AP with a CGPA of 8.5/10."
+                        containerRef={aboutRef as any}
+                        fromFontVariationSettings="'wght' 400"
+                        toFontVariationSettings="'wght' 700"
+                        radius={100}
+                        fontFamily="'Lora', serif"
+                      />
+                    ) : (
+                      <TypingText
+                        text="Hello! I'm Shiven Patro, an aspiring Data Science Engineer with a strong academic foundation and experience in Web Development. Currently pursuing BTech CSE at VIT-AP with a CGPA of 8.5/10."
+                        className="font-[Lora] text-lg sm:text-xl leading-relaxed text-foreground"
+                        speed={40}
+                        onDone={() => setAboutDone1(true)}
+                      />
+                    )}
                   </p>
 
                   <p className="text-lg sm:text-xl leading-relaxed text-foreground">
-                    <ScrambledText radius={120} duration={1} speed={0.4}>
-                      I'm passionately leveraging AI & LLM models to gain expertise in Data Science, Machine Learning, and other software domains, including Cloud Computing and Web Technologies, to build web applications with simple solutions.
-                    </ScrambledText>
+                    {aboutDone2 ? (
+                      <VariableProximity
+                        label="I'm passionately leveraging AI & LLM models to gain expertise in Data Science, Machine Learning, and other software domains, including Cloud Computing and Web Technologies, to build web applications with simple solutions."
+                        containerRef={aboutRef as any}
+                        fromFontVariationSettings="'wght' 400"
+                        toFontVariationSettings="'wght' 700"
+                        radius={100}
+                        fontFamily="'Lora', serif"
+                      />
+                    ) : (
+                      <TypingText
+                        text="I'm passionately leveraging AI & LLM models to gain expertise in Data Science, Machine Learning, and other software domains, including Cloud Computing and Web Technologies, to build web applications with simple solutions."
+                        className="font-[Lora] text-lg sm:text-xl leading-relaxed text-foreground"
+                        speed={40}
+                        onDone={() => setAboutDone2(true)}
+                      />
+                    )}
                   </p>
 
-                  <RevealElement delay={0.6} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 place-items-center mt-12">
+                  <RevealElement delay={0.6} className="grid grid-cols-1 sm:grid-cols-3 gap-8 place-items-center mt-12">
                     <StatCard 
                       icon={<Code className="w-6 h-6 text-primary" />}
                       value={10}
@@ -489,12 +593,6 @@ export default function Home() {
                       delay={0.2}
                     />
                     <StatCard 
-                      icon={<Cpu className="w-6 h-6 text-primary" />}
-                      value={5}
-                      label="Technologies"
-                      delay={0.4}
-                    />
-                    <StatCard 
                       icon={<Globe className="w-6 h-6 text-primary" />}
                       value={2}
                       label="Hackathons"
@@ -503,6 +601,7 @@ export default function Home() {
                   </RevealElement>
 
                   <RevealElement delay={0.8} className="mt-8 flex flex-wrap gap-4">
+                    <Magnet>
                     <AnimatedButton
                       onClick={() => scrollToSection("contact")}
                       variant="primary"
@@ -511,6 +610,8 @@ export default function Home() {
                     >
                       Contact Me
                     </AnimatedButton>
+                    </Magnet>
+                    <Magnet>
                     <AnimatedButton
                       onClick={handleDownloadResume}
                       variant="outline"
@@ -519,6 +620,7 @@ export default function Home() {
                     >
                       Download Resume
                     </AnimatedButton>
+                    </Magnet>
                   </RevealElement>
                 </div>
               </ParallaxContainer>
@@ -526,7 +628,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="skills" className="py-20 sm:py-32 px-4 relative">
+        <section id="skills" className="py-20 sm:py-32 px-4 relative" ref={skillsRef}>
           <ParallaxBackground speed={0.15} className="absolute inset-0">
             <div className="bg-gradient-to-b from-background/50 to-transparent pointer-events-none h-full w-full" />
           </ParallaxBackground>
@@ -560,21 +662,17 @@ export default function Home() {
                         <div key={item.skill} className="mb-4">
                           <div className="flex justify-between mb-1">
                             <span className="text-base font-medium text-foreground">
-                              <ScrambledText>
-                                <DecryptedText text={item.skill} animateOn="view" sequential />
-                              </ScrambledText>
+                              <VariableProximity
+                                label={item.skill}
+                                containerRef={skillsRef as React.RefObject<HTMLElement>}
+                                fromFontVariationSettings="'wght' 400, 'slnt' 0"
+                                toFontVariationSettings="'wght' 700, 'slnt' -8"
+                                radius={100}
+                              />
                             </span>
                             <span className="text-sm font-medium text-muted-foreground">{item.percentage}%</span>
                           </div>
-                          <div className="w-full bg-muted rounded-full h-2.5 overflow-hidden">
-                            <motion.div
-                              className="h-2.5 rounded-full bg-primary"
-                              initial={{ width: 0 }}
-                              whileInView={{ width: `${item.percentage}%` }}
-                              transition={{ duration: 1, delay: index * 0.1, ease: "easeOut" }}
-                              viewport={{ once: true }}
-                            />
-                          </div>
+                          <SkillProgress percentage={item.percentage} />
                         </div>
                       ))}
                     </div>
@@ -596,21 +694,17 @@ export default function Home() {
                         <div key={item.skill} className="mb-4">
                           <div className="flex justify-between mb-1">
                             <span className="text-base font-medium text-foreground">
-                              <ScrambledText>
-                                <DecryptedText text={item.skill} animateOn="view" sequential />
-                              </ScrambledText>
+                              <VariableProximity
+                                label={item.skill}
+                                containerRef={skillsRef as React.RefObject<HTMLElement>}
+                                fromFontVariationSettings="'wght' 400, 'slnt' 0"
+                                toFontVariationSettings="'wght' 700, 'slnt' -8"
+                                radius={100}
+                              />
                             </span>
                             <span className="text-sm font-medium text-muted-foreground">{item.percentage}%</span>
                           </div>
-                          <div className="w-full bg-muted rounded-full h-2.5 overflow-hidden">
-                            <motion.div
-                              className="h-2.5 rounded-full bg-primary"
-                              initial={{ width: 0 }}
-                              whileInView={{ width: `${item.percentage}%` }}
-                              transition={{ duration: 1, delay: index * 0.1, ease: "easeOut" }}
-                              viewport={{ once: true }}
-                            />
-                          </div>
+                          <SkillProgress percentage={item.percentage} />
                         </div>
                       ))}
                     </div>
@@ -623,18 +717,18 @@ export default function Home() {
               <RevealElement>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
                   {[
-                    { skill: "Python", icon: <Code className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                    { skill: "Java", icon: <Cpu className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                    { skill: "JavaScript", icon: <Globe className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                    { skill: "HTML/CSS", icon: <Layers className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                    { skill: "TypeScript", icon: <Code className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                    { skill: "React.js", icon: <Code className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                    { skill: "Node.js", icon: <Server className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                    { skill: "Docker", icon: <Layers className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                    { skill: "AWS", icon: <Cloud className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                    { skill: "SQL", icon: <Database className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                    { skill: "Pandas", icon: <Database className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
-                    { skill: "Git/GitHub", icon: <Github className="w-6 h-6 text-gray-700 dark:text-gray-300" /> },
+                    { skill: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+                    { skill: "Java", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
+                    { skill: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+                    { skill: "HTML/CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+                    { skill: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
+                    { skill: "React.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+                    { skill: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+                    { skill: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
+                    { skill: "AWS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" },
+                    { skill: "SQL", icon: <Database className="w-8 h-8 text-gray-700 dark:text-gray-300" /> },
+                    { skill: "Pandas", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" },
+                    { skill: "Git/GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
                   ].map((item, index) => (
                     <ClientOnly key={item.skill}>
                       <ParallaxScroll speed={0.2} direction="up">
@@ -650,7 +744,11 @@ export default function Home() {
                                 viewport={{ once: true, amount: 0.8 }}
                                 transition={{ duration: 0.5 }}
                               >
-                                {item.icon}
+                                {typeof item.icon === 'string' ? (
+                                  <img src={item.icon} alt={`${item.skill} logo`} className="w-8 h-8" />
+                                ) : (
+                                  item.icon
+                                )}
                               </motion.div>
                               <motion.div
                                 className="font-medium text-base text-gray-900 dark:text-white"
@@ -675,41 +773,48 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="projects" className="py-20 sm:py-32 px-4 relative">
+        <section id="projects" className="relative py-20 sm:py-32 px-4">
           <ParallaxBackground speed={0.1} className="absolute inset-0">
-            <div className="bg-gradient-to-b from-gray-50/50 to-transparent dark:from-gray-900/10 dark:to-transparent pointer-events-none h-full w-full" />
+            <div className="bg-gradient-to-b from-background/50 to-transparent pointer-events-none h-full w-full" />
           </ParallaxBackground>
           
-          <div className="max-w-6xl mx-auto relative z-10">
-            <ParallaxText speed={0.2} direction="right" className="mb-8">
-              <h2 className="text-3xl sm:text-4xl font-bold text-center text-gray-900 dark:text-white">
+          <div className="max-w-5xl mx-auto relative z-10">
+            <ParallaxText speed={0.2} direction="right" className="mb-16">
+              <h2 className="text-3xl sm:text-4xl font-bold text-center text-foreground">
                 <ScrambledText radius={120} duration={1} speed={0.4}>
-                  <DecryptedText text="My Projects" animateOn="view" sequential revealDirection="center" />
+                  <DecryptedText text="My Projects" animateOn="view" revealDirection="center" sequential />
                 </ScrambledText>
               </h2>
             </ParallaxText>
-
-            <ParallaxContainer speed={0.15}>
-              <RevealElement className="mb-8">
-                <AnimatedTabs
-                  tabs={[
-                    { id: "all", label: "All Projects" },
-                    { id: "data-science", label: "Data Science" },
-                    { id: "web-dev", label: "Web Development" },
-                    { id: "software", label: "Software" },
-                  ]}
-                  defaultTabId="all"
-                  onChange={setActiveTab}
-                  variant="pills"
-                  className="mb-8 justify-center"
-                />
-              </RevealElement>
-            </ParallaxContainer>
-
-            <ParallaxContainer speed={0.25}>
-              <ProjectsCarousel projects={filteredProjects} onContactClick={() => scrollToSection('contact')} />
-            </ParallaxContainer>
           </div>
+
+          {/* Immersive project scenes */}
+          <ImmersiveProjects />
+        </section>
+
+        <section id="writings" className="py-20 sm:py-32 relative">
+          <ParallaxBackground speed={0.05} className="absolute inset-0">
+            <div className="bg-gradient-to-b from-background to-background/80 pointer-events-none h-full w-full" />
+          </ParallaxBackground>
+
+          <div className="max-w-6xl mx-auto relative z-10">
+             <ParallaxText speed={0.2} direction="left" className="mb-8">
+              <h2 className="text-3xl sm:text-4xl font-bold text-center text-white">
+                <ScrambledText radius={120} duration={1} speed={0.4}>
+                  <DecryptedText text="My Writings" animateOn="view" sequential revealDirection="center" />
+                </ScrambledText>
+              </h2>
+            </ParallaxText>
+            <WritingsMarquee />
+          </div>
+        </section>
+
+        <section id="experience" className="py-20 sm:py-32 px-4 relative">
+          <ParallaxBackground speed={0.1} className="absolute inset-0">
+            <div className="bg-gradient-to-b from-background/50 to-transparent pointer-events-none h-full w-full" />
+          </ParallaxBackground>
+          
+          <ExperienceTimelineModern />
         </section>
 
         <section id="contact" className="py-20 sm:py-32 px-4 relative">
@@ -735,20 +840,26 @@ export default function Home() {
             <div className="grid md:grid-cols-2 gap-12">
               <ParallaxContainer speed={0.2}>
                 <RevealElement direction="left" className="text-gray-900 dark:text-gray-100">
-                  <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-8 border border-gray-200 dark:border-gray-800 h-full">
+                  <div ref={contactRef as any} className="bg-gray-50 dark:bg-gray-900 rounded-lg p-8 border border-gray-200 dark:border-gray-800 h-full">
                     <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
-                      <ScrambledText>
-                        <DecryptedText text="Contact Information" animateOn="view" sequential />
-                      </ScrambledText>
+                      <VariableProximity
+                        label="Contact Information"
+                        containerRef={contactRef as any}
+                        fromFontVariationSettings="'wght' 500"
+                        toFontVariationSettings="'wght' 900"
+                        radius={120}
+                        fontFamily="'Lora', serif"
+                      />
                     </h3>
                     <p className="mb-6 text-gray-900 dark:text-gray-100">
-                      <ScrambledText>
-                        <DecryptedText 
-                          text="Feel free to reach out to me through any of these channels. I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision."
-                          animateOn="view" 
-                          sequential 
-                        />
-                      </ScrambledText>
+                      <VariableProximity
+                        label="Feel free to reach out to me through any of these channels. I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision."
+                        containerRef={contactRef as any}
+                        fromFontVariationSettings="'wght' 400"
+                        toFontVariationSettings="'wght' 700"
+                        radius={120}
+                        fontFamily="'Lora', serif"
+                      />
                     </p>
 
                     <div className="space-y-4">
@@ -881,18 +992,24 @@ export default function Home() {
                       transition={{ duration: 0.5, delay: 0.3 }}
                     >
                       <h4 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
-                        <ScrambledText>
-                          <DecryptedText text="Let's Work Together" animateOn="view" sequential />
-                        </ScrambledText>
+                        <VariableProximity
+                          label="Let's Work Together"
+                          containerRef={contactRef as any}
+                          fromFontVariationSettings="'wght' 500"
+                          toFontVariationSettings="'wght' 900"
+                          radius={120}
+                          fontFamily="'Lora', serif"
+                        />
                       </h4>
                       <p className="text-sm text-gray-900 dark:text-gray-100">
-                        <ScrambledText>
-                          <DecryptedText 
-                            text="Looking for a passionate developer to bring your ideas to life? I'm currently available for freelance work and exciting opportunities."
-                            animateOn="view" 
-                            sequential 
-                          />
-                        </ScrambledText>
+                        <VariableProximity
+                          label="Looking for a passionate developer to bring your ideas to life? I'm currently available for freelance work and exciting opportunities."
+                          containerRef={contactRef as any}
+                          fromFontVariationSettings="'wght' 400"
+                          toFontVariationSettings="'wght' 700"
+                          radius={120}
+                          fontFamily="'Lora', serif"
+                        />
                       </p>
                     </motion.div>
                   </div>
@@ -901,80 +1018,13 @@ export default function Home() {
 
               <ParallaxContainer speed={0.3}>
                 <RevealElement direction="right">
-                  <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-8 border border-gray-200 dark:border-gray-800 h-full">
+                  <div ref={contactRef as any} className="bg-gray-50 dark:bg-gray-900 rounded-lg p-8 border border-gray-200 dark:border-gray-800 h-full">
                     <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
                       <ScrambledText>
                         <DecryptedText text="Send Me a Message" animateOn="view" sequential />
                       </ScrambledText>
                     </h3>
-                    <div className="mb-8 relative">
-                      <motion.label
-                        htmlFor="name"
-                        className="absolute left-4 text-base text-gray-500 dark:text-gray-400 transition-all duration-300 pointer-events-none"
-                        initial={{ y: 0 }}
-                        animate={{ y: -25, scale: 0.8 }}
-                      >
-                        <ScrambledText>
-                          <DecryptedText text="Name" animateOn="view" sequential />
-                        </ScrambledText>
-                      </motion.label>
-                      <motion.div
-                        className="w-full h-0.5 bg-gray-900 dark:bg-white absolute bottom-0 left-0 rounded-full"
-                        initial={{ scaleX: 0 }}
-                        whileInView={{ scaleX: 1 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                      />
-                      <input
-                        type="text"
-                        id="name"
-                        className="w-full px-4 py-3 bg-white dark:bg-gray-800 rounded-lg focus:outline-none text-foreground border border-gray-300 dark:border-gray-700 focus:border-gray-900 dark:focus:border-white transition-colors"
-                      />
-                    </div>
-                    <div className="mb-8 relative">
-                      <motion.label
-                        htmlFor="email"
-                        className="absolute left-4 text-base text-gray-500 dark:text-gray-400 transition-all duration-300 pointer-events-none"
-                        initial={{ y: 0 }}
-                        animate={{ y: -25, scale: 0.8 }}
-                      >
-                        <ScrambledText>
-                          <DecryptedText text="Email" animateOn="view" sequential />
-                        </ScrambledText>
-                      </motion.label>
-                      <motion.div
-                        className="w-full h-0.5 bg-gray-900 dark:bg-white absolute bottom-0 left-0 rounded-full"
-                        initial={{ scaleX: 0 }}
-                        whileInView={{ scaleX: 1 }}
-                        transition={{ duration: 0.5, delay: 0.3 }}
-                      />
-                      <input
-                        type="email"
-                        id="email"
-                        className="w-full px-4 py-3 bg-white dark:bg-gray-800 rounded-lg focus:outline-none text-foreground border border-gray-300 dark:border-gray-700 focus:border-gray-900 dark:focus:border-white transition-colors"
-                      />
-                    </div>
-                    <div className="mb-8 relative">
-                      <label htmlFor="message" className="block mb-2 text-base text-gray-500 dark:text-gray-400">
-                        <ScrambledText>
-                          <DecryptedText text="Message" animateOn="view" sequential />
-                        </ScrambledText>
-                      </label>
-                      <textarea
-                        id="message"
-                        rows={6}
-                        className="w-full px-4 py-3 bg-white dark:bg-gray-800 rounded-lg focus:outline-none text-foreground border border-gray-300 dark:border-gray-700 focus:border-gray-900 dark:focus:border-white transition-colors"
-                      ></textarea>
-                    </div>
-                    <AnimatedButton
-                      onClick={() => {}}
-                      variant="primary"
-                      fullWidth
-                      size="lg"
-                      icon={<Mail className="w-5 h-5" />}
-                      iconPosition="left"
-                    >
-                      Send Message
-                    </AnimatedButton>
+                    <ContactForm />
                   </div>
                 </RevealElement>
               </ParallaxContainer>

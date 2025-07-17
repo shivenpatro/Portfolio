@@ -143,13 +143,13 @@ export default function AnimatedBackground() {
 
   if (!init) return null
 
-  return (
+    return (
     <div className="fixed inset-0 -z-10 overflow-hidden">
       <Particles
         id="tsparticles"
         particlesLoaded={particlesLoaded}
         options={options}
-        style={{
+          style={{
           position: "absolute",
           width: "100%",
           height: "100%",

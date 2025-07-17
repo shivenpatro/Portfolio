@@ -32,6 +32,7 @@ export interface DecryptedTextProps extends HTMLMotionProps<"span"> {
   encryptedClassName?: string;
   animateOn?: "hover" | "view";
   lockHeight?: boolean;
+  className?: string;
 }
 
 export default function DecryptedText({
@@ -46,6 +47,7 @@ export default function DecryptedText({
   encryptedClassName = "",
   animateOn = "hover",
   lockHeight = false,
+  className,
   ...props
 }: DecryptedTextProps) {
   const [displayText, setDisplayText] = useState(text);

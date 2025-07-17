@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
-import { motion, useAnimation } from "framer-motion"
+import { useState, useMemo, useRef, useEffect } from "react"
+import { motion, Variants } from "framer-motion"
 
 interface AnimatedNameProps {
   name: string
@@ -24,28 +24,27 @@ export const AnimatedName = ({
   staggerDelay = 0.1,
   initialDelay = 0.5,
 }: AnimatedNameProps) => {
-  const controls = useAnimation()
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const [randomRotations, setRandomRotations] = useState<number[]>([]);
   const letters = name.split("")
   const containerRef = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => {
-    const sequence = async () => {
-      await controls.start("hidden")
-      await new Promise((resolve) => setTimeout(resolve, initialDelay * 1000))
-      return await controls.start((i) => ({
+    setRandomRotations(letters.map(() => Math.random() * 10 - 5));
+  }, [letters.length]);
+
+  const letterVariants: Variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: (i: number) => ({
         opacity: 1,
         y: 0,
         transition: {
-          delay: i * staggerDelay,
+        delay: initialDelay + i * staggerDelay,
           duration: 0.5,
           ease: "easeOut",
         },
-      }))
+    }),
     }
-
-    sequence()
-  }, [controls, initialDelay, staggerDelay])
 
   useEffect(() => {
     const container = containerRef.current
@@ -69,22 +68,20 @@ export const AnimatedName = ({
   return (
     <motion.h1
       ref={containerRef}
-      className={`flex justify-center items-center flex-wrap ${className}`}
+      className={`flex justify-center items-center flex-nowrap ${className}`}
       style={{
         fontSize,
         letterSpacing,
         fontWeight: 700,
       }}
+      initial="hidden"
+      animate="visible"
     >
       {letters.map((letter, index) => (
         <motion.span
           key={`${letter}-${index}`}
           custom={index}
-          initial={{ opacity: 0, y: 50 }}
-          animate={controls}
-          variants={{
-            hidden: { opacity: 0, y: 50 },
-          }}
+          variants={letterVariants}
           onHoverStart={() => setHoveredIndex(index)}
           onHoverEnd={() => setHoveredIndex(null)}
           style={{
@@ -96,7 +93,7 @@ export const AnimatedName = ({
           }}
           whileHover={{
             scale: 1.2,
-            rotate: Math.random() * 10 - 5,
+            rotate: randomRotations[index] || 0,
             transition: { type: "spring", stiffness: 500, damping: 10 },
           }}
         >

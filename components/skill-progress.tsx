@@ -1,32 +1,45 @@
 "use client"
 
 import { useRef } from "react"
-import { motion, useInView } from "framer-motion"
+import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayout"
+import gsap from "gsap"
 
 interface SkillProgressProps {
-  skill: string
   percentage: number
-  color?: string
 }
 
-export const SkillProgress = ({ skill, percentage, color = "bg-indigo-500" }: SkillProgressProps) => {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, amount: 0.5 })
+export function SkillProgress({ percentage }: SkillProgressProps) {
+  const barRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useIsomorphicLayoutEffect(() => {
+    const bar = barRef.current
+    const container = containerRef.current
+    if (!bar || !container) return
+
+    const ctx = gsap.context(() => {
+      gsap.to(bar, {
+        width: `${percentage}%`,
+        duration: 1.5,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: container,
+          start: "top 85%",
+          toggleActions: "play none none none",
+        },
+      })
+    }, container)
+
+    return () => ctx.revert()
+  }, [percentage])
 
   return (
-    <div ref={ref} className="mb-4">
-      <div className="flex justify-between mb-1">
-        <span className="text-base font-medium text-foreground">{skill}</span>
-        <span className="text-sm font-medium text-muted-foreground">{percentage}%</span>
-      </div>
-      <div className="w-full bg-gray-300 dark:bg-gray-700 rounded-full h-2.5">
-        <motion.div
-          className={`h-2.5 rounded-full ${color}`}
-          initial={{ width: 0 }}
-          animate={{ width: isInView ? `${percentage}%` : 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        />
-      </div>
+    <div ref={containerRef} className="w-full bg-muted rounded-full h-2.5 overflow-hidden">
+      <div
+        ref={barRef}
+        className="h-2.5 rounded-full bg-emerald-400"
+        style={{ width: 0 }}
+      />
     </div>
   )
 }

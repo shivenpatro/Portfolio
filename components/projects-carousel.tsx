@@ -2,11 +2,12 @@
 
 import React, { useRef, useMemo, useCallback } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { Navigation, Pagination } from "swiper/modules"
+import { Navigation, Pagination, EffectCoverflow, Mousewheel } from "swiper/modules"
 import type { Swiper as SwiperInstance } from "swiper"
 import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
+import "swiper/css/effect-coverflow"
 
 // Icons for navigation arrows
 import { ChevronLeft, ChevronRight } from "lucide-react"
@@ -81,17 +82,21 @@ export const ProjectsCarousel: React.FC<ProjectsCarouselProps> = ({ projects, on
       <Swiper
         // key prop forces Swiper to remount when project list changes (important for filter buttons)
         key={projects.map(p => p.title).join("-")}
-        modules={[Navigation, Pagination]}
+        modules={[Navigation, Pagination, EffectCoverflow, Mousewheel]}
         onSwiper={(swiper: SwiperInstance) => (swiperRef.current = swiper)}
         centeredSlides
-        slidesPerView={1.2}
-        spaceBetween={20}
+        effect="coverflow"
+        coverflowEffect={{ rotate: 0, stretch: 0, depth: 120, modifier: 1, slideShadows: false }}
+        grabCursor
+        slidesPerView={1.1}
+        spaceBetween={-80}
+        mousewheel={{ forceToAxis: true }}
         navigation={{ prevEl: "#projects-prev", nextEl: "#projects-next" }}
         pagination={{ clickable: true }}
         breakpoints={{
-          0: { slidesPerView: 1.05 },
-          640: { slidesPerView: 1.2 },
-          1024: { slidesPerView: 1.4 },
+          0: { slidesPerView: 1, spaceBetween: -60 },
+          640: { slidesPerView: 1.1, spaceBetween: -80 },
+          1024: { slidesPerView: 1.3, spaceBetween: -100 },
         }}
         className="pb-12" // extra bottom padding for pagination dots
       >
@@ -142,7 +147,7 @@ export const ProjectsCarousel: React.FC<ProjectsCarouselProps> = ({ projects, on
                 <RevealElement direction="up" >
                   <ThreeDCard className="h-full">
                     <div className="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-sm border border-gray-200 dark:border-gray-800 h-full flex flex-col">
-                      <div className="relative h-56 overflow-hidden group">
+                      <div className="relative h-48 lg:h-56 overflow-hidden group">
                         <motion.div
                           className="absolute inset-0 bg-gray-900/30"
                           whileHover={{ opacity: 0.3 }}

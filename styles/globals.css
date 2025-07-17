@@ -11,6 +11,20 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 
 @layer base {
@@ -132,4 +146,9 @@ body.theme-changing.reveal-fade::before {
 /* optional: smoother text/icon colour change */
 body.theme-changing *, body.theme-changing svg {
   transition: color 0.35s ease, fill 0.35s ease;
+}
+
+/* Hide "Built with Spline" watermark */
+spline-viewer::part(logo){
+  display:none !important;
 }
