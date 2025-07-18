@@ -303,7 +303,7 @@ export default function Home() {
       </ClientOnly>
 
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
-        <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
+        <nav className="w-full max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center">
             <motion.button
               className="sm:hidden mr-4 text-muted-foreground hover:text-foreground"
@@ -386,7 +386,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
           </ParallaxBackground>
 
-          <div className="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center h-full relative z-10">
+          <div className="w-full max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center h-full relative z-10">
             {/* Left Column */}
             <div className="text-left">
               <ParallaxContainer speed={0.15}>
