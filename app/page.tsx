@@ -456,7 +456,7 @@ export default function Home() {
 
             {/* Right Column */}
             <div className="relative h-full w-full hidden md:flex items-center justify-center">
-              <div className="relative">
+              <div className="relative w-full max-w-lg aspect-square">
                 <ClientOnly>
                   <SplineScene
                     scene="https://prod.spline.design/ASxYx2DPkJX2MQRO/scene.splinecode"
