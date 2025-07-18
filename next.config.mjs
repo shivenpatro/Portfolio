@@ -13,23 +13,17 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  images: {
-    unoptimized: true,
-  },
+  // Note: images config is defined later to set `unoptimized: true`
   experimental: {
     webpackBuildWorker: true,
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
-  // Configuration for GitHub Pages
-  output: 'export',  // Generates static HTML files
-  // Use your GitHub username and repository name
-  basePath: process.env.NODE_ENV === 'production' ? '/Portfolio' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/Portfolio/' : '',
-  trailingSlash: true, // Adds trailing slashes to URLs
-  images: {
-    unoptimized: true,
-  }
+  // Remove GitHub Pages specific configuration for Vercel deployment
+  // output: 'export',  // Removed to enable full Next.js capabilities on Vercel
+  // basePath: process.env.NODE_ENV === 'production' ? '/Portfolio' : '',
+  // assetPrefix: process.env.NODE_ENV === 'production' ? '/Portfolio/' : '',
+  // trailingSlash: true,
 }
 
 mergeConfig(nextConfig, userConfig)

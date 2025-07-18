@@ -14,11 +14,8 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
-  // Development configuration - no GitHub Pages setup
-  output: 'export',
-  basePath: '',  // No base path for local development
-  assetPrefix: '', // No asset prefix for local development
-  trailingSlash: true,
+  // Development configuration (same behavior as Vercel)
+  // No GitHub Pages basePath or assetPrefix needed
   images: {
     unoptimized: true,
   }
