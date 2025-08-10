@@ -4,7 +4,7 @@ A modern, interactive personal portfolio website showcasing my skills, projects,
 
 ## 🌟 Live Demo
 
-Visit the live portfolio: [https://shivenpatro.github.io/Portfolio/](https://shivenpatro.github.io/Portfolio/)
+Visit the live portfolio: [https://portfolio-delta-seven-93.vercel.app/](https://portfolio-delta-seven-93.vercel.app/)
 
 ## ✨ Features
 
